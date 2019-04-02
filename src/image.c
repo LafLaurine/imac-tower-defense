@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "file/Image.h"
+#include "../include/image.h"
 
 int read_image(Image* load_img, char* image_name) {
     FILE* image = NULL;
@@ -27,7 +27,7 @@ int read_image(Image* load_img, char* image_name) {
 
     //faut qu'on vérifie le commentaire
 
-
+	return 1;
 }
 
 void free_image (Image* image) {

@@ -1,9 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "geometry/Color3f.h"
-#include "image.h"
-#include "node.h"
+#include "../include/colors.h"
+#include "../include/image.h"
+#include "../include/node.h"
 
 typedef struct Map {
 
