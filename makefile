@@ -1,15 +1,16 @@
 CC		=	gcc
-CFLAGS	=	-Wall
+CFLAGS	=	-Wall -O2 -g
+LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm
 SRC		=	./src/
 BIN		=	./bin/
 INCL	=	./include/
 
 
-$(BIN)itd: $(SRC)main.o $(SRC)image.o $(SRC)map.o
-		$(CC) -o $@ $^
+$(BIN)itd: $(SRC)main.o $(SRC)image.o
+	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-main.o: $(SRC)main.c $(INCL)image.h $(INCL)map.h
-	$(CC) -o $@ -c $< $(CFLAGS)
+main.o: $(SRC)main.c $(INCL)image.h
+	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 clean:
 	rm -rf $(SRC)*.o

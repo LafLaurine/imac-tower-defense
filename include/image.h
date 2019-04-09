@@ -2,8 +2,6 @@
 #define IMAGE_H
 
 typedef struct Image {
-	//chemin vers img
-	char* path;
 	char format[2];
 	unsigned int height;
 	unsigned int width;
@@ -11,7 +9,7 @@ typedef struct Image {
 } Image;
 
 //Ouvrir et stocker une image
-int read_image(Image*, char*);
+Image *initializeImage(FILE *i);
 //Supprimer une image
-void free_image (Image*);
+void free_image (Image* image);
 #endif

@@ -73,3 +73,12 @@ Map* init_map (char* path) {
 	return 1;	
 
 }
+
+}
+
+void free_map (Map* map) {
+	//Si la map existe
+	if (map != NULL) {
+		free(map);
+	}
+}
