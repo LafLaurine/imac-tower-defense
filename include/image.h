@@ -1,15 +1,22 @@
-#ifndef IMAGE_H
-#define IMAGE_H
+#ifndef IMG_H
+#define IMG_H
+#include<stdlib.h>
+#include <string.h>
+#include<stdio.h>
+#include <stdbool.h>
+#include "../include/pixel.h"
+#include <ctype.h>
 
 typedef struct Image {
-	char format[2];
-	unsigned int height;
-	unsigned int width;
-	int maxValue;
+	int width;
+	int height;
+	Pixel *rvb;
 } Image;
 
-//Ouvrir et stocker une image
-Image *initializeImage(FILE *i);
-//Supprimer une image
-void free_image (Image* image);
+
+void errorMsg(char *message);
+void readPPMHeader(FILE* fp, int *w, int*h);
+int allocate(Image *newImg, int width, int height);
+void clear(Image *img);
+int imageRead(Image *image, char *filename);
 #endif

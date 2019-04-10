@@ -78,20 +78,9 @@ int main (int argc, char** argv)
 {
 	
 	// Openning the file
-	FILE *i = fopen("./images/carte_tower.ppm", "r");
-	if (i == NULL) {
-		printf("L'image n'a pas pu être ouverte \n");
-		return EXIT_FAILURE;
-	}
-
-	else{
-		printf("OK \n");
-	}
-
-
+	Image img;
 	// Creating variables
-	Image *loaded_img = initializeImage(i);
-	fclose(i);
+	Image *loaded_img = imageRead(&img, "./images/carte_tower.ppm");
 
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
@@ -107,6 +96,7 @@ int main (int argc, char** argv)
 
     /* Initialisation du titre de la fenetre */
 	SDL_WM_SetCaption(WINDOW_TITLE, NULL);
+
 
 	SDL_Surface *image = IMG_Load("./images/carte_tower.ppm");
 
@@ -209,6 +199,6 @@ int main (int argc, char** argv)
     /* Liberation des ressources associees a la SDL */ 
     SDL_Quit();
 
-    free_image(loaded_img);
+    clear(loaded_img);
     return EXIT_SUCCESS;
 }
