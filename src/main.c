@@ -8,12 +8,12 @@
 #include "../include/image.h"
 
 /* Dimensions initiales et titre de la fenetre */
-static const unsigned int WINDOW_WIDTH = 800;
-static const unsigned int WINDOW_HEIGHT = 600;
+static const unsigned int WINDOW_WIDTH = 500;
+static const unsigned int WINDOW_HEIGHT = 500;
 static const char WINDOW_TITLE[] = "IMAC TOWER DEFENSE";
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_WIDTH = 200.;
-static const float GL_VIEW_HEIGHT = 150.;
+static const float GL_VIEW_WIDTH = 50.;
+static const float GL_VIEW_HEIGHT = 50.;
 
 /* Nombre de bits par pixel de la fenetre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -141,7 +141,6 @@ int main (int argc, char** argv)
 
         glPushMatrix();
             glScalef(50,50,0);
-            glTranslatef(1,1,1);
             drawQuad(texture_image);
         glPopMatrix();
         
