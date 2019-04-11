@@ -1,15 +1,15 @@
 @ITD 1 
 #commentaire
-carte images/map.ppm
+carte images/carte_tower.ppm
 energie 100
-chemin 78 50 18
+chemin 255 255 255
 noeud 0 0 0
-construct 0 0 0
-in 227 6 19
-out 42 168 55
+construct 255 200 80
+in 0 200 0
+out 200 0 0
 5
-0 1 10 20 3 2 4
-1 2 454 103 2 4
-2 4 300 103 3 1 0
-3 3 200 103 0 2
-4 4 200 206 0 2 1
+0 1 0 0 0 
+1 2 10 10 0
+2 4 4 0 0
+3 3 6 4 0
+4 4 3 6 0

@@ -4,6 +4,33 @@
 
 #include "file/Map.h"
 
+Map* init_map (char* path) {
+	if(path != NULL) {
+	//Alloue la memoire
+		Map* map = malloc(sizeof(Map));
+		if(map != NULL) {
+			if(verif_map(map, path) == 0) {
+				fprintf(stderr, "Unvalid map\n");
+				return NULL;
+			}
+			return map;
+
+		}
+		else {
+			fprintf(stderr, "Coudln't allocate the map\n");
+			return NULL;
+		}
+
+	}
+	else {
+		fprintf(stderr, "Map not found\n");
+		return NULL;
+	}
+	
+	return 1;	
+
+}
+
 int verificationMap(Map* map, char* map_itd){ 
 
 	FILE* itd = NULL;
@@ -45,34 +72,32 @@ int verificationMap(Map* map, char* map_itd){
 }
 }
 }
-
-
-Map* init_map (char* path) {
-	if(path != NULL) {
-	//Alloue la memoire
-		Map* map = malloc(sizeof(Map));
-		if(map != NULL) {
-			if(verif_map(map, path) == 0) {
-				fprintf(stderr, "Unvalid map\n");
-				return NULL;
-			}
-			return map;
-
-		}
-		else {
-			fprintf(stderr, "Coudln't allocate the map\n");
-			return NULL;
-		}
-
-	}
-	else {
-		fprintf(stderr, "Map not found\n");
-		return NULL;
-	}
-	
-	return 1;	
-
 }
+
+//si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
+//Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
+int change_path_color(Image* img, unsigned char* pixels, Map* map) {
+
+	int i, j;
+
+	// On parcourt les lignes du tableau
+	for(i=0; i<(img->height); i++) {
+
+		// puis on parcourt les colonnes du tableau
+		for(j=0; j<(img->width); j++) {
+			
+			//On vérifie la couleur
+			if(pixels[i*(img->height)*3+j*3] == 255 && pixels[i*(img->width)*3+j*3+1] == 255 && pixels[i*(img->width)*3+j*3+2] == 255){
+
+				//Change de couleur
+				pixels[i*(img->width)*3+j*3] = ((map->path).r)*255;
+				pixels[i*(img->width)*3+j*3+1] = ((map->path).g)*255;
+				pixels[i*(img->width)*3+j*3+2] = ((map->path).b)*255;
+			}
+		}
+	}
+
+	return 1;
 
 }
 

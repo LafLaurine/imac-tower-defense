@@ -2,6 +2,10 @@
 #define MONSTER
 
 #include "node.h"
+#define LIFE 1
+#define SPEED 1
+
+typedef enum{Monster_1, Monster_2} Monster_Type;
 
 typedef struct Monster {
 
@@ -18,8 +22,12 @@ typedef struct Monster {
 	char* type;
 	//point de vie
 	int pv;
+	//vitesse
+	int speed;
 	//qd il meurt
 	int money;
+	//type
+	Monster_Type type;
 }Monster;
 
 //liste monstre
