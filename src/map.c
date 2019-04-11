@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "file/Map.h"
+#include "../include/map.h"
 
 Map* init_map (char* path) {
 	if(path != NULL) {
