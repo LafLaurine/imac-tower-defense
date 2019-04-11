@@ -80,7 +80,7 @@ int main (int argc, char** argv)
 	// Openning the file
 	Image img;
 	// Creating variables
-	Image *loaded_img = imageRead(&img, "./images/carte_tower.ppm");
+	Image *loaded_img = read_image(&img, "./images/carte_tower.ppm");
 
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
@@ -199,6 +199,6 @@ int main (int argc, char** argv)
     /* Liberation des ressources associees a la SDL */ 
     SDL_Quit();
 
-    clear(loaded_img);
+    free_image(loaded_img);
     return EXIT_SUCCESS;
 }

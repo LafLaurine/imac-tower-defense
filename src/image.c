@@ -58,9 +58,9 @@ int allocate(Image *newImg, int width, int height)
 
 	//rvb point to Pixel structure 
 	//allocate memory
-	newImg->rvb = malloc(width*height * sizeof(Pixel));
+	newImg = malloc(sizeof(Image) + 3*height*width*sizeof(unsigned char));
 
-	if(!newImg->rvb)
+	if(!newImg)
 	{
 		errorMsg("Not enough memory");
 		return EXIT_FAILURE;
@@ -72,38 +72,30 @@ int allocate(Image *newImg, int width, int height)
 	return EXIT_SUCCESS;
 }
 
+//Read an image
+int read_image(Image *image, char *filename)
+{
+	int width;
+	int height;
+	FILE  *fp = fopen(filename, "rb");
+	if (!fp)
+		errorMsg("Cannot open file for reading");
+	readPPMHeader(fp, &width, &height);
+	allocate(image,width,height);  	
+ 	fclose(fp);
+ 	return EXIT_SUCCESS;
+}
+
 //free memory
-void clear(Image *img)
+void free_image(Image *img)
 {
 	//if the structure is not empty
 	if (img!=NULL)
 	{
-		//if the field is not empty
-		if(img->rvb!=NULL)
-		{
-			free((void *) img->rvb);
-			img->rvb = NULL;
-		}
-
 		img->width = 0;
 		img->height = 0;
+		free(img->path);
+		free(img);
 	}
 	
-}
-//Read an image
-int imageRead(Image *image, char *filename)
-{
-	int width, height, size;
-	FILE  *fp    = fopen(filename, "rb");
-	if (!fp)    errorMsg("Cannot open file for reading");
-	readPPMHeader(fp, &width, &height);
-	size = width * height * 3;
-
-	allocate(image,width,height);
-  	fread(image->rvb, sizeof(unsigned char), (size_t) size, fp);
-  	if (!image->rvb) errorMsg("Cannot allocate memory for new image");
-
-  	
- 	fclose(fp);
- 	return EXIT_SUCCESS;
 }
