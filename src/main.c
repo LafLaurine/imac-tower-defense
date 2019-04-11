@@ -10,7 +10,7 @@
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
 static const unsigned int WINDOW_HEIGHT = 500;
-static const char WINDOW_TITLE[] = "IMAC TOWER DEFENSE";
+static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 /* Espace fenetre virtuelle */
 static const float GL_VIEW_WIDTH = 50.;
 static const float GL_VIEW_HEIGHT = 50.;
@@ -43,16 +43,7 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
         -GL_VIEW_HEIGHT / 2, GL_VIEW_HEIGHT / 2);
 }
 
-int is_loaded(SDL_Surface *image)
-{
-    if(image == NULL) {
-        printf("%s\n", "Image not loaded");
-        SDL_Quit();
-        return 0;
-    }
-    printf("%s\n", "Image loaded");
-    return 1;
-}
+
 
 void drawQuad(GLuint texture) {
     glEnable(GL_TEXTURE_2D);
@@ -98,6 +89,7 @@ int main (int argc, char** argv)
 	SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
 
+    //IMG_Load(map->img->path)
 	SDL_Surface *image = IMG_Load("./images/carte_tower.ppm");
 
     is_loaded(image);

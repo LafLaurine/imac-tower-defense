@@ -1,9 +1,6 @@
 #ifndef IMG_H
 #define IMG_H
-#include<stdlib.h>
-#include <string.h>
-#include<stdio.h>
-#include <stdbool.h>
+
 
 typedef struct Image {
 	int width;
