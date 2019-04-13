@@ -82,7 +82,7 @@ int main (int argc, char** argv)
 	// Openning the file
 	Image img;
 	// Creating variables
-	Image *loaded_img = read_image(&img, "./images/carte_tower.ppm");
+	Image *loaded_img = read_image(&img, "./images/carte_tower_2.ppm");
 
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
@@ -101,7 +101,7 @@ int main (int argc, char** argv)
 
 
     //IMG_Load(map->img->path)
-	SDL_Surface *image = IMG_Load("./images/carte_tower.ppm");
+	SDL_Surface *image = IMG_Load("./images/carte_tower_2.ppm");
 
     is_loaded(image);
 
