@@ -44,6 +44,17 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 }
 
 
+int is_loaded(SDL_Surface *image)
+{
+    if(image == NULL) {
+        printf("%s\n", "Image not loaded");
+        SDL_Quit();
+        return 0;
+    }
+    printf("%s\n", "Image loaded");
+    return 1;
+}
+
 
 void drawQuad(GLuint texture) {
     glEnable(GL_TEXTURE_2D);
