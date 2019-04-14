@@ -2,6 +2,7 @@
 #define MONSTER_H__
 
 #include "node.h"
+#include "tower.h"
 #define WAVESIZE 10;
 
 
@@ -14,10 +15,9 @@ typedef struct Monster {
 	float y;
 	int direction;
     //son chemin = noeud
+    Node* node_prev;
 	//Noeud suivant (carte)
 	Node* node_next;
-	//type de monstre
-	char* type;
 	//point de vie
 	int pv;
 	//vitesse
@@ -26,6 +26,12 @@ typedef struct Monster {
 	int money;
 	//type
 	Monster_Type type;
+	int resist;
+	TowerType type_tower;
+	//monstre precedent
+	struct Monster* m_prev;
+	//monstre suivant
+	struct Monster* m_next;
 }Monster;
 
 //liste monstre
@@ -38,9 +44,9 @@ typedef struct List_Monster {
 
 }List_Monster;
 
-Monster* create_monster(Monster* m, int pv, MonsterResist resist, int speed, int money);
-Monster* set_position(Monster* monster, float x, float y);
+List_Monster* new_list();
+List_Monster* create_monster(Monster* m,TowerType type_t, int pv, int resist, Monster_Type type, int speed, int money, Node* head);
 //when monster is touched
-Monster* set_pv(Monster* m, int pv);
+void kill_monsters(List_Monster* list_monster);
 
 #endif

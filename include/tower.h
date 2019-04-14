@@ -2,7 +2,7 @@
 #define TOWER
 
 typedef enum{
-	LASER, ROCKET, ELECTRIC, WATER
+	LASER, ROCKET, YELLOW, BLUE
 }TowerType;
 
 
@@ -12,7 +12,7 @@ typedef struct Tower {
 	float x;
 	float y;
 	//Type de la tour
-	char* tower_type;
+	TowerType* type;
 	//cadence 
 	int rate;
     //puissance de tir de la tour
