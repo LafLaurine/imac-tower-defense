@@ -1,9 +1,9 @@
-#ifndef MONSTER
-#define MONSTER
+#ifndef MONSTER_H__
+#define MONSTER_H__
 
 #include "node.h"
-#define LIFE 1
-#define SPEED 1
+#define WAVESIZE 10;
+
 
 typedef enum{Monster_1, Monster_2} Monster_Type;
 
@@ -14,8 +14,6 @@ typedef struct Monster {
 	float y;
 	int direction;
     //son chemin = noeud
-	//Noeud précédent (carte)
-	Node* node_prev;
 	//Noeud suivant (carte)
 	Node* node_next;
 	//type de monstre
@@ -39,5 +37,10 @@ typedef struct List_Monster {
 	Monster *m_last; //pointeur vers le dernier element
 
 }List_Monster;
+
+Monster* create_monster(Monster* m, int pv, MonsterResist resist, int speed, int money);
+Monster* set_position(Monster* monster, float x, float y);
+//when monster is touched
+Monster* set_pv(Monster* m, int pv);
 
 #endif

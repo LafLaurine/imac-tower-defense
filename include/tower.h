@@ -1,6 +1,11 @@
 #ifndef TOWER
 #define TOWER
 
+typedef enum{
+	LASER, ROCKET, ELECTRIC, WATER
+}TowerType;
+
+
 typedef struct Tower {
 
 	//position

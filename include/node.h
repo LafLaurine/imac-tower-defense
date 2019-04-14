@@ -23,10 +23,10 @@ typedef struct List_Node {
 //Initialisation de la liste de noeuds
 List_Node* new_List_Node();
 //Ajouter un noeud à la liste de noeuds
-int add_node(List_Node*);
+int add_node(List_Node*, float x, float y);
 //Supprimer un noeud
-List_Node* remove_node(List_Node*, Node*);
+List_Node* remove_node(List_Node* current_node, Node* current);
 //Supprimer la liste de noeuds
-void free_all_node (List_Node*);
+void free_all_node (List_Node* list_node);
 
 #endif

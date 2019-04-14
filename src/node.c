@@ -1,0 +1,103 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "../include/node.h"
+
+
+/* Nvlle liste noeud */
+List_Node* new_List_Node() {
+	List_Node* new_lnode = malloc(sizeof(List_Node));
+	if (new_lnode != NULL) {
+		new_lnode->length = 0;
+		new_lnode->head = NULL;
+		new_lnode->tail = NULL;
+	}
+	return new_lnode;
+}
+
+/* Nv noeud dans liste */
+
+int add_node(List_Node*, float x, float y) {
+
+	// On vérifie si notre liste a été allouée
+	if (List_Node != NULL) {
+		//Création d'un nouveau noeud
+		Node* new_node = malloc(sizeof(Node)); 
+
+		// On vérifie si le malloc n'a pas échoué
+		if (new_node != NULL) {
+		
+			new_node->x = x; 
+			new_node->y = y; 
+			// Rajoute à la fin : dernier élement de la liste 
+			new_node->next = NULL; 
+
+			// Cas où notre liste est vide (pointeur vers fin de liste à  NULL)
+			if (new_node->tail == NULL) 
+				new_node->head = new_node; // Pointe la tête de la liste sur le nouveau noeud
+
+			// Cas où des éléments sont déjà présents dans la  liste
+			else 
+				new_node->tail->next = new_node;  // Relie le dernier de la liste au nouveau noeud
+
+			// Pointe la fin de la liste sur le nouveau noeud
+			new_node->tail = new_node; 
+
+			// On augmente de 1 la taille de la liste
+			new_node->length++; 
+		}
+		else {
+			printf("Not enough memory\n");
+			return 0;
+		}
+	}
+	else {
+		printf("Node list doesn't exist\n");
+		return 0;
+	}
+
+	return 1; 
+}
+
+
+List_Node* remove_node(List_Node* current_node, Node* current) {
+
+	// On vérifie si notre liste a été allouée
+	if (current_node != NULL) {
+
+		if(current != NULL) {
+
+			//Pointe la tête de la liste vers le noeud suivante
+			current_node->head = courant->next;
+
+			if(current_node->head == NULL) 
+				current_node->tail = NULL;
+			
+			free(current);
+			//Décrémente de un la taille de la liste
+			current_node->length--;
+
+		}
+		else
+			printf("%s\n","node doesn't existrs");
+	}
+	else 
+		printf("%s\n","couldn't find list");
+
+	// on retourne notre nouvelle liste
+	return current_node; 
+}
+
+
+void free_all_node (List_Node* list_node) {
+	//Si la liste n'est pas vide
+	if (list_node->length != 0) {
+
+		//Tant que la liste n'est pas vide
+		while (list_node->head != NULL) {
+			list_node = remove_node(list_node, list_node->head);
+		}
+		
+	}
+	free(list_node);
+}
