@@ -41,7 +41,9 @@ void readPPMHeader(FILE* fp, int *w, int *h)
 	}
 
 	ungetc(ch,fp);
-	fscanf(fp, "%d%d%d\n",w,h,&maxval);
+	if(fscanf(fp, "%d%d%d\n",w,h,&maxval) != 3){
+		errorMsg("No width / height / maxval");
+	}
 
 	if(maxval!=255)
 	{
