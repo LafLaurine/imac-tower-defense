@@ -6,6 +6,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "../include/image.h"
+#include "../include/map.h"
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
@@ -84,7 +85,9 @@ int main (int argc, char** argv)
 	// Creating variables
 	read_image(img, "./images/carte_tower_2.ppm");
 
-    
+    // Check map
+    Map* map = init_map("./data/ITDMap.itd");
+
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
         fprintf(

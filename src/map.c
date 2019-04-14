@@ -6,33 +6,27 @@
 
 Map* init_map (char* path) {
 	if(path != NULL) {
-	//Alloue la memoire
+		//Alloue la memoire
 		Map* map = malloc(sizeof(Map));
 		if(map != NULL) {
-			if(verif_map(map, path) == 0) {
+			if(verificationMap(map, path) == 0) {
 				fprintf(stderr, "Unvalid map\n");
 				return NULL;
+			} else {
+				fprintf(stderr, "Valid map !\n");
+				return map;
 			}
-			return map;
-
-		}
-		else {
+		} else {
 			fprintf(stderr, "Coudln't allocate the map\n");
 			return NULL;
 		}
-
-	}
-	else {
+	} else {
 		fprintf(stderr, "Map not found\n");
 		return NULL;
-	}
-	
-	return 1;	
-
+	}	
 }
 
 int verificationMap(Map* map, char* map_itd){ 
-
 	FILE* itd = NULL;
 	itd = fopen(map_itd, "r");	
 
@@ -73,6 +67,7 @@ int verificationMap(Map* map, char* map_itd){
 			}	
 		}
 	}
+	return 1;
 }
 
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 

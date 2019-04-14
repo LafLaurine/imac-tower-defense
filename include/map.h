@@ -30,9 +30,13 @@ typedef struct Map {
 
 }Map;
 
-//Initialisation de la map
+//Initialisation de la carte
 Map* init_map (char* path);
 //Vérification de la carte
-int verif_map(Map*, char* itd);
+int verificationMap(Map* map, char* map_itd);
+//Change couleur en fonction de l'image
+int change_path_color(Image* img, unsigned char* pixels, Map* map);
+//Libere la carte
+void free_map (Map* map);
 
 #endif
