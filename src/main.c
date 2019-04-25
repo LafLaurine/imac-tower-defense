@@ -89,7 +89,7 @@ int main (int argc, char** argv)
 
     // Check map
     Map* map = init_map("./data/map01.itd");
-
+/*
     //Create NODE
     List_Node* list_node = new_List_Node();
     add_node(list_node, 10, 10);
@@ -103,7 +103,7 @@ int main (int argc, char** argv)
     Tower* t = malloc(sizeof(Tower));
     t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
     printf("%d", t->range);
-
+*/
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
         fprintf(
