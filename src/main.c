@@ -99,6 +99,11 @@ int main (int argc, char** argv)
     m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
     printf("%d", m->pv);
 
+    // Create tower
+    Tower* t = malloc(sizeof(Tower));
+    t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
+    printf("%d", t->range);
+
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
         fprintf(

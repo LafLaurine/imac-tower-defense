@@ -1,18 +1,19 @@
 #ifndef TOWER
 #define TOWER
 
+#include "node.h"
+
 typedef enum{
 	LASER, ROCKET, YELLOW, BLUE
 }TowerType;
 
 
 typedef struct Tower {
-
 	//position
 	float x;
 	float y;
 	//Type de la tour
-	TowerType* type;
+	TowerType type;
 	//cadence 
 	int rate;
     //puissance de tir de la tour
@@ -21,6 +22,28 @@ typedef struct Tower {
 	int range;
 	//cout de la tour
 	int cost;
-}Tower;
+    //son chemin = noeud
+    Node* node_prev;
+	//Noeud suivant (carte)
+	Node* node_next;
+	//monstre precedent
+	struct Tower* t_prev;
+	//monstre suivant
+	struct Tower* t_next;
+} Tower;
+
+//liste tour
+typedef struct List_Tower {
+	//Taille de la liste
+	size_t length;
+	Tower *t_first; //pointeur vers le premier element
+	Tower *t_last; //pointeur vers le dernier element
+
+} List_Tower;
+
+List_Tower* new_tower_list();
+Tower* create_tower(Tower* t, TowerType type, float x, float y, int rate, int power, int range, int cost, Node* head);
+void add_tower_list(Tower* t, List_Tower* list_tower);
+void destroy_tower(List_Tower* list_tower);
 
 #endif
