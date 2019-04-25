@@ -6,8 +6,8 @@ List_Monster* new_list() {
 	List_Monster *list_monster = malloc(sizeof(List_Monster));
 	if (list_monster != NULL) {
 		list_monster->length = 0;
-		list_monster->head = NULL;
-		list_monster->tail = NULL;
+		list_monster->first = NULL;
+		list_monster->last = NULL;
 	}
 	else {
 		printf("%s\n", "Not enough memory");
@@ -30,20 +30,20 @@ List_Monster* create_monster(Monster* m,TowerType type_t, int pv, int resist, Mo
 		m->y = head->y; //position y du noeud
 		m->node_prev = head; //Pointeur vers le premier noeud
 		m->node_next = head->next; //Pointeur vers le second noeud
-		m->p_next = NULL; 
-		if (list_monster->tail == NULL) {
+		m->node_next = NULL; 
+		if (list_monster->last == NULL) {
 				// Pointe la tête de la liste sur le nouveau monstre
-				list_monster->head = m; 
+				list_monster->first = m; 
 				m->m_prev = NULL;
 			}
 			// Cas où des éléments sont déjà présents dans la  liste
 			else {
-				m->m_prev = list_monster->tail; 
-				list_monster->tail->next = m;  
+				m->m_prev = list_monster->last; 
+				list_monster->last->next = m;  
 			}
 			
 			// Pointe la fin de la liste sur le nouveau monstre
-			list_monster->tail = m; 
+			list_monster->last = m; 
 
 			// On augmente de 1 la taille de la liste
 			list_monster->length++; 
