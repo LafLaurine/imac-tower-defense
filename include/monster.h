@@ -34,7 +34,9 @@ typedef struct Monster {
 	struct Monster* m_next;
 }Monster;
 
-//liste monstre
+
+
+//liste monstre = wave
 typedef struct List_Monster {
 
 	//Taille de la liste

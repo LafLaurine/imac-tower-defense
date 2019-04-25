@@ -17,7 +17,7 @@ void readPPMHeader(FILE* fp, int *w, int *h)
 	int maxval;
 
 	//check the PPM type
-	if(fscanf(fp, "P%c\n",&ch)!=1 || ch!='6')
+	if(fscanf(fp, "P%c\n",&ch)!=1 || ch!='3')
 	{
 		errorMsg("Not PPM raw format");
 	}
