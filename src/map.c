@@ -33,129 +33,304 @@ int map_verification(Map* map, char* map_itd){
 		fprintf(stderr, "Couldn't open file\n");
 		return 0;
 	} else {
-		char* check_itd = (char*)malloc(20*sizeof(char));
-		if(fscanf(itd, "%s", check_itd) == 1) {
-			if(strcmp("@ITD", check_itd) == 0){
 		
-			if(fscanf(itd, "%s", check_itd) == 1) {
-				//Vérifie qu'il s'agit bien de carte
-				if(strcmp("carte", check_itd) == 0) {
+		// PREMIERE LIGNE
+		char* type = (char*)malloc(20*sizeof(char));
+		char ligne[100];
+		int numb;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d", type, &numb) == 2){
+				printf("%s %d", type, numb);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
 
-					//Alloue de la mémoire pour une image
-					Image* new_img = (Image*)malloc(sizeof(Image));
-					char* path = (char*)malloc(50*sizeof(char));
-						
-					//Récupère le chemin vers l'image ppm
-					if(fscanf(itd, "%s\n", path) == 1){
-						new_img->path = path;
-						read_image(new_img, new_img->path);
-						map->img = new_img;	
+		// DEUXIEME LIGNE
+		int comments;
+		comments = getc(itd);
+		while (comments == '#'){
+			while(getc(itd) != '\n');
+			comments = getc(itd);
+		}
+		ungetc(comments, itd);
 
-						//Récupère chemin
-						if(fscanf(itd, "%s", check_itd) == 1) {
-							//Vérifie qu'il s'agit bien du chemin
-							if(strcmp("chemin", check_itd) == 0) {
-								int r, v, b;
-								//Récupère la couleur du chemin
-								if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
-									(map->path).r = r/255.0;
-									(map->path).g = v/255.0;
-							 		(map->path).b = b/255.0;
+		// TROISIEME LIGNE
+		char* map = (char*)malloc(20*sizeof(char));
+		char* path = (char*)malloc(20*sizeof(char));
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %s", map, path) == 2){
+				printf("%s %s", map, path);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// QUATRIEME LIGNE
+		char* energie = (char*)malloc(20*sizeof(char));
+		int energie_val;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d", energie, &energie_val) == 2){
+				printf("%s %d", energie, energie_val);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// CINQUIEME LIGNE
+		char* chemin = (char*)malloc(20*sizeof(char));
+		int chemin_r; int chemin_g; int chemin_b;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d %d %d", chemin, &chemin_r, &chemin_g, &chemin_b) == 4){
+				printf("%s %d %d %d", chemin, chemin_r, chemin_g, chemin_b);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// SIXIEME LIGNE
+		char* noeud = (char*)malloc(20*sizeof(char));
+		int noeud_r; int noeud_g; int noeud_b;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d %d %d", noeud, &noeud_r, &noeud_g, &noeud_b) == 4){
+				printf("%s %d %d %d", noeud, noeud_r, noeud_g, noeud_b);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// SIXIEME LIGNE
+		char* construct = (char*)malloc(20*sizeof(char));
+		int construct_r; int construct_g; int construct_b;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d %d %d", construct, &construct_r, &construct_g, &construct_b) == 4){
+				printf("%s %d %d %d", construct, construct_r, construct_g, construct_b);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// SEPTIEME LIGNE
+		char* in = (char*)malloc(20*sizeof(char));
+		int in_r; int in_g; int in_b;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d %d %d", in, &in_r, &in_g, &in_b) == 4){
+				printf("%s %d %d %d", in, in_r, in_g, in_g);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// HUITIEME LIGNE
+		char* out = (char*)malloc(20*sizeof(char));
+		int out_r; int out_g; int out_b;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%s %d %d %d", out, &out_r, &out_g, &out_b) == 4){
+				printf("%s %d %d %d", out, out_r, out_g, out_g);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+		// NEUVIEME LIGNE
+		int nb_node;
+		if(fgets(ligne, 99, itd) != NULL){			
+			if(sscanf(ligne,"%d", &nb_node) == 1){
+				printf("%d", nb_node);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		} else {
+			printf("%s", "NULLLLL ");
+			exit(EXIT_FAILURE);
+		}
+
+
+		// RESTE DES LIGNES
+		int node_indice;
+		int node_type;
+		int node_width;
+		int node_height;
+		//successeurs
+		while(fgets(ligne, 99, itd) != NULL){
+			if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_width, &node_height) == 4){
+				printf("%d %d %d %d", node_indice, node_type, node_width, node_height);
+			} else {
+				printf("%s", "pas cool ");
+				exit(EXIT_FAILURE);
+			}
+		}
+		
+
+
+/*
+			if(strcmp("@ITD", nom) == 0){
+
+				char* check_itd2 = (char*)malloc(20*sizeof(char));
+		
+				if(fscanf(itd, "%s", check_itd2) == 1) {
+					//Vérifie qu'il s'agit bien de carte
+					if(strcmp("carte", check_itd2) == 0) {
+
+						//Alloue de la mémoire pour une image
+						Image* new_img = (Image*)malloc(sizeof(Image));
+						char* path = (char*)malloc(50*sizeof(char));
+							
+						//Récupère le chemin vers l'image ppm
+						if(fscanf(itd, "%s\n", path) == 1){
+							new_img->path = path;
+							read_image(new_img, new_img->path);
+							map->img = new_img;	
+
+							//Récupère chemin
+							if(fscanf(itd, "%s", check_itd) == 1) {
+								//Vérifie qu'il s'agit bien du chemin
+								if(strcmp("chemin", check_itd) == 0) {
+									int r, v, b;
+									//Récupère la couleur du chemin
+									if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
+										(map->path).r = r/255.0;
+										(map->path).g = v/255.0;
+										(map->path).b = b/255.0;
+									}
 								}
 							}
-						}
 
-						if(fscanf(itd, "%s", check_itd) == 1) {
-							//Vérifie qu'il s'agit bien du chemin
-							if(strcmp("noeud", check_itd) == 0) {
-								int r, v, b;
-								//Récupère la couleur du chemin
-								if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
-									(map->node).r = r/255.0;
-									(map->node).g = v/255.0;
-									(map->node).b = b/255.0;
+							if(fscanf(itd, "%s", check_itd) == 1) {
+								//Vérifie qu'il s'agit bien du chemin
+								if(strcmp("noeud", check_itd) == 0) {
+									int r, v, b;
+									//Récupère la couleur du chemin
+									if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
+										(map->node).r = r/255.0;
+										(map->node).g = v/255.0;
+										(map->node).b = b/255.0;
+									}
 								}
 							}
-						}
 
-						if(fscanf(itd, "%s", check_itd) == 1) {
-							//Vérifie qu'il s'agit bien du chemin
-							if(strcmp("construct", check_itd) == 0) {
-								int r, v, b;
-								//Récupère la couleur du chemin
-								if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
-									List_Node* list_pixels = new_List_Node();
-									map->list_pixels = list_pixels;
-									(map->construct).r = r/255.0;
-									(map->construct).g = v/255.0;
-									(map->construct).b = b/255.0;
+							
+
+							if(fscanf(itd, "%s", check_itd) == 1) {
+								//Vérifie qu'il s'agit bien du chemin
+								if(strcmp("construct", check_itd) == 0) {
+									int r, v, b;
+									//Récupère la couleur du chemin
+									if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
+										List_Node* list_pixels = new_List_Node();
+										map->list_pixels = list_pixels;
+										(map->construct).r = r/255.0;
+										(map->construct).g = v/255.0;
+										(map->construct).b = b/255.0;
+									}
 								}
 							}
-						}
 
-						if(fscanf(itd, "%s", check_itd) == 1) {
-							//Vérifie qu'il s'agit bien du chemin
-							if(strcmp("in", check_itd) == 0) {
-								int r, v, b;
-								//Récupère la couleur du chemin
-								if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
-									(map->in).r = r/255.0;
-									(map->in).g = v/255.0;
-									(map->in).b = b/255.0;
+							if(fscanf(itd, "%s", check_itd) == 1) {
+								//Vérifie qu'il s'agit bien du chemin
+								if(strcmp("in", check_itd) == 0) {
+									int r, v, b;
+									//Récupère la couleur du chemin
+									if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
+										(map->in).r = r/255.0;
+										(map->in).g = v/255.0;
+										(map->in).b = b/255.0;
+									}
 								}
 							}
-						}
 
-						if(fscanf(itd, "%s", check_itd) == 1) {
-							//Vérifie qu'il s'agit bien du chemin
-							if(strcmp("out", check_itd) == 0) {
-								int r, v, b;
-								//Récupère la couleur du chemin
-								if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
-									(map->out).r = r/255.0;
-									(map->out).g = v/255.0;
-									(map->out).b = b/255.0;
+							if(fscanf(itd, "%s", check_itd) == 1) {
+								//Vérifie qu'il s'agit bien du chemin
+								if(strcmp("out", check_itd) == 0) {
+									int r, v, b;
+									//Récupère la couleur du chemin
+									if(fscanf(itd, "%d %d %d\n", &r, &v, &b) == 3){
+										(map->out).r = r/255.0;
+										(map->out).g = v/255.0;
+										(map->out).b = b/255.0;
+									}
 								}
 							}
-						}
 
-						if(fscanf(itd, "%d\n", &(map->number_node)) == 1){
-							int i, x, y;
-							//Création d'une nouvelle liste de noeuds
-							map->list_node = new_List_Node();
-							if(map->list_node != NULL){
-								for(i=0; i < (map->number_node); i++){
-								//Récupére les coordonnées
-									if(fscanf(itd, "%d %d\n", &x, &y) == 2){
-									//Vérifie que le noeud se trouve dans l'image
-										if(x <= map->img->width && x >= 0 && y <= map->img->height && y >= 0){
-											//Vérifie que le noeud à bien été ajouté à la liste de noeud
-											if(add_node(map->list_node, x, y) != 1) {
-												fprintf(stderr, "Not integer");
+							if(fscanf(itd, "%d\n", &(map->number_node)) == 1){
+								int i, x, y;
+								//Création d'une nouvelle liste de noeuds
+								map->list_node = new_List_Node();
+								if(map->list_node != NULL){
+									for(i=0; i < (map->number_node); i++){
+									//Récupére les coordonnées
+										if(fscanf(itd, "%d %d\n", &x, &y) == 2){
+										//Vérifie que le noeud se trouve dans l'image
+											if(x <= map->img->width && x >= 0 && y <= map->img->height && y >= 0){
+												//Vérifie que le noeud à bien été ajouté à la liste de noeud
+												if(add_node(map->list_node, x, y) != 1) {
+													fprintf(stderr, "Not integer");
+													return 0;
+												}
+											}
+											else{
+												fprintf(stderr, "Cannot find node on map");
 												return 0;
 											}
 										}
-										else{
-											fprintf(stderr, "Cannot find node on map");
+										else {
+											fprintf(stderr, "Wrong coordonate");
 											return 0;
 										}
 									}
-									else {
-										fprintf(stderr, "Wrong coordonate");
-										return 0;
-									}
 								}
 							}
+							else {
+								fprintf(stderr, "Not node number");
+								return 0;
+							}
+						} else {
+							fprintf(stderr, "No ppm");
 						}
-						else {
-							fprintf(stderr, "Not node number");
-							return 0;
-						}
+					} else {
+						printf("%s", check_itd2);
+						fprintf(stderr, "No map again");
 					}
-				}	
-			}
+				} else {
+					fprintf(stderr, "Not map");
+				}
+		} else {
+			fprintf(stderr, "Not itd");
 		}
-	}
+		*/
 }
 	return 1;
 }
