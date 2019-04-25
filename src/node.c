@@ -56,6 +56,7 @@ int add_node(List_Node* list_node, float x, float y) {
 		return 0;
 	}
 
+	printf("Node added\n");
 	return 1; 
 }
 

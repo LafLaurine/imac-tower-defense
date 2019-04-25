@@ -5,7 +5,7 @@
 #include "tower.h"
 #define WAVESIZE 10;
 
-
+// enum type monster
 typedef enum{Monster_1, Monster_2} Monster_Type;
 
 typedef struct Monster {
@@ -27,7 +27,7 @@ typedef struct Monster {
 	//type
 	Monster_Type type;
 	int resist;
-	TowerType type_tower;
+	//TowerType type_tower;
 	//monstre precedent
 	struct Monster* m_prev;
 	//monstre suivant
@@ -46,8 +46,10 @@ typedef struct List_Monster {
 
 }List_Monster;
 
+
 List_Monster* new_list();
-List_Monster* create_monster(Monster* m,TowerType type_t, int pv, int resist, Monster_Type type, int speed, int money, Node* head);
+Monster* create_monster(Monster* m, int pv, int resist, Monster_Type type, int speed, int money, Node* head);
+void add_to_list(Monster* m, List_Monster* list_monster);
 //when monster is touched
 void kill_monsters(List_Monster* list_monster);
 

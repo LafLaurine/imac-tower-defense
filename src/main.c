@@ -7,6 +7,8 @@
 #include <GL/glu.h>
 #include "../include/image.h"
 #include "../include/map.h"
+#include "../include/monster.h"
+#include "../include/node.h"
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
@@ -87,6 +89,15 @@ int main (int argc, char** argv)
 
     // Check map
     Map* map = init_map("./data/map01.itd");
+
+    //Create NODE
+    List_Node* list_node = new_List_Node();
+    add_node(list_node, 10, 10);
+
+    // Create monster
+    Monster* m = malloc(sizeof(Monster));
+    m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
+    printf("%d", m->pv);
 
 	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
