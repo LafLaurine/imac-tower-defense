@@ -17,10 +17,10 @@ List_Node* new_List_Node() {
 
 /* Nv noeud dans liste */
 
-int add_node(List_Node*, float x, float y) {
+int add_node(List_Node* list_node, float x, float y) {
 
 	// On vérifie si notre liste a été allouée
-	if (List_Node != NULL) {
+	if (list_node!= NULL) {
 		//Création d'un nouveau noeud
 		Node* new_node = malloc(sizeof(Node)); 
 
@@ -33,18 +33,18 @@ int add_node(List_Node*, float x, float y) {
 			new_node->next = NULL; 
 
 			// Cas où notre liste est vide (pointeur vers fin de liste à  NULL)
-			if (new_node->tail == NULL) 
-				new_node->head = new_node; // Pointe la tête de la liste sur le nouveau noeud
+			if (list_node->tail == NULL) 
+				list_node->head = new_node; // Pointe la tête de la liste sur le nouveau noeud
 
 			// Cas où des éléments sont déjà présents dans la  liste
 			else 
-				new_node->tail->next = new_node;  // Relie le dernier de la liste au nouveau noeud
+				list_node->tail->next = new_node;  // Relie le dernier de la liste au nouveau noeud
 
 			// Pointe la fin de la liste sur le nouveau noeud
-			new_node->tail = new_node; 
+			list_node->tail = new_node; 
 
 			// On augmente de 1 la taille de la liste
-			new_node->length++; 
+			list_node->length++; 
 		}
 		else {
 			printf("Not enough memory\n");
@@ -68,7 +68,7 @@ List_Node* remove_node(List_Node* current_node, Node* current) {
 		if(current != NULL) {
 
 			//Pointe la tête de la liste vers le noeud suivante
-			current_node->head = courant->next;
+			current_node->head = current->next;
 
 			if(current_node->head == NULL) 
 				current_node->tail = NULL;

@@ -1,9 +1,9 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "../include/colors.h"
-#include "../include/image.h"
-#include "../include/node.h"
+#include "colors.h"
+#include "image.h"
+#include "node.h"
 
 typedef struct Map {
 
@@ -23,8 +23,6 @@ typedef struct Map {
 	Color3f out;
 	//Nombre de noeud
 	int number_node;
-	//energie
-	int energie;
 	//Liste des noeuds
 	List_Node* list_node;
 
@@ -33,7 +31,7 @@ typedef struct Map {
 //Initialisation de la carte
 Map* init_map (char* path);
 //Vérification de la carte
-int verificationMap(Map* map, char* map_itd);
+int map_verification(Map* map, char* map_itd);
 //Change couleur en fonction de l'image
 int change_path_color(Image* img, unsigned char* pixels, Map* map);
 //Libere la carte

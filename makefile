@@ -6,10 +6,10 @@ BIN		=	./bin/
 INCL	=	./include/
 
 
-$(BIN)itd: $(SRC)main.o $(SRC)image.o $(SRC)map.o
+$(BIN)itd: $(SRC)main.o $(SRC)image.o $(SRC)map.o $(SRC)node.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-main.o: $(SRC)main.c $(INCL)image.h $(INCL)map.h
+main.o: $(SRC)main.c $(INCL)image.h $(INCL)map.h $(INCL)node.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 clean:
