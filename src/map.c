@@ -58,16 +58,15 @@ int map_verification(Map* map, char* map_itd){
 
 		// TROISIEME LIGNE : chemin carte
 		//Alloue de la mémoire pour une image
-		Image* new_img = (Image*)malloc(sizeof(Image));
-		char* carte = (char*)malloc(20*sizeof(char));
-		char* path = (char*)malloc(50*sizeof(char));
+		char* carte = (char*)malloc(sizeof(char));
+		char* path = (char*)malloc(sizeof(char));
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %s", carte, path) == 2)){
+				Image* new_img = (Image*)malloc(sizeof(Image));
+				new_img = read_image(path);
 				new_img->path = path;
-				printf("%s\n", new_img->path);
-				read_image(new_img, new_img->path);
 				map->img = new_img;
-				printf("New image width :%d\n",new_img->width );
+				printf("New image width :%d\n",map->img->width);
 
 		} else {
 			printf("%s", "Unreadable file (at : map path)");
@@ -83,7 +82,7 @@ int map_verification(Map* map, char* map_itd){
 
 
 		// CINQUIEME LIGNE : couleur chemin
-		char* chemin = (char*)malloc(20*sizeof(char));
+		char* chemin = (char*)malloc(sizeof(char));
 		int chemin_r; int chemin_g; int chemin_b;
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", chemin, &chemin_r, &chemin_g, &chemin_b) == 4)){
@@ -235,31 +234,30 @@ int map_verification(Map* map, char* map_itd){
 		while(fgets(ligne, 99, itd) != NULL){
 				map->list_node = new_List_Node();
 				if(map->list_node != NULL){
-					for(int i =0; i < (map->number_node); i++){
+					for(int i = 0; i < (map->number_node); i++){
+					//Récupére les coordonnées
 						if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
-
 						//Vérifie que le noeud se trouve dans l'image
-							if((node_x <= map->img->width && node_x >= 0) && (node_y <= map->img->height && node_y >= 0)){
+							if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
 							//Vérifie que le noeud à bien été ajouté à la liste de noeud
-								/*if(add_node(map->list_node, node_x, node_y) != 1) {
-									fprintf(stderr, "Not integer");
+								if(add_node(map->list_node, node_x, node_y) != 1) {
+									fprintf(stderr, "Nodes not added");
 									exit(EXIT_FAILURE);
 								}
-							}else {
+							} else{
 								fprintf(stderr, "Cannot find node on map");
 								exit(EXIT_FAILURE);
-							}*/
+							}
+						}
+						else {
+							printf("%s", "Unreadable file (at : node)");
+							exit(EXIT_FAILURE);
 						}
 					}
 				}
-				printf("%d", map->img->width);
-
-			} else {
-				printf("%s", "Unreadable file (at : node)");
-				exit(EXIT_FAILURE);
-			}
 			compteur++;
 		}
+
 		
 		if(compteur > nb_node || compteur < nb_node){
 			printf("%s", "pas le bon nombre de node");
