@@ -82,11 +82,6 @@ GLuint texture_image;
 int main (int argc, char** argv)
 {
 	
-	// Openning the file
-	Image* img = NULL;
-	// Creating variables
-	read_image(img, "./images/map01.ppm");
-
     // Check map
     Map* map = init_map("./data/map01.itd");
 /*
@@ -221,7 +216,5 @@ int main (int argc, char** argv)
 
     /* Liberation des ressources associees a la SDL */ 
     SDL_Quit();
-
-    free_image(img);
     return EXIT_SUCCESS;
 }

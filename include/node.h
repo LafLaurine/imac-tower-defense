@@ -2,12 +2,17 @@
 #define NODE_H
 #include <stdio.h>
 #include <stdlib.h>
+#define NB_MIN_NOEUDS 2
+
+typedef enum{In, Out, Twist, Intersect} Node_Type;
 
 typedef struct Node {
 	//Coordonée x du noeud
 	float x;
 	//Coordonnée y du noeud
 	float y;
+	//type
+	Node_Type type;
 	//Noeud suivant
 	struct Node *next;
 }Node;

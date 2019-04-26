@@ -51,8 +51,17 @@ void readPPMHeader(FILE* fp, int *w, int *h)
 	}
 }
 
-int allocate(Image *newImg, int width, int height)
+//Read an image
+int read_image(Image *image, char *filename)
 {
+	int width;
+	int height;
+	FILE *fp = fopen(filename, "rb");
+	if (!fp)
+		errorMsg("Cannot open file for reading");
+	readPPMHeader(fp, &width, &height);
+	printf("%d\n",width);
+
 	if (width<=0 || height <=0)
 	{
 		errorMsg("Negative size");
@@ -60,30 +69,18 @@ int allocate(Image *newImg, int width, int height)
 
 	//rvb point to Pixel structure 
 	//allocate memory
-	newImg = malloc(sizeof(Image) + 3*height*width*sizeof(unsigned char));
+	image = malloc(sizeof(Image) + 3*height*width*sizeof(unsigned char));
 
-	if(!newImg)
+	if(!image)
 	{
 		errorMsg("Not enough memory");
 		return EXIT_FAILURE;
 	}
 
 	//Affect values to the structure
-	newImg->width = width;
-	newImg->height = height;
-	return EXIT_SUCCESS;
-}
-
-//Read an image
-int read_image(Image *image, char *filename)
-{
-	int width;
-	int height;
-	FILE  *fp = fopen(filename, "rb");
-	if (!fp)
-		errorMsg("Cannot open file for reading");
-	readPPMHeader(fp, &width, &height);
-	allocate(image,width,height);  	
+	image->width = width;
+	image->height = height;
+	printf("image width and height%d\n %d\n", image->width, image->height);
  	fclose(fp);
  	return EXIT_SUCCESS;
 }

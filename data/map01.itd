@@ -1,6 +1,6 @@
 @ITD 1
 # premiere ligne de commentaire
-carte images/map01.ppm
+carte ./images/map01.ppm
 energie 100
 chemin 255 255 255
 noeud 0 0 0
