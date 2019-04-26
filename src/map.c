@@ -84,9 +84,21 @@ int map_verification(Map* map, char* map_itd){
 		int chemin_r; int chemin_g; int chemin_b;
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", chemin, &chemin_r, &chemin_g, &chemin_b) == 4)){
-			(map->path).r = chemin_r/255.0;
-			(map->path).g = chemin_g/255.0;
-			(map->path).b = chemin_b/255.0;
+			if(chemin_r < 0 || chemin_r > 255) {
+				fprintf(stderr, "Red value from path out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(chemin_g < 0 || chemin_g > 255) {
+				fprintf(stderr, "Green value from path out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(chemin_b < 0 || chemin_b > 255) {
+				fprintf(stderr, "Blue value from path out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			(map->path).r = chemin_r;
+			(map->path).g = chemin_g;
+			(map->path).b = chemin_b;
 		} else {
 			printf("%s", "Unreadable file (at : path color)");
 			exit(EXIT_FAILURE);
@@ -98,9 +110,21 @@ int map_verification(Map* map, char* map_itd){
 		int noeud_r; int noeud_g; int noeud_b;
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", noeud, &noeud_r, &noeud_g, &noeud_b) == 4)){
-			(map->node).r = noeud_r/255.0;
-			(map->node).g = noeud_g/255.0;
-			(map->node).b = noeud_b/255.0;
+			if(noeud_r < 0 || noeud_r > 255) {
+				fprintf(stderr, "Red value from node out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(noeud_g < 0 || noeud_g > 255) {
+				fprintf(stderr, "Green value from node out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(noeud_b < 0 || noeud_b > 255) {
+				fprintf(stderr, "Blue value from node out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			(map->node).r = noeud_r;
+			(map->node).g = noeud_g;
+			(map->node).b = noeud_b;
 		} else {
 			printf("%s", "Unreadable file (at : node color)");
 			exit(EXIT_FAILURE);
@@ -114,9 +138,21 @@ int map_verification(Map* map, char* map_itd){
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", construct, &construct_r, &construct_g, &construct_b) == 4)){
 			List_Node* list_pixels = new_List_Node();
 			map->list_pixels = list_pixels;
-			(map->construct).r = construct_r/255.0;
-			(map->construct).g = construct_g/255.0;
-			(map->construct).b = construct_b/255.0;
+			if(construct_r < 0 || construct_r > 255) {
+				fprintf(stderr, "Red value from construct out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(construct_g < 0 || construct_g > 255) {
+				fprintf(stderr, "Green value from construct out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(construct_b < 0 || construct_b > 255) {
+				fprintf(stderr, "Blue value from construct out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			(map->construct).r = construct_r;
+			(map->construct).g = construct_g;
+			(map->construct).b = construct_b;
 		} else {
 			printf("%s", "Unreadable file (at : construct color)");
 			exit(EXIT_FAILURE);
@@ -128,9 +164,21 @@ int map_verification(Map* map, char* map_itd){
 		int in_r; int in_g; int in_b;
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", in, &in_r, &in_g, &in_b) == 4)){
-			(map->in).r = in_r/255.0;
-			(map->in).g = in_g/255.0;
-			(map->in).b = in_b/255.0;
+			if(in_r < 0 || in_r > 255) {
+				fprintf(stderr, "Red value from in out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(in_g < 0 || in_g > 255) {
+				fprintf(stderr, "Green value from in out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(in_b < 0 || in_b > 255) {
+				fprintf(stderr, "Blue value from in out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			(map->in).r = in_r;
+			(map->in).g = in_g;
+			(map->in).b = in_b;
 		} else {
 			printf("%s", "Unreadable file (at : in colo)");
 			exit(EXIT_FAILURE);
@@ -141,10 +189,22 @@ int map_verification(Map* map, char* map_itd){
 		char* out = (char*)malloc(20*sizeof(char));
 		int out_r; int out_g; int out_b;
 
-		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", out, &out_r, &out_g, &out_b) == 4)){			
-			(map->out).r = out_r/255.0;
-			(map->out).g = out_g/255.0;
-			(map->out).b = out_b/255.0;
+		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", out, &out_r, &out_g, &out_b) == 4)){
+			if(out_r < 0 || out_r > 255) {
+				fprintf(stderr, "Red value from out, out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(out_g < 0 || out_g > 255) {
+				fprintf(stderr, "Green value from out, out of range\n");
+				exit(EXIT_FAILURE);
+			}
+			if(out_b < 0 || ou_b > 255) {
+				fprintf(stderr, "Blue value from out, out of range\n");
+				exit(EXIT_FAILURE);
+			}	
+			(map->out).r = out_r;
+			(map->out).g = out_g;
+			(map->out).b = out_b;
 		} else {
 			printf("%s", "Unreadable file (at : out color)");
 			exit(EXIT_FAILURE);
@@ -171,22 +231,24 @@ int map_verification(Map* map, char* map_itd){
 		// + int successeurs à ajouter
 
 		while(fgets(ligne, 99, itd) != NULL){
-			if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
 				map->list_node = new_List_Node();
 
 				if(map->list_node != NULL){
-					//Vérifie que le noeud se trouve dans l'image
-					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
-						//Vérifie que le noeud à bien été ajouté à la liste de noeud
-						if(add_node(map->list_node, node_x, node_y) != 1) {
-							fprintf(stderr, "Not integer");
-							return 0;
+					for(int i =0; i < (map->number_node); i++){
+						if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
+						//Vérifie que le noeud se trouve dans l'image
+							if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
+							//Vérifie que le noeud à bien été ajouté à la liste de noeud
+								if(add_node(map->list_node, node_x, node_y) != 1) {
+									fprintf(stderr, "Not integer");
+									exit(EXIT_FAILURE);
+								}
+							}else {
+								fprintf(stderr, "Cannot find node on map");
+								exit(EXIT_FAILURE);
+							}
 						}
-					} else {
-						fprintf(stderr, "Cannot find node on map");
-						return 0;
 					}
-				}
 				printf("%d %d %d %d", node_indice, node_type, node_x, node_y);
 			} else {
 				printf("%s", "Unreadable file (at : node)");
@@ -199,6 +261,9 @@ int map_verification(Map* map, char* map_itd){
 			printf("%s", "pas le bon nombre de node");
 			exit(EXIT_FAILURE);
 		}
+
+		fflush(itd);
+		fclose(itd);
 
 
 /*
