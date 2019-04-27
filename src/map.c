@@ -234,26 +234,24 @@ int map_verification(Map* map, char* map_itd){
 		while(fgets(ligne, 99, itd) != NULL){
 				map->list_node = new_List_Node();
 				if(map->list_node != NULL){
-					for(int i = 0; i < (map->number_node); i++){
 					//Récupére les coordonnées
-						if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
-						//Vérifie que le noeud se trouve dans l'image
-							if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
-							//Vérifie que le noeud à bien été ajouté à la liste de noeud
-								if(add_node(map->list_node, node_x, node_y) != 1) {
-									fprintf(stderr, "Nodes not added");
-									exit(EXIT_FAILURE);
-								}
-							} else{
-								fprintf(stderr, "Cannot find node on map");
+					if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
+					//Vérifie que le noeud se trouve dans l'image
+						if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
+						//Vérifie que le noeud à bien été ajouté à la liste de noeud
+							if(add_node(map->list_node, node_x, node_y) != 1) {
+								fprintf(stderr, "Nodes not added");
 								exit(EXIT_FAILURE);
 							}
-						}
-						else {
-							printf("%s", "Unreadable file (at : node)");
+						} else{
+							fprintf(stderr, "Cannot find node on map");
 							exit(EXIT_FAILURE);
 						}
 					}
+					else {
+						printf("%s", "Unreadable file (at : node)");
+						exit(EXIT_FAILURE);
+					}	
 				}
 			compteur++;
 		}

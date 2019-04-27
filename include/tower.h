@@ -26,9 +26,9 @@ typedef struct Tower {
     Node* node_prev;
 	//Noeud suivant (carte)
 	Node* node_next;
-	//monstre precedent
+	//tour precedente
 	struct Tower* t_prev;
-	//monstre suivant
+	//tour suivante
 	struct Tower* t_next;
 } Tower;
 
