@@ -2,6 +2,7 @@
 #define INSTALLATION
 
 #include "node.h"
+#include "tower.h"
 
 typedef enum{
 	radar, usine, stock
@@ -18,10 +19,12 @@ typedef struct Installation {
     Node* node_prev;
 	//Noeud suivant (carte)
 	Node* node_next;
-	//monstre precedent
+	//installation precedente
 	struct Installation* t_prev;
-	//monstre suivant
+	//installation suivante
 	struct Installation* t_next;
+    //liste tours
+    List_Tower* list_tower;
 } Installation;
 
 //liste tour
@@ -34,8 +37,9 @@ typedef struct List_Installation {
 } List_Installation;
 
 List_Installation* new_installation_list();
-Installation* create_installation(Installation* t, InstallationType type, float x, float y, int rate, int power, int range, int cost, Node* head);
+Installation* create_installation(Installation* t, InstallationType type, float x, float y, Node* head);
 void add_installation_list(Installation* t, List_Installation* list_installation);
 void destroy_installation(List_Installation* list_installation);
+// fonction pour donner bonus aux tours les plus proches
 
 #endif
