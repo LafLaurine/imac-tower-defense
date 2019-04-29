@@ -7,9 +7,8 @@
 #include <GL/glu.h>
 #include "../include/image.h"
 #include "../include/map.h"
-#include "../include/monster.h"
 #include "../include/node.h"
-
+#include "../include/game.h"
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
 static const unsigned int WINDOW_HEIGHT = 500;
@@ -84,7 +83,10 @@ int main (int argc, char** argv)
 	
     // Check map
     Map* map = init_map("./data/map01.itd");
-/*
+
+    //Init game
+    Game *game = new_game();
+
     //Create NODE
     List_Node* list_node = new_List_Node();
     add_node(list_node, 10, 10);
@@ -92,7 +94,15 @@ int main (int argc, char** argv)
     // Create monster
     Monster* m = malloc(sizeof(Monster));
     m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
-    printf("%d", m->pv);
+    game_update(game, m);
+    update_player(game,20);
+
+    printf("%d\n", game->player_life);
+
+/*
+    
+
+
 
     // Create tower
     Tower* t = malloc(sizeof(Tower));
@@ -213,7 +223,7 @@ int main (int argc, char** argv)
     }
 
     glDeleteTextures(1,&texture_image);
-
+    game_end(game);
     /* Liberation des ressources associees a la SDL */ 
     SDL_Quit();
     return EXIT_SUCCESS;

@@ -35,6 +35,6 @@ int map_verification(Map* map, char* map_itd);
 //Change couleur en fonction de l'image
 int change_path_color(Image* img, unsigned char* pixels, Map* map);
 //Libere la carte
-void free_map (Map* map);
+void free_map(Map* map);
 
 #endif

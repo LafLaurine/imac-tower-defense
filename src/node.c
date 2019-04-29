@@ -89,8 +89,7 @@ List_Node* remove_node(List_Node* current_node, Node* current) {
 	return current_node; 
 }
 
-
-void free_all_node (List_Node* list_node) {
+void free_all_node(List_Node* list_node) {
 	//Si la liste n'est pas vide
 	if (list_node->length != 0) {
 
@@ -101,4 +100,29 @@ void free_all_node (List_Node* list_node) {
 		
 	}
 	free(list_node);
+}
+
+List_Node* free_node_by_position(List_Node* list_node, Node* current) {
+	if (list_node != NULL) {
+
+		if(current != NULL) {
+
+			//Pointe la tête de la liste vers le noeud suivante
+			list_node->head = current->next;
+
+			if(list_node->head == NULL) 
+				list_node->tail = NULL;
+			
+			//Libère espace mémoire : supprime la tour
+			free(current);
+			//Décrémente de un la taille de la liste
+			list_node->length--;
+
+		}
+		else
+			fprintf(stderr, "Ce noeud n'existe pas");
+	}
+	else 
+		fprintf(stderr, "Cette liste de noeuds n'existe pas");
+	return list_node; 
 }

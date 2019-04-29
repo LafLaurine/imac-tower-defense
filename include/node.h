@@ -7,31 +7,33 @@
 typedef enum{In, Out, Twist, Intersect} Node_Type;
 
 typedef struct Node {
-	//Coordonée x du noeud
+	//x node coordonate
 	float x;
-	//Coordonnée y du noeud
+	//y node coordonate
 	float y;
-	//type
+	//Node type
 	Node_Type type;
-	//Noeud suivant
+	//Next node
 	struct Node *next;
 }Node;
 
-/* STRUCTURE DE LA LISTE DE NOEUDS */
+//List of node struct
 typedef struct List_Node {
-	//Taille de la liste
+	//lenght of list
 	size_t length;
-	Node *head; //pointeur vers le premier element
-	Node *tail; //pointeur vers le dernier element
+	Node *head; //pointeur to first element
+	Node *tail; //pointeur to last element
 }List_Node;
 
-//Initialisation de la liste de noeuds
+//Init node's list
 List_Node* new_List_Node();
-//Ajouter un noeud à la liste de noeuds
+//Add node to list
 int add_node(List_Node*, float x, float y);
-//Supprimer un noeud
+//Delete one node
 List_Node* remove_node(List_Node* current_node, Node* current);
-//Supprimer la liste de noeuds
+//Delete list of node
 void free_all_node (List_Node* list_node);
+//Remove node by position
+List_Node* free_node_by_position(List_Node* list_node, Node* current);
 
 #endif
