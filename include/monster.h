@@ -4,6 +4,12 @@
 #include "node.h"
 #include "tower.h"
 #define WAVESIZE 10;
+#define PARCOURU 0
+#define POIDS 1
+#define ANTECEDENT 2
+#define NEW_POIDS 3
+#define ORDRE 0
+#define DEGRE_ENTRANT 1
 
 // enum type monster
 typedef enum{Monster_1, Monster_2} Monster_Type;
