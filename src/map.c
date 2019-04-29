@@ -268,7 +268,7 @@ int map_verification(Map* map, char* map_itd){
 
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
 //Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
-int change_path_color(Image* img, unsigned char* pixels, Map* map) {
+int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f path, float r, float g, float b) {
 
 	int i, j;
 
@@ -279,7 +279,7 @@ int change_path_color(Image* img, unsigned char* pixels, Map* map) {
 		for(j=0; j<(img->width); j++) {
 			
 			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == 255 && pixels[i*(img->width)*3+j*3+1] == 255 && pixels[i*(img->width)*3+j*3+2] == 255){
+			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
 
 				//Change de couleur
 				pixels[i*(img->width)*3+j*3] = ((map->path).r)*255;
@@ -290,7 +290,6 @@ int change_path_color(Image* img, unsigned char* pixels, Map* map) {
 	}
 
 	return 1;
-
 }
 
 

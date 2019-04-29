@@ -83,6 +83,9 @@ int main (int argc, char** argv)
 	
     // Check map
     Map* map = init_map("./data/map01.itd");
+    Image *img = read_image("./images/map01.ppm");
+    unsigned char* pixels;
+    Color3f path;
 
     //Init game
     Game *game = new_game();
@@ -96,6 +99,7 @@ int main (int argc, char** argv)
     m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
     game_update(game, m);
     update_player(game,20);
+    change_path_color(img,pixels,map,path,255,255,255); 
 
     printf("%d\n", game->player_life);
 

@@ -33,7 +33,7 @@ Map* init_map (char* path);
 //Vérification de la carte
 int map_verification(Map* map, char* map_itd);
 //Change couleur en fonction de l'image
-int change_path_color(Image* img, unsigned char* pixels, Map* map);
+int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f objet, float r, float g, float b);
 //Libere la carte
 void free_map(Map* map);
 
