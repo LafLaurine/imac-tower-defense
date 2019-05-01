@@ -64,6 +64,9 @@ void kill_monsters(List_Monster* list_monster) {
 	}
 }
 
+//IL FAUT ADAPTER DIJKSTRA 
+
+/*
 void initialisation_dijkstra(int ** distance, int sommet, int nb_sommet)
 {
     int i;
@@ -91,8 +94,8 @@ void dijkstra(matrice_adjacente * m,int ** distance, int sommet)
         {
             if(!distance[j][PARCOURU] && distance[j][POIDS] > -1 && (distance[j][POIDS] < poids_actu || sommet_actu == -1))
             {
-                /*Si le sommet j n'a pas été parcouru, que son poids est sup à 0 et que le poids du sommet j est inférieur ou que le sommet actuel
-                 est égal à -1, donc aucun sommet marqué. On marque ainsi le sommet non parcouru, ayant le plus petit poids positif */
+                //Si le sommet j n'a pas été parcouru, que son poids est sup à 0 et que le poids du sommet j est inférieur ou que le sommet actuel
+                 //est égal à -1, donc aucun sommet marqué. On marque ainsi le sommet non parcouru, ayant le plus petit poids positif 
                 sommet_actu = j;
                 poids_actu = distance[j][POIDS];
                 nombre_operation+=2;
@@ -165,4 +168,4 @@ void plusCourtChemin(matrice_adjacente *m, int sommet, char nom[50])
         free(distance[i]);
     }
     free(distance);
-}
+}*/

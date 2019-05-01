@@ -9,6 +9,8 @@
 #include "../include/map.h"
 #include "../include/node.h"
 #include "../include/game.h"
+#include "../include/sprite.h"
+
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
 static const unsigned int WINDOW_HEIGHT = 500;
@@ -46,17 +48,6 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 }
 
 
-int is_loaded(SDL_Surface *image)
-{
-    if(image == NULL) {
-        printf("%s\n", "Image not loaded");
-        SDL_Quit();
-        return 0;
-    }
-    printf("%s\n", "Image loaded");
-    return 1;
-}
-
 
 void drawQuad(GLuint texture) {
     glEnable(GL_TEXTURE_2D);
@@ -77,15 +68,12 @@ void drawQuad(GLuint texture) {
 
 GLuint texture_image;
 
-
 int main (int argc, char** argv)
 {
 	
     // Check map
     Map* map = init_map("./data/map01.itd");
     Image *img = read_image("./images/map01.ppm");
-    unsigned char* pixels;
-    Color3f path;
 
     //Init game
     Game *game = new_game();
@@ -99,7 +87,6 @@ int main (int argc, char** argv)
     m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
     game_update(game, m);
     update_player(game,20);
-    //change_path_color(img,pixels,map,path,255,255,255); 
 
     printf("%d\n", game->player_life);
 
@@ -130,27 +117,10 @@ int main (int argc, char** argv)
 
 
     //IMG_Load(map->img->path)
-	SDL_Surface *image = IMG_Load("./images/map01.ppm");
+    SDL_Surface* image;
+    printf("%s\n", map->img->path);
 
-    is_loaded(image);
-
-    glGenTextures(1,&texture_image);
-    glBindTexture(GL_TEXTURE_2D,texture_image);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-
-    glTexImage2D(
-    GL_TEXTURE_2D,
-    0, 
-    GL_RGB,
-    image->w,
-    image->h, 
-    0, 
-    GL_RGB,
-    GL_UNSIGNED_BYTE, 
-    image->pixels);
-
-    SDL_FreeSurface(image);
-    glBindTexture(GL_TEXTURE_2D,0);
+    load_map_texture(map,texture_image,image);
     int loop = 1;
 
     while(loop) 
@@ -161,10 +131,10 @@ int main (int argc, char** argv)
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glPushMatrix();
+        /*glPushMatrix();
             glScalef(50,50,0);
             drawQuad(texture_image);
-        glPopMatrix();
+        glPopMatrix();*/
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();

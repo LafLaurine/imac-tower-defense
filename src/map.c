@@ -266,52 +266,6 @@ int map_verification(Map* map, char* map_itd){
 	return 1;
 }
 
-int in_out_path(Node *node, int* nb_nodes) {
-	///// VARIABLES
-	Node* nodesIN[MAX_NODES];
-	int nbOfNodesIN = 0;
-
-	Node* nodeOUT = NULL;
-
-
-	///// CODE
-
-	//Get all the nodes IN
-	for(int i = 0; i < *nbOfNodes; i++) {
-		//If the node is a IN
-		if(nodesArray[i].type == 1) {
-			nodesIN[nbOfNodesIN] = &nodesArray[i];
-			nbOfNodesIN++;
-		}
-	}
-
-	//Get the only node OUT
-	for(int i = 0; i < *nbOfNodes; i++) {
-		//If the node is a OUT
-		if(nodesArray[i].type == 2) {
-			nodeOUT = &nodesArray[i];
-			break;
-		}
-	}
-
-	//For each node IN
-	for(int i = 0; i < nbOfNodesIN; i++) {
-		deleteAllMarksOnNodes(nodesArray, nbOfNodes); //Delete all the marks on the nodes
-		depthFirstSearchFromRoot(nodesArray, nbOfNodes, nodesIN[i]); //Mark all the nodes accessible from the root 'nodesIN[i]'
-
-		//If the out area is marked, it means we can access it from the current IN area
-		if(nodeOUT->marqued == 1) {
-			printf("The OUT area is accessible from the IN area (node n° %d).\n", nodesIN[i]->value);
-		}
-		else {
-			fprintf(stderr, "Error: the OUT area is not accessible from the IN area (node n° %d).\n", nodesIN[i]->value);
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	return EXIT_SUCCESS;
-}
-
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
 //Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
 int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f path, float r, float g, float b) {

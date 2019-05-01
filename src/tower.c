@@ -64,7 +64,7 @@ void destroy_tower(List_Tower* list_tower) {
 	}
 }
 
-int tour_on_construct(List_Tower* list_tower, List_node *list_node, Point2D pt1, Point2D pt2) {
+int tour_on_construct(List_Tower* list_tower, List_Node *list_node, Point2D pt1, Point2D pt2) {
 
 	if(list_tower != NULL && list_node != NULL) {
 
@@ -101,7 +101,7 @@ int tour_on_construct(List_Tower* list_tower, List_node *list_node, Point2D pt1,
 				if(point.x == tmp->x && point.y == tmp->y)
 					quad++;
 
-				tmp = tmp->p_next;
+				tmp = tmp->next;
 			}
 
 		}
