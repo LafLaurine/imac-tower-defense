@@ -64,6 +64,9 @@ int main (int argc, char** argv)
     List_Node* list_node = new_List_Node();
     add_node(list_node, 10, 10);
 
+    // Test check segment
+    //check_segment(300, 100, 450, 100, map);
+
     // Create monster
     Monster* m = malloc(sizeof(Monster));
     m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);

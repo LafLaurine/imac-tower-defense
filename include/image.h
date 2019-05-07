@@ -11,7 +11,7 @@ typedef struct Image {
 
 
 void errorMsg(char *message);
-void readPPMHeader(FILE* fp, int *w, int*h);
+Image* readPPMHeader(FILE* fp, int *w, int*h);
 void free_image(Image *img);
 Image* read_image(char *filename);
 #endif

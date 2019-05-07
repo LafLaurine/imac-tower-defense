@@ -303,10 +303,11 @@ int check_segment(int x1, int y1, int x2, int y2, Map* map){
 	x_err = (y2 - y1) / (x2 - x1);
 	y_err = -1;
 
-	while(x<x2 && y<y2){
+	while(x<x2){
 		x++;
 		if(check_pixel(x, y, map) == 0){
-			return 0;
+			printf("%s", "Wrong pixel color\n");
+			exit(EXIT_FAILURE);
 		}
 		erreur += x_err;
 
@@ -315,10 +316,15 @@ int check_segment(int x1, int y1, int x2, int y2, Map* map){
 			erreur += y_err;
 		}
 	}
+	printf("%s", "Good segment, good path !\n");
 	return 1;
 }
 
-int check_pixel(int x, int y, Map* map){	
+int check_pixel(int x, int y, Map* map){
+	
+	printf("Rouge du pixel : %d\n", map->img->pixelData[1]);
+	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3+1]); tab[hauteurImage*largeurImage*3 + 3x + c]
+	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3]);
 	if(map->img->pixelData[y*(map->img->height)*3+x*3] == map->path.r){
 		if(map->img->pixelData[y*(map->img->height)*3+x*3+1] == map->path.g){
 			if(map->img->pixelData[y*(map->img->height)*3+x*3+2] == map->path.b){

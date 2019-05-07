@@ -11,7 +11,7 @@ void errorMsg(char *message)
 }
 
 //Read the header of a PPM file
-void readPPMHeader(FILE* fp, int *w, int *h)
+Image* readPPMHeader(FILE* fp, int *w, int *h)
 {
 	char ch;
 	int maxval;
@@ -49,6 +49,15 @@ void readPPMHeader(FILE* fp, int *w, int *h)
 	{
 		errorMsg("Not colored image");
 	}
+
+	Image *image = malloc(sizeof(Image) + 3**h**w*sizeof(unsigned char));
+
+	if(fread(image->pixelData, sizeof(unsigned char), *w**h*3, fp) == 0){
+		errorMsg("Can't read data pixel");
+		exit(EXIT_FAILURE);
+	}
+
+	return image;
 }
 
 //Read an image
@@ -57,16 +66,18 @@ Image* read_image(char *filename)
 	int width;
 	int height;
 	FILE *fp = fopen(filename, "rb");
+
 	if (!fp)
 		errorMsg("Cannot open file for reading");
-	readPPMHeader(fp, &width, &height);
+	Image* image = readPPMHeader(fp, &width, &height);
+
 	if (width<=0 || height <=0)
 	{
 		errorMsg("Negative size");
 	}
-	//allocate memory
-	Image *image = malloc(sizeof(Image) + 3*height*width*sizeof(unsigned char));
 
+	//allocate memory
+	
 	if(!image)
 	{
 		errorMsg("Not enough memory");
@@ -76,12 +87,13 @@ Image* read_image(char *filename)
 	//Affect values to the structure
 	image->width = width;
 	image->height = height;
-	if(fread(image->pixelData, sizeof(unsigned char), width*height*3, fp) == 0){
+	
+	/*if(fread(image->pixelData, sizeof(unsigned char), width*height*3, fp) == 0){
 		errorMsg("Can't read data pixel");
 		exit(EXIT_FAILURE);
-	}
+	}*/
 
-	printf("image width and height%d\n %d\n", image->width, image->height);
+	printf("image width and height %d %d\n", image->width, image->height);
  	fclose(fp);
  	return image;
 }
