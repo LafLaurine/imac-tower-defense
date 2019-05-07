@@ -13,11 +13,11 @@
 
 /* Dimensions initiales et titre de la fenetre */
 static const unsigned int WINDOW_WIDTH = 500;
-static const unsigned int WINDOW_HEIGHT = 500;
+static const unsigned int WINDOW_HEIGHT = 300;
 static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 /* Espace fenetre virtuelle */
-static const float GL_VIEW_WIDTH = 50.;
-static const float GL_VIEW_HEIGHT = 50.;
+static const float GL_VIEW_WIDTH = 50;
+static const float GL_VIEW_HEIGHT = 50;
 
 /* Nombre de bits par pixel de la fenetre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -43,34 +43,15 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     gluOrtho2D(
-        -GL_VIEW_WIDTH / 2, GL_VIEW_WIDTH / 2, 
-        -GL_VIEW_HEIGHT / 2, GL_VIEW_HEIGHT / 2);
+        -GL_VIEW_WIDTH / 2, GL_VIEW_WIDTH /2, 
+        -GL_VIEW_HEIGHT / 2, GL_VIEW_HEIGHT/2);
 }
 
 
-
-void drawQuad(GLuint texture) {
-    glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, texture);        
-        glBegin(GL_QUADS);
-            glTexCoord2f(0, 1);
-            glVertex2f(-0.5,-0.5);
-            glTexCoord2f(0, 0);
-            glVertex2f(-0.5,0.5);
-            glTexCoord2f(1, 0);
-            glVertex2f(0.5,0.5);
-            glTexCoord2f(1, 1);
-            glVertex2f(0.5,-0.5);
-        glEnd();
-        glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_TEXTURE_2D);
-}
-
-GLuint texture_image;
 
 int main (int argc, char** argv)
 {
-	
+	GLuint texture_image;
     // Check map
     Map* map = init_map("./data/map01.itd");
     Image *img = read_image("./images/map01.ppm");
@@ -88,14 +69,9 @@ int main (int argc, char** argv)
     game_update(game, m);
     update_player(game,20);
 
-    printf("%d\n", game->player_life);
+    printf("Player life : %d\n", game->player_life);
 
-/*
-    
-
-
-
-    // Create tower
+/*  // Create tower
     Tower* t = malloc(sizeof(Tower));
     t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
     printf("%d", t->range);
@@ -114,13 +90,11 @@ int main (int argc, char** argv)
 
     /* Initialisation du titre de la fenetre */
 	SDL_WM_SetCaption(WINDOW_TITLE, NULL);
-
-
-    //IMG_Load(map->img->path)
-    SDL_Surface* image;
+    load_map_texture(map,&texture_image);
     printf("%s\n", map->img->path);
+    printf("%d\n", texture_image);
+    
 
-    load_map_texture(map,texture_image,image);
     int loop = 1;
 
     while(loop) 
@@ -131,10 +105,10 @@ int main (int argc, char** argv)
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        /*glPushMatrix();
+        glPushMatrix();
             glScalef(50,50,0);
             drawQuad(texture_image);
-        glPopMatrix();*/
+        glPopMatrix();
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -157,8 +131,7 @@ int main (int argc, char** argv)
 				break;
 			}
 		
-			if(	e.type == SDL_KEYDOWN 
-				&& (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
+			if(	e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
 			{
 				loop = 0; 
 				break;
@@ -179,7 +152,7 @@ int main (int argc, char** argv)
                 
                 /* Touche clavier */
                 case SDL_KEYDOWN:
-                    printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                    //printf("touche pressee (code = %d)\n", e.key.keysym.sym);
                     break;
                     
                 default:
