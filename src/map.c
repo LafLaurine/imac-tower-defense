@@ -292,6 +292,42 @@ int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f path,
 	return 1;
 }
 
+int check_segment(int x1, int y1, int x2, int y2, Map* map){
+	int x, y;
+	float erreur = -0.5;
+	float x_err, y_err;
+
+	x = x1;
+	y = y1;
+
+	x_err = (y2 - y1) / (x2 - x1);
+	y_err = -1;
+
+	while(x<x2 && y<y2){
+		x++;
+		if(check_pixel(x, y, map) == 0){
+			return 0;
+		}
+		erreur += x_err;
+
+		if(erreur > 0){
+			y++;
+			erreur += y_err;
+		}
+	}
+	return 1;
+}
+
+int check_pixel(int x, int y, Map* map){	
+	if(map->img->pixelData[y*(map->img->height)*3+x*3] == map->path.r){
+		if(map->img->pixelData[y*(map->img->height)*3+x*3+1] == map->path.g){
+			if(map->img->pixelData[y*(map->img->height)*3+x*3+2] == map->path.b){
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
 
 void free_map(Map* map) {
 	//Si la map existe

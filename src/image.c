@@ -76,6 +76,11 @@ Image* read_image(char *filename)
 	//Affect values to the structure
 	image->width = width;
 	image->height = height;
+	if(fread(image->pixelData, sizeof(unsigned char), width*height*3, fp) == 0){
+		errorMsg("Can't read data pixel");
+		exit(EXIT_FAILURE);
+	}
+
 	printf("image width and height%d\n %d\n", image->width, image->height);
  	fclose(fp);
  	return image;

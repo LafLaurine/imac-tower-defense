@@ -34,6 +34,10 @@ Map* init_map (char* path);
 int map_verification(Map* map, char* map_itd);
 //Change couleur en fonction de l'image
 int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f objet, float r, float g, float b);
+//Check les chemins
+int check_segment(int x1, int y1, int x2, int y2, Map* map);
+//check les pixels
+int check_pixel(int x, int y, Map* map);
 //Libere la carte
 void free_map(Map* map);
 
