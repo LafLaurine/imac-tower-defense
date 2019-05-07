@@ -7,7 +7,8 @@
 int is_loaded(SDL_Surface *image);
 void drawQuad(GLuint texture);
 SDL_Surface* load_map_texture(Map* map, GLuint *texture);
-int load_sprite(char* file_name, GLuint texture, SDL_Surface* img);
+SDL_Surface* load_sprite(char* file_name, GLuint *texture);
 void free_sprite(GLuint texture, SDL_Surface* img);
-int draw_map(GLuint* texture);
+//int draw_monster(GLuint monster);
+void drawSquare(GLuint *monster);
 #endif

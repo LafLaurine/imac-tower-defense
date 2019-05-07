@@ -52,6 +52,7 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 int main (int argc, char** argv)
 {
 	GLuint texture_image;
+    GLuint texture_monster;
     // Check map
     Map* map = init_map("./data/map01.itd");
     Image *img = read_image("./images/map01.ppm");
@@ -91,6 +92,7 @@ int main (int argc, char** argv)
     /* Initialisation du titre de la fenetre */
 	SDL_WM_SetCaption(WINDOW_TITLE, NULL);
     load_map_texture(map,&texture_image);
+    load_sprite("./images/monster.jpg", &texture_monster);
     printf("%s\n", map->img->path);
     printf("%d\n", texture_image);
     
@@ -108,6 +110,12 @@ int main (int argc, char** argv)
         glPushMatrix();
             glScalef(50,50,0);
             drawQuad(texture_image);
+        glPopMatrix();
+
+        glPushMatrix();
+            glScalef(10,10,0);
+            drawQuad(texture_monster) ;
+            //draw_monster(texture_monster);
         glPopMatrix();
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
