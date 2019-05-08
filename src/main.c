@@ -13,12 +13,11 @@
 #include "../include/sprite.h"
 
 /* Dimensions initiales et titre de la fenetre */
-static const unsigned int WINDOW_WIDTH = 500;
-static const unsigned int WINDOW_HEIGHT = 300;
+static unsigned int WINDOW_WIDTH = 500;
+static unsigned int WINDOW_HEIGHT = 300;
+
 static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
-/* Espace fenetre virtuelle */
-static const float GL_VIEW_WIDTH = 50;
-static const float GL_VIEW_HEIGHT = 50;
+
 
 /* Nombre de bits par pixel de la fenetre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -26,28 +25,12 @@ static const unsigned int BIT_PER_PIXEL = 32;
 /* Nombre minimal de millisecondes separant le rendu de deux images */
 static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
 
-
-void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
-{
-    SDL_Surface* surface_temp = SDL_SetVideoMode(   
-        width, height, BIT_PER_PIXEL,
-        SDL_OPENGL | SDL_GL_DOUBLEBUFFER | SDL_RESIZABLE);
-    if(NULL == surface_temp) 
-    {
-        fprintf(
-            stderr, 
-            "Erreur lors du redimensionnement de la fenetre.\n");
-        exit(EXIT_FAILURE);
-    }
-    *surface = surface_temp;
-    glViewport(0, 0, (*surface)->w, (*surface)->h);
+void reshape() {
+    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(
-        -GL_VIEW_WIDTH / 2, GL_VIEW_WIDTH /2, 
-        -GL_VIEW_HEIGHT / 2, GL_VIEW_HEIGHT/2);
+    gluOrtho2D(0., 500., 300., 0.);
 }
-
 
 
 int main (int argc, char** argv)
@@ -63,7 +46,16 @@ int main (int argc, char** argv)
   
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     SDL_Surface* surface;
-    reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
+     if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, 
+            SDL_OPENGL  | SDL_RESIZABLE | SDL_DOUBLEBUF)) {
+        fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+        exit(EXIT_FAILURE);
+    }
+  
+    reshape();
+  
+    glClear(GL_COLOR_BUFFER_BIT);
+    SDL_GL_SwapBuffers();
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);

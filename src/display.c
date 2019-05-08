@@ -22,16 +22,16 @@ int display_map(GLuint* texture) {
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
-			glVertex2f(800, 660);
+			glVertex2f(500, 300);
 
 			glTexCoord2f(1, 0);
-			glVertex2f(800, 0);
+			glVertex2f(500, 0);
 
 			glTexCoord2f(0, 0);
 			glVertex2f(0, 0);
 
 			glTexCoord2f(0, 1);
-			glVertex2f(0, 660);
+			glVertex2f(0, 300);
 
 			glEnd();
 
