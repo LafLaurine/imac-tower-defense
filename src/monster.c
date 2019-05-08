@@ -17,7 +17,8 @@ List_Monster* new_monster_list() {
 	return list_monster;
 }
 
-Monster* create_monster(Monster* m, int pv, int resist, Monster_Type type, int speed, int money, Node* head){
+Monster* create_monster(int pv, int resist, Monster_Type type, int speed, int money, Node* head){
+    Monster* m = malloc(sizeof(Monster)); 
 	m->type = type; //type
 	m->pv = pv; //Points de vie
 	m->resist = resist; //La résistance
@@ -54,6 +55,19 @@ void add_monster_list(Monster* m, List_Monster* list_monster){
 	else {
 		printf("%s\n", "Fail to add to list monster");
 	}
+}
+
+Monster* level_up(Monster* m, int lvl) {
+
+    if(m != NULL) {
+        m->pv += lvl * 10;
+        m->resist += lvl * 10;
+    }
+    else {
+        fprintf(stderr, "Erreur ce monstre n'existe pas\n");
+        return 0;
+    }
+    return m;
 }
 
 

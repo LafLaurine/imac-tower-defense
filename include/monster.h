@@ -53,9 +53,9 @@ typedef struct List_Monster {
 
 
 List_Monster* new_moster_list();
-Monster* create_monster(Monster* m, int pv, int resist, Monster_Type type, int speed, int money, Node* head);
+Monster* create_monster(int pv, int resist, Monster_Type type, int speed, int money, Node* head);
 void add_monster_list(Monster* m, List_Monster* list_monster);
-//when monster is touched
+Monster* level_up(Monster* m, int lvl);
 void kill_monsters(List_Monster* list_monster);
 
 #endif

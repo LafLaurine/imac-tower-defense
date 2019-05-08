@@ -69,7 +69,7 @@ int main (int argc, char** argv)
 
     // Create monster
     Monster* m = malloc(sizeof(Monster));
-    m = create_monster(m, 100, 50, Monster_1, 20, 10, list_node->head);
+    m = create_monster(100, 50, Monster_1, 20, 10, list_node->head);
     game_update(game, m);
     update_player(game,20);
 
@@ -117,7 +117,7 @@ int main (int argc, char** argv)
 
         glPushMatrix();
             glScalef(10,10,0);
-            drawQuad(texture_monster) ;
+            drawQuad(texture_monster);
             //draw_monster(texture_monster);
         glPopMatrix();
         
