@@ -3,37 +3,37 @@
 
 #include "node.h"
 #include "tower.h"
+
 #define WAVESIZE 10;
-#define PARCOURU 0
-#define POIDS 1
-#define ANTECEDENT 2
-#define NEW_POIDS 3
-#define ORDRE 0
-#define DEGRE_ENTRANT 1
 
 // enum type monster
-typedef enum{Monster_1, Monster_2} Monster_Type;
+typedef enum{BACTERY, VIRUS} Monster_Type;
 
 typedef struct Monster {
 
 	//position du monstre
 	float x;
 	float y;
+	//direction des sprites
 	int direction;
     //son chemin = noeud
     Node* node_prev;
 	//Noeud suivant (carte)
 	Node* node_next;
-	//point de vie
+	//point de vie courant
 	int pv;
-	//vitesse
+	//pt vie max
+	int pv_max;
+	//vitesse deplacement
 	int speed;
-	//qd il meurt
+	//qd il meurt, player gagne ... argent
 	int money;
 	//type
 	Monster_Type type;
+	//resistance
 	int resist;
-	//TowerType type_tower;
+	//type tour auquel il resiste
+	TowerType type_tower;
 	//monstre precedent
 	struct Monster* m_prev;
 	//monstre suivant
@@ -52,10 +52,11 @@ typedef struct List_Monster {
 }List_Monster;
 
 
-List_Monster* new_moster_list();
-Monster* create_monster(int pv, int resist, Monster_Type type, int speed, int money, Node* head);
+List_Monster* new_monster_list();
+Monster* create_monster(List_Monster* list_monster, Monster *m, int pv, int pv_max, int resist, Monster_Type type, TowerType type_t, int speed, int money, Node* head);
 void add_monster_list(Monster* m, List_Monster* list_monster);
 Monster* level_up(Monster* m, int lvl);
-void kill_monsters(List_Monster* list_monster);
+List_Monster* kill_monster(List_Monster* list_monster, Monster* m);
+void free_list_monster(List_Monster* list_monster);
 
 #endif

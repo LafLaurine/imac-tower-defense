@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "../include/monster.h"
+#include "../include/tower.h"
 
 List_Monster* new_monster_list() {
 	List_Monster *list_monster = malloc(sizeof(List_Monster));
@@ -17,21 +18,34 @@ List_Monster* new_monster_list() {
 	return list_monster;
 }
 
-Monster* create_monster(int pv, int resist, Monster_Type type, int speed, int money, Node* head){
-    Monster* m = malloc(sizeof(Monster)); 
-	m->type = type; //type
-	m->pv = pv; //Points de vie
-	m->resist = resist; //La résistance
-	//m->type_tower = type_t; //Le type de tour dont elle est résistante
-	m->speed = speed; //La vitesse de déplacement
-	m->money = money; //argent gagne
-	m->x = head->x; //position x du noeud
-	m->y = head->y; //position y du noeud
-	m->node_prev = head; //Pointeur vers le premier noeud
-	m->node_next = head->next; //Pointeur vers le second noeud
-	m->node_next = NULL; 
+Monster* create_monster(List_Monster* list_monster, Monster* m, int pv, int pv_max, int resist, Monster_Type type, TowerType type_t, int speed, int money, Node* head){
+    if (list_monster != NULL) {
+        if(m != NULL) {
+            m->type = type; //type
+            m->pv = pv_max; //Points de vie (au début c'est au max)
+            m->pv_max = pv_max; //Points de vie
+            m->resist = resist; //La résistance
+            m->type_tower = type_t; //Le type de tour dont elle est résistante
+            m->speed = speed; //La vitesse de déplacement
+            m->money = money; //argent gagne
+            m->x = head->x; //position x du noeud
+            m->y = head->y; //position y du noeud
+            m->node_prev = head; //Pointeur vers le premier noeud
+            m->node_next = head->next; //Pointeur vers le second noeud
+           // calculErreur(m);
+            add_monster_list(m,list_monster);
+        } else {
+            fprintf(stderr, "Cannot create new monster\n");
+            exit(EXIT_FAILURE);
+        }
+    } else {
+            fprintf(stderr, "Cannot add monster \n");
+            exit(EXIT_FAILURE);
+        }
 	return m;
 }
+
+
 
 void add_monster_list(Monster* m, List_Monster* list_monster){
 	if (list_monster != NULL) {
@@ -64,18 +78,76 @@ Monster* level_up(Monster* m, int lvl) {
         m->resist += lvl * 10;
     }
     else {
-        fprintf(stderr, "Erreur ce monstre n'existe pas\n");
+        fprintf(stderr, "Monster doesn't exist\n");
         return 0;
     }
     return m;
 }
 
+List_Monster* kill_monster(List_Monster* list_monster, Monster* m) {
 
-void kill_monsters(List_Monster* list_monster) {
+    // On vérifie si notre liste a été allouée
+    if (list_monster != NULL) {
+        if(m != NULL) {
+            //Si c'est le dernier monstre de la liste
+            if (m->m_next == NULL) {
+                printf("%s\n", "lalala");
+
+                list_monster->m_last = m->m_prev;
+                if(list_monster->m_last != NULL) {
+                    //Lien du dernier monstre vers le monstre suivant est NULL
+                    list_monster->m_last->m_next = NULL;
+                }
+                else
+                    list_monster->m_first = NULL;
+                
+            }
+            //Si c'est le premier monstre de la liste
+            else if (m->m_prev == NULL) {
+                list_monster->m_first = m->m_next;
+
+                if(list_monster->m_first != NULL) {
+                    list_monster->m_first->m_prev = NULL;
+                }
+                else
+                    list_monster->m_last = NULL;
+            }
+
+            else {
+                //Relie le monstre suivant au monstre précédent du monstre que l'on veut supprimer 
+                m->m_next->m_prev = m->m_prev;
+                //Relie le monstre précédent au monstre suivant du monstre que l'on veut supprimer 
+                m->m_prev->m_next = m->m_next;
+            }
+            free(m);
+            list_monster->length--;
+
+        }
+        else {
+            fprintf(stderr, "Find no monster\n");
+            return NULL;
+        }
+    }
+    else {
+        fprintf(stderr, "Monster list desn't exist\n");
+        return NULL;
+    }
+
+    // on retourne notre nouvelle liste
+    return list_monster; 
+}
+
+
+
+void free_list_monster(List_Monster* list_monster) {
 	//Si la liste n'est pas vide
 	if (list_monster->length != 0) {
-		free(list_monster);
+        while (list_monster->m_first != NULL) {
+            //list_monster = kill_monster(list_monster, list_monster->m_first);
+
+        }
 	}
+    free(list_monster);
 }
 
 //IL FAUT ADAPTER DIJKSTRA 

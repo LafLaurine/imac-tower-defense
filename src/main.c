@@ -68,8 +68,9 @@ int main (int argc, char** argv)
     //check_segment(300, 100, 450, 100, map);
 
     // Create monster
+    List_Monster* l_monster = new_monster_list();
     Monster* m = malloc(sizeof(Monster));
-    m = create_monster(100, 50, Monster_1, 20, 10, list_node->head);
+    m = create_monster(l_monster, m, 100, 100, 10, VIRUS, ROCKET, 20, 10, list_node->head);
     game_update(game, m);
     update_player(game,20);
 
@@ -97,9 +98,7 @@ int main (int argc, char** argv)
     load_map_texture(map,&texture_image);
     load_sprite("./images/monster.jpg", &texture_monster);
     printf("%s\n", map->img->path);
-    printf("%d\n", texture_image);
-    
-
+    //kill_monster(l_monster, m);
     int loop = 1;
 
     while(loop) 
