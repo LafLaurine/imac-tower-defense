@@ -8,6 +8,7 @@
 #include "../include/image.h"
 #include "../include/map.h"
 #include "../include/node.h"
+#include "../include/display.h"
 #include "../include/game.h"
 #include "../include/sprite.h"
 
@@ -51,11 +52,30 @@ void reshape(SDL_Surface** surface, unsigned int width, unsigned int height)
 
 int main (int argc, char** argv)
 {
-	GLuint texture_image;
+
+    if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
+    {
+        fprintf(
+            stderr, 
+            "Impossible d'initialiser la SDL. Fin du programme.\n");
+        exit(EXIT_FAILURE);
+    }
+  
+    /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
+    SDL_Surface* surface;
+    reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
+
+    /* Initialisation du titre de la fenetre */
+    SDL_WM_SetCaption(WINDOW_TITLE, NULL);
+
+     GLuint texture_map;
     GLuint texture_monster;
     // Check map
     Map* map = init_map("./data/map01.itd");
-    Image *img = read_image("./images/map01.ppm");
+    SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
+    SDL_Surface* s_monster = load_sprite("./images/monster.jpg", &texture_monster);
+    printf("Texture map %d\n", texture_map);
+    printf("Texture monstre %d\n", texture_monster);
 
     //Init game
     Game *game = new_game();
@@ -81,23 +101,7 @@ int main (int argc, char** argv)
     t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
     printf("%d", t->range);
 */
-	if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
-    {
-        fprintf(
-            stderr, 
-            "Impossible d'initialiser la SDL. Fin du programme.\n");
-        exit(EXIT_FAILURE);
-    }
-  
-    /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
-    SDL_Surface* surface;
-    reshape(&surface, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-    /* Initialisation du titre de la fenetre */
-	SDL_WM_SetCaption(WINDOW_TITLE, NULL);
-    load_map_texture(map,&texture_image);
-    load_sprite("./images/monster.jpg", &texture_monster);
-    printf("%s\n", map->img->path);
     //kill_monster(l_monster, m);
     int loop = 1;
 
@@ -108,17 +112,8 @@ int main (int argc, char** argv)
         
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glPushMatrix();
-            glScalef(50,50,0);
-            drawQuad(texture_image);
-        glPopMatrix();
-
-        glPushMatrix();
-            glScalef(10,10,0);
-            drawQuad(texture_monster);
-            //draw_monster(texture_monster);
-        glPopMatrix();
+        display_map(&texture_map);
+        display_path(map);
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -135,23 +130,23 @@ int main (int argc, char** argv)
             }
 
             /* L'utilisateur ferme la fenetre : */
-			if(e.type == SDL_QUIT) 
-			{
-				loop = 0;
-				break;
-			}
-		
-			if(	e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
-			{
-				loop = 0; 
-				break;
-			}
+            if(e.type == SDL_QUIT) 
+            {
+                loop = 0;
+                break;
+            }
+        
+            if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
+            {
+                loop = 0; 
+                break;
+            }
             
             /* Quelques exemples de traitement d'evenements : */
             switch(e.type) 
             {
                 /* Redimensionnement fenetre */
-				case SDL_VIDEORESIZE:
+                case SDL_VIDEORESIZE:
                     reshape(&surface, e.resize.w, e.resize.h);
                     break;
 
@@ -179,7 +174,7 @@ int main (int argc, char** argv)
         }
     }
 
-    glDeleteTextures(1,&texture_image);
+    glDeleteTextures(1,&texture_map);
     game_end(game);
     /* Liberation des ressources associees a la SDL */ 
     SDL_Quit();

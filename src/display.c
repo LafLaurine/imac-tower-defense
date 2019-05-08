@@ -8,13 +8,54 @@
 #include <math.h>
 #include "../include/display.h"
 
-void draw_circle(float rayon) 
-{
+int display_map(GLuint* texture) {
+
+	if(texture != NULL) {
+		//Active le texturage 2D
+		glEnable(GL_TEXTURE_2D);
+		//appel de la texture
+
+		glBindTexture(GL_TEXTURE_2D, *texture);
+
+			glBegin(GL_QUADS);
+			glColor3ub(255,255,255);
+			//coordonée de la texture
+			glTexCoord2f(1, 1);
+			//Cordonnée du quadrilatère 
+			glVertex2f(800, 660);
+
+			glTexCoord2f(1, 0);
+			glVertex2f(800, 0);
+
+			glTexCoord2f(0, 0);
+			glVertex2f(0, 0);
+
+			glTexCoord2f(0, 1);
+			glVertex2f(0, 660);
+
+			glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_TEXTURE_2D);
+	}
+	else {
+		fprintf(stderr, "Erreur la texture de la map n'existe pas\n");
+		return 0;
+	}
+
+	return 1;
+
+}
+
+//perimetre action sous forme de cdisque
+void draw_perim(float rayon) {
 	
 	int i, j = 100;
 	float angle, x1, y1;
 	
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_TRIANGLE_FAN);
+
+	glVertex2f(0, 0);
 
 	for(i = 0; i <= j; i++) {
 		angle = (2*3.14*i)/j;
@@ -27,38 +68,79 @@ void draw_circle(float rayon)
 
 }
 
-void draw_rectangle(int x1, int y1, int x2, int y2) 
-{
-	glBegin(GL_QUADS);
-		glVertex2f(x1,y1);
-		glVertex2f(x2,y1);
-		glVertex2f(x2,y2);
-		glVertex2f(x1,y2);
-	glEnd();
-}
+int display_path(Map* map) {
 
-int is_loaded(SDL_Surface *image)
-{
-    if(image == NULL) {
-        printf("%s\n", "Image not loaded");
-        SDL_Quit();
-        return 0;
-    }
-    printf("%s\n", "Image loaded");
-    return 1;
-}
+	if(map != NULL) {
 
-int load_map(Map* map, GLuint* texture, SDL_Surface* image) {
-	image = IMG_Load(map->img->path);
-	is_loaded(image);
-	glGenTextures(1, texture);
-	glBindTexture(GL_TEXTURE_2D, *texture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, format, GL_UNSIGNED_BYTE, image->pixels);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		Node* tmp = map->list_node->head;
+
+		while(tmp->next != NULL) {
+		
+			//node
+			glBegin(GL_LINES);
+				glColor3ub(0,0,0);
+				glVertex2d(tmp->x, tmp->y);
+				glVertex2d(tmp->next->x, tmp->next->y);
+			glEnd();
+
+			glPushMatrix();
+				glColor3ub((map->node).r,(map->node).g,(map->node).b);
+				glTranslatef(tmp->x,tmp->y, 0.0);
+				draw_perim(2);
+			glPopMatrix();
+			//path
+			glColor3ub(255,255,255);
+
+			tmp = tmp->next;					
+
+		}
+	}
+	else {
+		fprintf(stderr, "Map doesn't exist\n");
+		return 0;
+	}
+
 	return 1;
+
 }
 
-void free_display(GLuint* texture, SDL_Surface* img) {
-	SDL_FreeSurface(img);
-	glDeleteTextures(1, texture);
+// A TERMINER : PAS IDEE DES COORDONNEES DU MONSTRE
+int display_monster(GLuint* monster, List_Monster* list_monster) {
+
+	//Vérifie qu'il existe
+	if(monster != NULL && list_monster != NULL) {
+	
+		//Création d'un pointeur monstre temporaire pour parcourir la liste de monstres
+		Monster *tmp = list_monster->m_last;
+
+		//Parcours la liste de monstres
+		while(tmp != NULL){
+
+			int sprite;
+			//Affecte un nb différent en fonction des différents types
+			if(tmp->type == BACTERY)
+				sprite = 0;
+			else if(tmp->type == VIRUS) 
+				sprite = 1;
+			
+			/*glEnable(GL_TEXTURE_2D);
+			glBindTexture(GL_TEXTURE_2D, *monster);
+		
+				glPushMatrix();
+					glBegin(GL_QUADS);
+					
+					glEnd();
+				glPopMatrix();
+
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glDisable(GL_TEXTURE_2D);*/
+
+		}
+	}
+	else {
+		printf("Can't display monster\n");
+		return 0;
+	}
+
+	return 1;
 }

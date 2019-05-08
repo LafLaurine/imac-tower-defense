@@ -93,7 +93,6 @@ Image* read_image(char *filename)
 		exit(EXIT_FAILURE);
 	}*/
 
-	printf("image width and height %d %d\n", image->width, image->height);
  	fclose(fp);
  	return image;
 }
