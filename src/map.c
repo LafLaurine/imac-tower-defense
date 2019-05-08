@@ -268,7 +268,7 @@ int map_verification(Map* map, char* map_itd){
 
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
 //Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
-int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f path, float r, float g, float b) {
+int change_path_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
 
 	int i, j;
 
@@ -291,6 +291,115 @@ int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f path,
 
 	return 1;
 }
+
+int change_node_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
+
+	int i, j;
+
+	// On parcourt les lignes du tableau
+	for(i=0; i<(img->height); i++) {
+
+		// puis on parcourt les colonnes du tableau
+		for(j=0; j<(img->width); j++) {
+			
+			//On vérifie la couleur
+			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
+
+				//Change de couleur
+				pixels[i*(img->width)*3+j*3] = ((map->node).r)*255;
+				pixels[i*(img->width)*3+j*3+1] = ((map->node).g)*255;
+				pixels[i*(img->width)*3+j*3+2] = ((map->node).b)*255;
+			}
+		}
+	}
+
+	return 1;
+}
+
+int change_construct_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
+
+	int i, j;
+
+	// On parcourt les lignes du tableau
+	for(i=0; i<(img->height); i++) {
+
+		// puis on parcourt les colonnes du tableau
+		for(j=0; j<(img->width); j++) {
+			
+			//On vérifie la couleur
+			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
+
+				//Change de couleur
+				pixels[i*(img->width)*3+j*3] = ((map->construct).r)*255;
+				pixels[i*(img->width)*3+j*3+1] = ((map->construct).g)*255;
+				pixels[i*(img->width)*3+j*3+2] = ((map->construct).b)*255;
+				add_node(map->list_pixels, j, i);
+			}
+		}
+	}
+
+	return 1;
+}
+
+int change_in_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
+
+	int i, j;
+
+	// On parcourt les lignes du tableau
+	for(i=0; i<(img->height); i++) {
+
+		// puis on parcourt les colonnes du tableau
+		for(j=0; j<(img->width); j++) {
+			
+			//On vérifie la couleur
+			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
+
+				//Change de couleur
+				pixels[i*(img->width)*3+j*3] = ((map->in).r)*255;
+				pixels[i*(img->width)*3+j*3+1] = ((map->in).g)*255;
+				pixels[i*(img->width)*3+j*3+2] = ((map->in).b)*255;
+			}
+		}
+	}
+
+	return 1;
+}
+
+int change_out_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
+
+	int i, j;
+
+	// On parcourt les lignes du tableau
+	for(i=0; i<(img->height); i++) {
+
+		// puis on parcourt les colonnes du tableau
+		for(j=0; j<(img->width); j++) {
+			
+			//On vérifie la couleur
+			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
+
+				//Change de couleur
+				pixels[i*(img->width)*3+j*3] = ((map->out).r)*255;
+				pixels[i*(img->width)*3+j*3+1] = ((map->out).g)*255;
+				pixels[i*(img->width)*3+j*3+2] = ((map->out).b)*255;
+			}
+		}
+	}
+
+	return 1;
+}
+
+int change_map_color(Image* img, unsigned char* pixels, Map* map) {
+
+	change_path_color(img, pixels, map,255,255,255);
+	change_node_color(img, pixels, map,0,0,0);
+	change_construct_color(img, pixels, map,255,200,80);
+	change_in_color(img, pixels, map,0,200,0);
+	change_out_color(img, pixels, map,200,0,0);
+	return 1;
+
+}
+
 
 int check_segment(int x1, int y1, int x2, int y2, Map* map){
 	int x, y;

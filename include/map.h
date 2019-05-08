@@ -33,7 +33,12 @@ Map* init_map (char* path);
 //Vérification de la carte
 int map_verification(Map* map, char* map_itd);
 //Change couleur en fonction de l'image
-int change_path_color(Image* img, unsigned char* pixels, Map* map, Color3f objet, float r, float g, float b);
+int change_path_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
+int change_node_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
+int change_construct_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
+int change_in_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
+int change_out_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
+int change_map_color(Image* img, unsigned char* pixels, Map* map);
 //Check les chemins
 int check_segment(int x1, int y1, int x2, int y2, Map* map);
 //check les pixels
