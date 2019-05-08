@@ -63,7 +63,7 @@ int main (int argc, char** argv)
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
-     GLuint texture_map;
+    GLuint texture_map;
     GLuint texture_monster;
     // Check map
     Map* map = init_map("./data/map01.itd");
@@ -87,9 +87,9 @@ int main (int argc, char** argv)
     Monster* m = malloc(sizeof(Monster));
     m = create_monster(l_monster, m, 100, 100, 10, VIRUS, ROCKET, 20, 10, list_node->head);
     game_update(game, m);
-    update_player(game,20);
+    player_money_update(game,50);
 
-    printf("Player life : %d\n", game->player_life);
+    printf("Player money : %d\n", game->money);
 
 /*  // Create tower
     Tower* t = malloc(sizeof(Tower));
