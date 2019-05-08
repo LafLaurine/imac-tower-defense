@@ -32,6 +32,14 @@ void reshape() {
     gluOrtho2D(0., 500., 300., 0.);
 }
 
+void init_window() {
+    if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, 
+            SDL_OPENGL  | SDL_RESIZABLE | SDL_DOUBLEBUF)) {
+        fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 
 int main (int argc, char** argv)
 {
@@ -46,12 +54,7 @@ int main (int argc, char** argv)
   
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     SDL_Surface* surface;
-     if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, 
-            SDL_OPENGL  | SDL_RESIZABLE | SDL_DOUBLEBUF)) {
-        fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
-        exit(EXIT_FAILURE);
-    }
-  
+    init_window();
     reshape();
   
     glClear(GL_COLOR_BUFFER_BIT);
@@ -139,7 +142,9 @@ int main (int argc, char** argv)
             {
                 /* Redimensionnement fenetre */
                 case SDL_VIDEORESIZE:
-                    reshape(&surface, e.resize.w, e.resize.h);
+                    WINDOW_WIDTH = e.resize.w;
+                    WINDOW_HEIGHT = e.resize.h;
+                    init_window();
                     break;
 
                 /* Clic souris */
