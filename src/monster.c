@@ -32,7 +32,6 @@ Monster* create_monster(List_Monster* list_monster, Monster* m, int pv, int pv_m
             m->y = head->y; //position y du noeud
             m->node_prev = head; //Pointeur vers le premier noeud
             m->node_next = head->next; //Pointeur vers le second noeud
-           // calculErreur(m);
             add_monster_list(m,list_monster);
         } else {
             fprintf(stderr, "Cannot create new monster\n");
@@ -76,6 +75,7 @@ Monster* level_up(Monster* m, int lvl) {
     if(m != NULL) {
         m->pv += lvl * 10;
         m->resist += lvl * 10;
+        m->money += lvl * 2;
     }
     else {
         fprintf(stderr, "Monster doesn't exist\n");
@@ -136,8 +136,6 @@ List_Monster* kill_monster(List_Monster* list_monster, Monster* m) {
     // on retourne notre nouvelle liste
     return list_monster; 
 }
-
-
 
 void free_list_monster(List_Monster* list_monster) {
 	//Si la liste n'est pas vide
