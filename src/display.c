@@ -144,3 +144,47 @@ int display_monster(GLuint* monster, List_Monster* list_monster) {
 
 	return 1;
 }
+
+int display_help(GLuint* texture) {
+
+	if(texture != NULL) {
+
+		//Active le texturage 2D
+		glEnable(GL_TEXTURE_2D);
+		//appel de la texture
+		glBindTexture(GL_TEXTURE_2D, *texture);
+
+			glBegin(GL_QUADS);
+			//couleur neutre
+			glColor3ub(255,255,255);
+			//coordonée de la texture
+			glTexCoord2f(1, 1);
+			//Cordonnée du quadrilatère 
+			glVertex2f(500, 300);
+
+			glTexCoord2f(1, 0);
+			glVertex2f(500, 0);
+
+			glTexCoord2f(0, 0);
+			glVertex2f(0, 0);
+
+			glTexCoord2f(0, 1);
+			glVertex2f(0, 300);
+
+			glEnd();
+
+		//Déblinder la texture
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//Désactive le texturage 2D
+		glDisable(GL_TEXTURE_2D);
+
+		
+	}
+	else {
+		fprintf(stderr, "Couldn't find help\n");
+		return 0;
+	}
+
+	return 1;
+
+}

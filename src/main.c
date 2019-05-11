@@ -23,7 +23,9 @@ static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 60;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 20;
+static const Uint32 FRAMERATE_MILLISECONDS_FAST = 1000 / 60;
+
 
 void reshape() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -43,6 +45,8 @@ void init_window() {
 
 int main (int argc, char** argv)
 {
+    int play = 0;
+    int help = 0;
 
     if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
@@ -91,6 +95,11 @@ int main (int argc, char** argv)
 
     printf("Player money : %d\n", game->money);
 
+    GLuint help_txt;
+    SDL_Surface* help_surface = load_sprite("./images/aide.jpg", &help_txt);
+
+  
+
 /*  // Create tower
     Tower* t = malloc(sizeof(Tower));
     t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
@@ -109,6 +118,10 @@ int main (int argc, char** argv)
         glClear(GL_COLOR_BUFFER_BIT);
         display_map(&texture_map);
         display_path(map);
+          if(help == 1){
+        display_help(&help_txt);
+    }
+    
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
@@ -123,20 +136,7 @@ int main (int argc, char** argv)
                 loop = 0;
                 break;
             }
-
-            /* L'utilisateur ferme la fenetre : */
-            if(e.type == SDL_QUIT) 
-            {
-                loop = 0;
-                break;
-            }
-        
-            if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_q || e.key.keysym.sym == SDLK_ESCAPE))
-            {
-                loop = 0; 
-                break;
-            }
-            
+    
             /* Quelques exemples de traitement d'evenements : */
             switch(e.type) 
             {
@@ -154,9 +154,33 @@ int main (int argc, char** argv)
                 
                 /* Touche clavier */
                 case SDL_KEYDOWN:
-                    //printf("touche pressee (code = %d)\n", e.key.keysym.sym);
+                switch(e.key.keysym.sym){
+                        case 'p' :
+                            if(play == 0)
+                                play = 1;
+                            else
+                                play = 0;
+                            break;
+
+                        case 'h' :
+                        if(help == 0)
+                        {
+                            help = 1;
+                        }
+                        else {
+                            help = 0;
+                        }
+                            break;
+
+                            case 'q' : 
+                            case SDLK_ESCAPE : 
+                            loop = 0;
+                            break;
+
+                            default : break;
+                    }
                     break;
-                    
+              
                 default:
                     break;
             }
@@ -165,10 +189,17 @@ int main (int argc, char** argv)
         /* Calcul du temps ecoule */
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
         /* Si trop peu de temps s'est ecoule, on met en pause le programme */
-        if(elapsedTime < FRAMERATE_MILLISECONDS) 
-        {
-            SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+        if(play == 0) {
+            if(elapsedTime < FRAMERATE_MILLISECONDS) {
+                SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
+            }
         }
+        else if(play == 2) {
+            if(elapsedTime < FRAMERATE_MILLISECONDS_FAST) {
+                    SDL_Delay(FRAMERATE_MILLISECONDS_FAST - elapsedTime);
+            }
+        }
+        
     }
 
     glDeleteTextures(1,&texture_map);
