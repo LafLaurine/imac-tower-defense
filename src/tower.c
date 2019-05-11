@@ -56,6 +56,62 @@ void add_tower_list(Tower* t, List_Tower* list_tower){
 	}
 }
 
+//delete tower from list and return list of tower
+List_Tower* delete_from_position(List_Tower* list_tower, Tower* current) {
+	if (list_tower != NULL) {
+
+		if(current != NULL) {
+
+			//Si c'est la dernière tour de la liste
+			if (current->t_next == NULL) {
+				
+				//Pointe la fin de la liste sur la tour précédente
+				list_tower->t_last = current->t_prev;
+
+				if(list_tower->t_last != NULL) {
+					//Lien de la dernière tour vers la tour suivante est NULL
+					list_tower->t_last->t_next = NULL;
+				}
+				else
+					list_tower->t_first = NULL;
+					
+			}
+		
+			//Si c'est la première de la liste
+			else if (current->t_prev == NULL) {
+				list_tower->t_first = current->t_next;
+
+				if(list_tower->t_first != NULL) {
+			 		list_tower->t_first->t_prev = NULL;
+				}
+				else
+					list_tower->t_last = NULL;
+			}
+
+			else {
+				//Relie la tour suivante à la tour précédente de la tour que l'on veut supprmer 
+				current->t_next->t_prev = current->t_prev;
+				//Relie la tour précédente à la tour suivante de la tour que l'on veut supprmer 
+				current->t_prev->t_next = current->t_next;
+
+			}
+			//supprime la tour
+			free(current);
+			list_tower->length--;
+
+		}
+		else {
+			fprintf(stderr, "Tower doesn't exist");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else {
+		fprintf(stderr, "Tower list doesn't exist");
+		exit(EXIT_FAILURE);
+	}
+	return list_tower; 
+}
+
 
 void destroy_tower(List_Tower* list_tower) {
 	//Si la liste n'est pas vide

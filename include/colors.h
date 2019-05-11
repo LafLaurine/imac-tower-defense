@@ -2,7 +2,7 @@
 #define COLORS_H__
 
 typedef struct col3f {
-    float r, g, b;
+    unsigned char r, g, b;
 } Color3f;
 
 

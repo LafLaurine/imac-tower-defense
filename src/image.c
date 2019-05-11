@@ -57,6 +57,8 @@ Image* readPPMHeader(FILE* fp, int *w, int *h)
 		exit(EXIT_FAILURE);
 	}
 
+	//printf("%d\n", image->pixelData[]);
+
 	return image;
 }
 

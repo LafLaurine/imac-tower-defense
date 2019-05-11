@@ -400,7 +400,7 @@ int change_map_color(Image* img, unsigned char* pixels, Map* map) {
 
 }
 
-
+//bressenham
 int check_segment(int x1, int y1, int x2, int y2, Map* map){
 	int x, y;
 	float erreur = -0.5;
@@ -430,8 +430,8 @@ int check_segment(int x1, int y1, int x2, int y2, Map* map){
 }
 
 int check_pixel(int x, int y, Map* map){
-	
-	printf("Rouge du pixel : %d\n", map->img->pixelData[1]);
+
+	printf("Rouge du pixel : %d\n", map->img->pixelData[y*(map->img->height)*3+x*3]);
 	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3+1]); tab[hauteurImage*largeurImage*3 + 3x + c]
 	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3]);
 	if(map->img->pixelData[y*(map->img->height)*3+x*3] == map->path.r){

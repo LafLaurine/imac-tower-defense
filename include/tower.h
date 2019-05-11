@@ -4,7 +4,7 @@
 #include "node.h"
 
 typedef enum{
-	LASER, ROCKET, YELLOW, BLUE
+	LASER, ROCKET, HYBRIDE, MITRAILLETTE
 }TowerType;
 
 
@@ -44,6 +44,7 @@ typedef struct List_Tower {
 List_Tower* new_tower_list();
 Tower* create_tower(Tower* t, TowerType type, float x, float y, int rate, int power, int range, int cost, Node* head);
 void add_tower_list(Tower* t, List_Tower* list_tower);
+List_Tower* delete_from_position(List_Tower* list_tower, Tower* current);
 void destroy_tower(List_Tower* list_tower);
 
 #endif
