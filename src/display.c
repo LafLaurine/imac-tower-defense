@@ -188,3 +188,53 @@ int display_help(GLuint* texture) {
 	return 1;
 
 }
+
+int display_tower(GLuint* tower, List_Tower* list_tower, List_Monster* list_monster, Tower* current) {
+
+	if(tower != NULL && list_tower != NULL && list_monster != NULL) {
+
+		//Création d'un pointeur tour temporaire pour parcourir la liste de tours
+		Tower *temp = list_tower->t_last;
+
+			//Parcours la liste de tours
+			while(temp != NULL){
+
+				if(current != NULL) {
+					if(current == temp) {
+						glPushMatrix();
+							glTranslatef(temp->x,temp->y, 0.0);
+							glColor3ub(255,255,255);
+							draw_perim(temp->range);
+						glPopMatrix();
+					}
+				}
+				
+				glColor3ub(255,255,255);
+				glPushMatrix();
+				glEnable(GL_TEXTURE_2D);
+				glBindTexture(GL_TEXTURE_2D, *tower);
+				int towerNumber = 0;
+				//Choisir le bon monstre dans le sprite
+				if(temp->type == "LASER") 
+					towerNumber = 0;
+				else if(temp->type == "ROCKET") 
+					towerNumber = 1;
+				else if(temp->type == "HYBRIDE") 
+					towerNumber = 3;
+				else if(temp->type == "MITRAILLETTE") 
+					towerNumber = 2;
+
+				glBindTexture(GL_TEXTURE_2D, 0);
+				glDisable(GL_TEXTURE_2D);
+				glPopMatrix();
+
+				temp = temp->t_prev;
+			}
+		}
+		else {
+			fprintf(stderr, "Allocation error\n");
+			return 0;
+		}
+
+		return 1;
+}

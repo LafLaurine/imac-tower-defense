@@ -23,7 +23,7 @@ static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images */
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 20;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 40;
 static const Uint32 FRAMERATE_MILLISECONDS_FAST = 1000 / 60;
 
 
@@ -45,9 +45,6 @@ void init_window() {
 
 int main (int argc, char** argv)
 {
-    int play = 0;
-    int help = 0;
-
     if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
     {
         fprintf(
@@ -57,24 +54,35 @@ int main (int argc, char** argv)
     }
   
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
-    SDL_Surface* surface;
     init_window();
     reshape();
-  
     glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapBuffers();
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
+    int play = 0;
+    int help = 0;
+
+    //Textures et surfaces associées
+    SDL_Surface* surface;
+    
+    //Map
     GLuint texture_map;
+    SDL_Surface* s_map = NULL;
+
+    //Monster
     GLuint texture_monster;
-    // Check map
-    Map* map = init_map("./data/map01.itd");
-    SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
-    SDL_Surface* s_monster = load_sprite("./images/monster.jpg", &texture_monster);
-    printf("Texture map %d\n", texture_map);
-    printf("Texture monstre %d\n", texture_monster);
+    SDL_Surface* s_monster = NULL; 
+
+    //Help
+    GLuint help_txt;
+    SDL_Surface* help_surface = NULL;   
+
+    GLuint tower_texture;
 
     //Init game
     Game *game = new_game();
@@ -82,31 +90,20 @@ int main (int argc, char** argv)
     //Create NODE
     List_Node* list_node = new_List_Node();
     add_node(list_node, 10, 10);
+    Map* map = init_map("./data/map01.itd");
 
     // Test check segment
     //check_segment(300, 100, 450, 100, map);
 
-    // Create monster
+    // Create list monster
     List_Monster* l_monster = new_monster_list();
-    Monster* m = malloc(sizeof(Monster));
-    m = create_monster(l_monster, m, 100, 100, 10, VIRUS, ROCKET, 20, 10, list_node->head);
-    game_update(game, m);
-    player_money_update(game,50);
 
-    printf("Player money : %d\n", game->money);
+    //Create list tower
+    List_Tower* l_tower =  new_tower_list();
 
-    GLuint help_txt;
-    SDL_Surface* help_surface = load_sprite("./images/aide.jpg", &help_txt);
+    Monster* monster = NULL;
+    Tower* tower = NULL;
 
-  
-
-/*  // Create tower
-    Tower* t = malloc(sizeof(Tower));
-    t = create_tower(t, LASER, 50, 20, 20, 10, 5, 20, list_node->head);
-    printf("%d", t->range);
-*/
-
-    //kill_monster(l_monster, m);
     int loop = 1;
 
     while(loop) 
@@ -116,11 +113,26 @@ int main (int argc, char** argv)
         
         /* Placer ici le code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
+        glMatrixMode(GL_MODELVIEW);
+
+         // Check map
+        s_map = load_sprite(map->img->path,&texture_map);
+        s_monster = load_sprite("./images/monster.jpg", &texture_monster);
+        help_surface = load_sprite("./images/aide.jpg", &help_txt);
         display_map(&texture_map);
         display_path(map);
-          if(help == 1){
-        display_help(&help_txt);
-    }
+
+        //Vague monstre
+
+
+        //Dessiner les tours
+        display_tower(&tower_texture, l_tower, l_monster, tower);
+
+        //Dessiner les monstres
+
+        if(help == 1){
+            display_help(&help_txt);
+        }
     
         
         /* Echange du front et du back buffer : mise a jour de la fenetre */
