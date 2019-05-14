@@ -1,23 +1,23 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "../include/wave.h"
 
-Wave* addMonster(Wave* wave, Monster myNewMonster){
-	Wave* currentMonster = wave;
-	Wave* newMonster;
-	while(currentMonster != NULL && currentMonster->nextMonster != NULL){
-		currentMonster = currentMonster->nextMonster;
-	}
-	newMonster = (Wave*)malloc(sizeof(Wave));
-	if(newMonster == NULL){
-		exit(EXIT_FAILURE);
-	}
-	newMonster -> monster = myNewMonster;
-	newMonster -> nextMonster = NULL;
-	if(currentMonster != NULL){
-		currentMonster -> nextMonster = newMonster;
-	}else{
-		wave = newMonster;
-	}
-	return wave;
+int lauch_waves(Map* map, float timer){
+  int restMonster = 0;
+
+  Wave* currentWave = malloc(sizeof(Wave));
+
+  currentWave = mapdata->listWaves->next;
+
+  while(currentWave != NULL) {
+    restMonster = restMonster + currentWave->monster_total;
+    if(currentWave->timeBegin*1000 < timer) {
+    }
+    currentWave = currentWave->next;
+  }
+
+  /* La vague est terminée */
+  if(restMonster == 0) {
+    return 1;
+  }
+  return 0;
 }

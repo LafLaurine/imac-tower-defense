@@ -178,3 +178,5 @@ int tour_on_construct(List_Tower* list_tower, List_Node *list_node, Point2D pt1,
 }
 
 
+
+

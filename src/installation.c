@@ -16,13 +16,22 @@ List_Installation* new_installation_list() {
 	return list_installation;
 }
 
-Installation* create_installation(Installation* t, InstallationType type, float x, float y, Node* head){
+Installation* create_installation(Installation* t, InstallationType type, float x, float y, List_Tower list_tower){
 	t->type = type; //type
 	t->x = x; //coordonnee x
 	t->y = y; //coordonnee y
-	t->node_prev = head; //Pointeur vers le premier noeud
-	t->node_next = head->next; //Pointeur vers le second noeud
-	t->node_next = NULL; 
+	switch(type){
+		case RADAR :
+			break;
+		case USINE : 
+			break;
+		case STOCK : 
+			break;
+		default : 
+			printf("NOT WORKING");
+			exit(EXIT_FAILURE);
+			break;
+	}
 	return t;
 }
 

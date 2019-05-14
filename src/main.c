@@ -111,6 +111,12 @@ int main (int argc, char* argv[])
         Tower* tower = NULL;
 
         int loop = 1;
+        matrice_adjacente *m;
+        graphe_chargement g;
+        chargementGraphe(&g, nom);
+        int sommet = choixSommet(&m);
+
+        plusCourtChemin(m,sommet);
 
         while(loop) 
         {

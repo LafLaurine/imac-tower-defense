@@ -1,16 +1,13 @@
 #ifndef WAVE_H
 #define WAVE_H
-
-#include "node.h"
-#ifndef WAVES_H_
-#define WAVES_H_
-#pragma once
+#define WAVESIZE 10;
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
 #include "monster.h"
+#include "node.h"
 
 typedef struct Wave{
   int wave_id;

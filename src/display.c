@@ -104,47 +104,6 @@ int display_path(Map* map) {
 
 }
 
-// A TERMINER : PAS IDEE DES COORDONNEES DU MONSTRE
-int display_monster(GLuint* monster, List_Monster* list_monster) {
-
-	//Vérifie qu'il existe
-	if(monster != NULL && list_monster != NULL) {
-	
-		//Création d'un pointeur monstre temporaire pour parcourir la liste de monstres
-		Monster *tmp = list_monster->m_last;
-
-		//Parcours la liste de monstres
-		while(tmp != NULL){
-
-			int sprite;
-			//Affecte un nb différent en fonction des différents types
-			if(tmp->type == BACTERY)
-				sprite = 0;
-			else if(tmp->type == VIRUS) 
-				sprite = 1;
-			
-			/*glEnable(GL_TEXTURE_2D);
-			glBindTexture(GL_TEXTURE_2D, *monster);
-		
-				glPushMatrix();
-					glBegin(GL_QUADS);
-					
-					glEnd();
-				glPopMatrix();
-
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glDisable(GL_TEXTURE_2D);*/
-
-		}
-	}
-	else {
-		printf("Can't display monster\n");
-		return 0;
-	}
-
-	return 1;
-}
-
 int display_help(GLuint* texture) {
 
 	if(texture != NULL) {
@@ -189,52 +148,128 @@ int display_help(GLuint* texture) {
 
 }
 
-int display_tower(GLuint* tower, List_Tower* list_tower, List_Monster* list_monster, Tower* current) {
+/*
+TowerType choose_tower_type(int x, int y) {
+	// Si "ROCKET"
+	if(x >= ? && x <= ? && y >= ? && y <= ?) {
+		printf("ROCKET !\n");
+		type = ROCKET;
+	}
+	// Si "MITRAILLETTE"
+	if(x >= ? && x <= ? && y >= ? && y <= ?) {
+		type = MITRAILLETTE;
+	}
+	// Si "LASER"
+	if(x >= ? && x <= ? && y >= ? && y <= ?) {
+		type = LASER;
+	}
+	// Si "HYBRIDE"
+	if(x >= ? && x <= ? && y >= ? && y <= ?) {
+		type = HYBRIDE;
+	}
 
-	if(tower != NULL && list_tower != NULL && list_monster != NULL) {
+	return type;
+}*/
 
-		//Création d'un pointeur tour temporaire pour parcourir la liste de tours
-		Tower *temp = list_tower->t_last;
+/*
 
-			//Parcours la liste de tours
-			while(temp != NULL){
+void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
+	while(current != NULL) {
+		// Chargement de l'image de la tour en fonction de son type
+		if(current->type == ROCKET) {
+			tourImg = IMG_Load("");
+		    if(tourImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image \n");
+		        exit(1);
+		    }
+		    tourTexture = load_sprite("images/towers/rocket.png");
+		}
+		else if(current->type == LASER) {
+			tourImg = IMG_Load("");
+		    if(tourImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image\n");
+		        exit(1);
+		    }
+		    tourTexture = load_sprite("");		
+		}
+		else if(current->type == YELLOW) {
+			tourImg = IMG_Load("");
+		    if(tourImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image\n");
+		        exit(1);
+		    }
+		    tourTexture = load_sprite("");
+		}
+		else if(current->type == BLUE) {
+			tourImg = IMG_Load("");
+		    if(tourImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image\n");
+		        exit(1);
+		    }
+		    tourTexture = load_sprite("");
+		}
+		
+		// Affichage de la texture sur la carte
+		glEnable(GL_TEXTURE_2D);
+	    glEnable(GL_BLEND);
+	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	    glBindTexture(GL_TEXTURE_2D, tourTexture);
+	    
+		glBegin(GL_QUADS);
+			glColor4ub(255, 255, 255, 255); // Opacité 100%
+			glTexCoord2d(0, 0); glVertex2f(current->x - tourImg->w * 0.5, current->y + tourImg->h * 0.5);
+			glTexCoord2d(0, 1); glVertex2f(current->x - tourImg->w * 0.5, current->y - tourImg->h * 0.5);
+			glTexCoord2d(1, 1); glVertex2f(current->x + tourImg->w * 0.5, current->y - tourImg->h * 0.5);
+			glTexCoord2d(1, 0); glVertex2f(current->x + tourImg->w * 0.5, current->y + tourImg->h * 0.5);
+		glEnd();
+	    
+	    glBindTexture(GL_TEXTURE_2D, 0);
+	    glDisable(GL_BLEND);
+	    glDisable(GL_TEXTURE_2D);
 
-				if(current != NULL) {
-					if(current == temp) {
-						glPushMatrix();
-							glTranslatef(temp->x,temp->y, 0.0);
-							glColor3ub(255,255,255);
-							draw_perim(temp->range);
-						glPopMatrix();
-					}
+	    current = current->t_next;
+    }
+
+    glDeleteTextures(1, &tourTexture);
+    SDL_FreeSurface(tourImg);
+}*/
+
+int display_monsters(List_Monster l_monster) {
+	SDL_Surface* bactery = IMG_Load("");
+	if(bactery == NULL) {
+		fprintf(stderr, "impossible de charger l'image\n");
+		exit(1);
+	}
+	SDL_Surface* virus = IMG_Load("");
+	if(virus == NULL) {
+		fprintf(stderr, "impossible de charger l'image barjot.png \n");
+		exit(1);
+	}
+	GLuint textureBoutin = ("images/monsters/boutin.png");
+	GLuint textureBarjot = loadTexture("images/monsters/barjot.png");
+
+	Monster* monster;
+	int success = 1;
+	int i = 0;
+	for(i = 0; i < lists.nbLists; i++) {
+		monster = lists.lists[i]->root;
+		while(monster != NULL) {
+			if((*monster).type == BARJOT) {
+				if(drawMonster(monster, barjot, textureBarjot) == 0) {
+					success = 0;
 				}
-				
-				glColor3ub(255,255,255);
-				glPushMatrix();
-				glEnable(GL_TEXTURE_2D);
-				glBindTexture(GL_TEXTURE_2D, *tower);
-				int towerNumber = 0;
-				//Choisir le bon monstre dans le sprite
-				if(temp->type == "LASER") 
-					towerNumber = 0;
-				else if(temp->type == "ROCKET") 
-					towerNumber = 1;
-				else if(temp->type == "HYBRIDE") 
-					towerNumber = 3;
-				else if(temp->type == "MITRAILLETTE") 
-					towerNumber = 2;
-
-				glBindTexture(GL_TEXTURE_2D, 0);
-				glDisable(GL_TEXTURE_2D);
-				glPopMatrix();
-
-				temp = temp->t_prev;
 			}
+			else {
+				if(drawMonster(monster, boutin, textureBoutin) == 0) {
+					success = 0;
+				}
+			}
+			monster = (*monster).next;
 		}
-		else {
-			fprintf(stderr, "Allocation error\n");
-			return 0;
-		}
+	}
 
-		return 1;
+	SDL_FreeSurface(boutin);
+	SDL_FreeSurface(barjot);
+
+	return success;
 }
