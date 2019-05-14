@@ -91,7 +91,6 @@ List_Monster* kill_monster(List_Monster* list_monster, Monster* m) {
         if(m != NULL) {
             //Si c'est le dernier monstre de la liste
             if (m->m_next == NULL) {
-                printf("%s\n", "lalala");
 
                 list_monster->m_last = m->m_prev;
                 if(list_monster->m_last != NULL) {

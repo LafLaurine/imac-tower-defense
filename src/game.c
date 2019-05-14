@@ -43,6 +43,7 @@ int game_update(Game* game, Monster* m_alive) {
 }
 
 //when player buy something
+//Monstres première vague = +5 unité d'argent, a chaque nouvelle vague, monstre rapportent + de money
 int player_money_update(Game* game, int cost) {
 
 	//Si l'interface a été alloué
@@ -65,7 +66,7 @@ void game_end(Game* game) {
 	}
 }
 /*
-int add_tower_to_game(List_Tower* list_tower, TowerType type, Game* game, float x, float y) {
+int add_tower_to_game(List_Tower* list_tower, TowerType type, Game* game) {
 
 	//Vérifie si les elements ont été alloué
 	if(list_tower != NULL && game != NULL) {
@@ -73,13 +74,13 @@ int add_tower_to_game(List_Tower* list_tower, TowerType type, Game* game, float 
 		SDL_Event e;
         while(SDL_PollEvent(&e)) 
         {
-        	if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_h))
+        	if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_b))
             {
-                type = HYBRIDE; 
+                type = BLUE; 
             }
-            else if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_m))
+            else if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_y))
             {
-                type = MITRAILLETTE; 
+                type = YELLOW; 
                 break;
             }
             else if( e.type == SDL_KEYDOWN && (e.key.keysym.sym == SDLK_r))
@@ -107,7 +108,8 @@ int add_tower_to_game(List_Tower* list_tower, TowerType type, Game* game, float 
 
 			//S'il le joueur a assez d'argent
 			if((game->money) >= tmp->cost) {
-				//Ajoute une tour
+				//Ajoute une tour sur map 
+				?????
 				//Met a jour l'agent
 				player_update_money(game, tmp->cost);
 				return 1;

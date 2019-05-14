@@ -124,7 +124,7 @@ int main (int argc, char* argv[])
             display_path(map);
 
             //Vague monstre
-
+            
 
             //Dessiner les tours
             display_tower(&tower_texture, l_tower, l_monster, tower);

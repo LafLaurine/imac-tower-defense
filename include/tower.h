@@ -4,7 +4,7 @@
 #include "node.h"
 
 typedef enum{
-	LASER, ROCKET, HYBRIDE, MITRAILLETTE
+	LASER, ROCKET, YELLOW, BLUE
 }TowerType;
 
 
