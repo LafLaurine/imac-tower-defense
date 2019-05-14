@@ -5,6 +5,7 @@
 #include "tower.h"
 
 #define WAVESIZE 10;
+#define WAVENUMBER 20;
 
 // enum type monster
 typedef enum{BACTERY, VIRUS} Monster_Type;
@@ -25,6 +26,7 @@ typedef struct Monster {
 	//pt vie max
 	int pv_max;
 	//vitesse deplacement
+	int move;
 	int speed;
 	//qd il meurt, player gagne ... argent
 	int money;

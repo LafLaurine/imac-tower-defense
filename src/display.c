@@ -234,42 +234,99 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
     SDL_FreeSurface(tourImg);
 }*/
 
-int display_monsters(List_Monster l_monster) {
-	SDL_Surface* bactery = IMG_Load("");
+/*
+int display_monsters(List_Monster* l_monster) {
+	SDL_Surface* bactery = IMG_Load("./images/bactery.png");
 	if(bactery == NULL) {
-		fprintf(stderr, "impossible de charger l'image\n");
-		exit(1);
+		fprintf(stderr, "Cannot load image\n");
+		exit(EXIT_FAILURE);
 	}
-	SDL_Surface* virus = IMG_Load("");
+	SDL_Surface* virus = IMG_Load("./images/virus.png");
 	if(virus == NULL) {
-		fprintf(stderr, "impossible de charger l'image barjot.png \n");
-		exit(1);
+		fprintf(stderr, "Cannot load image\n");
+		exit(EXIT_FAILURE);
 	}
-	GLuint textureBoutin = ("images/monsters/boutin.png");
-	GLuint textureBarjot = loadTexture("images/monsters/barjot.png");
+	GLuint texture_bactery = load_sprite("./images/bactery.png");
+	GLuint texture_virus = load_sprite("./images/virus.png");
 
 	Monster* monster;
 	int success = 1;
 	int i = 0;
-	for(i = 0; i < lists.nbLists; i++) {
-		monster = lists.lists[i]->root;
+	for(i = 0; i < l_monster->length; i++) {
+		monster = l_monster->m_first;
 		while(monster != NULL) {
-			if((*monster).type == BARJOT) {
-				if(drawMonster(monster, barjot, textureBarjot) == 0) {
-					success = 0;
-				}
-			}
+			if(monster->type == BACTERY) {
+ 				if(display_monster(monster, bactery, texture_bactery)) {
+ 					success = 0;
+ 				}
 			else {
-				if(drawMonster(monster, boutin, textureBoutin) == 0) {
-					success = 0;
-				}
-			}
-			monster = (*monster).next;
+				if(display_monster(monster, virus, texture_virus)) {
+ 					success = 0;
+ 				}			
+ 			}
+			monster = monster->m_next;
 		}
 	}
 
-	SDL_FreeSurface(boutin);
-	SDL_FreeSurface(barjot);
+	SDL_FreeSurface(bactery);
+	SDL_FreeSurface(virus);
 
 	return success;
 }
+}
+
+int display_monster(Monster* monster, SDL_Surface* image, GLuint texture) {
+	if(monster->node_next != NULL) {
+		if(monster->move == monster->speed) {
+			// Déplacement horizontal du monstre
+			if(monster->node_next->y == monster->y) {
+				// Vers la droite
+				if(monster->node_next->x > monster->x) {
+					monster->x += 1;
+				}
+				// Vers la gauche
+				else {
+					monster->x -= 1;
+				}   
+			}
+			// Déplacement vertical du monstre
+			else {
+				// Vers le bas
+				if(monster->node_next->y > monster->y) {
+					monster->y += 1;
+				}
+				// Vers le haut
+				else {
+					monster->y -= 1;
+				}
+			}
+			if(monster->x == monster->node_next->x && monster->y == monster->node_next->y) {
+				monster->node_next = monster->node_next->next;
+			}
+
+			monster->move = 0;
+		}
+		else {
+			monster->move += 1;
+		}
+
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, texture);
+
+		glBegin(GL_QUADS);
+		glColor3ub(255, 255, 255); // couleur neutre
+		glTexCoord2d(0, 1); glVertex2d(monster->x - image->w * 0.5, monster->y - image->h * 0.5);
+		glTexCoord2d(0, 0); glVertex2d(monster->x - image->w * 0.5, monster->y + image->h * 0.5);
+		glTexCoord2d(1, 0); glVertex2d(monster->x + image->w * 0.5, monster->y + image->h * 0.5);
+		glTexCoord2d(1, 1); glVertex2d(monster->x + image->w * 0.5, monster->y - image->h * 0.5);
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+		return 1;
+	}
+	return 0;
+}*/

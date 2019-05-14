@@ -111,12 +111,6 @@ int main (int argc, char* argv[])
         Tower* tower = NULL;
 
         int loop = 1;
-        matrice_adjacente *m;
-        graphe_chargement g;
-        chargementGraphe(&g, nom);
-        int sommet = choixSommet(&m);
-
-        plusCourtChemin(m,sommet);
 
         while(loop) 
         {
@@ -135,10 +129,6 @@ int main (int argc, char* argv[])
             display_path(map);
 
             //Vague monstre
-            
-
-            //Dessiner les tours
-            display_tower(&tower_texture, l_tower, l_monster, tower);
 
             //Dessiner les monstres
 
