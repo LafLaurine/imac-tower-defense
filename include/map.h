@@ -39,10 +39,12 @@ int change_construct_color(Image* img, unsigned char* pixels, Map* map, float r,
 int change_in_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
 int change_out_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b);
 int change_map_color(Image* img, unsigned char* pixels, Map* map);
-//Check les chemins
-int check_segment(int x1, int y1, int x2, int y2, Map* map);
+//Check les chemins X
+int check_segment_X(int x1, int y1, int x2, int y2, Map* map);
+//Check les chemins Y
+int check_segment_Y(int x1, int y1, int x2, int y2, Map* map);
 //check les pixels
-int check_pixel(int x, int y, Map* map);
+int check_pixel(int x, int y, Map* map, Color3f color);
 //Libere la carte
 void free_map(Map* map);
 

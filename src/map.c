@@ -401,42 +401,100 @@ int change_map_color(Image* img, unsigned char* pixels, Map* map) {
 }
 
 //bressenham
-int check_segment(int x1, int y1, int x2, int y2, Map* map){
+int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	int x, y;
 	float erreur = -0.5;
 	float x_err, y_err;
+	int step = 1;
+	Color3f color = map->node;
 
 	x = x1;
 	y = y1;
-
 	x_err = (y2 - y1) / (x2 - x1);
 	y_err = -1;
 
 	while(x<x2){
 		x++;
-		if(check_pixel(x, y, map) == 0){
-			printf("%s", "Wrong pixel color\n");
-			exit(EXIT_FAILURE);
+
+		if(check_pixel(x, y, map, color) == 0){
+			if (color.r == map->node.r)
+			{
+				color = map->path;
+				step = 2;
+			} else {
+				color = map->node;
+				step = 3;
+			}
 		}
 		erreur += x_err;
+		//printf("erreur : %f, erreur de X: %f\n", erreur, x_err);
 
 		if(erreur > 0){
 			y++;
 			erreur += y_err;
 		}
 	}
+
+	if(step != 3){
+		printf("%s", "Not a good path\n");
+		exit(EXIT_FAILURE);
+	}
+
 	printf("%s", "Good segment, good path !\n");
 	return 1;
 }
 
-int check_pixel(int x, int y, Map* map){
 
-	printf("Rouge du pixel : %d\n", map->img->pixelData[y*(map->img->height)*3+x*3]);
-	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3+1]); tab[hauteurImage*largeurImage*3 + 3x + c]
-	//printf("%d", map->img->pixelData[y*(map->img->height)*3+x*3]);
-	if(map->img->pixelData[y*(map->img->height)*3+x*3] == map->path.r){
-		if(map->img->pixelData[y*(map->img->height)*3+x*3+1] == map->path.g){
-			if(map->img->pixelData[y*(map->img->height)*3+x*3+2] == map->path.b){
+int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
+	int x, y;
+	float erreur = -0.5;
+	float x_err, y_err;
+	int step = 1;
+	Color3f color = map->node;
+
+	x = x1;
+	y = y1;
+	x_err = (y2 - y1) / (x2 - x1);
+	y_err = -1;
+
+	while(x<x2){
+		x++;
+
+		if(check_pixel(x, y, map, color) == 0){
+			if (color.r == map->node.r)
+			{
+				color = map->path;
+				step = 2;
+			} else {
+				color = map->node;
+				step = 3;
+			}
+		}
+		erreur += y_err;
+		//printf("erreur : %f, erreur de X: %f\n", erreur, x_err);
+
+		if(erreur > 0){
+			x++;
+			erreur += x_err;
+		}
+	}
+
+	if(step != 3){
+		printf("%s", "Not a good path\n");
+		exit(EXIT_FAILURE);
+	}
+
+	printf("%s", "Good segment, good path !\n");
+	return 1;
+}
+
+
+int check_pixel(int x, int y, Map* map, Color3f color){
+	//printf("Rouge du pixel : %u, coordonnee x: %d et y: %d\n",map->img->pixelData[(y*(map->img->width)+x)*3], x, y);
+	
+	if(map->img->pixelData[(y*(map->img->width)+x)*3] == map->path.r){
+		if(map->img->pixelData[(y*(map->img->width)+x)*3+1] == map->path.g){
+			if(map->img->pixelData[(y*(map->img->width)+x)*3+2] == map->path.b){
 				return 1;
 			}
 		}

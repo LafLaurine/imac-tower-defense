@@ -41,7 +41,7 @@ Image* readPPMHeader(FILE* fp, int *w, int *h)
 	}
 
 	ungetc(ch,fp);
-	if(fscanf(fp, "%d%d%d\n",w,h,&maxval) != 3){
+	if(fscanf(fp, "%d %d %d",w,h,&maxval) != 3){
 		errorMsg("No width / height / maxval");
 	}
 
@@ -50,11 +50,15 @@ Image* readPPMHeader(FILE* fp, int *w, int *h)
 		errorMsg("Not colored image");
 	}
 
-	Image *image = malloc(sizeof(Image) + 3**h**w*sizeof(unsigned char));
+	Image *image = malloc(sizeof(Image));
+	image->pixelData = malloc(3**h**w*sizeof(unsigned char)); //penser a convertir si bug sur ordi de la fac
 
-	if(fread(image->pixelData, sizeof(unsigned char), *w**h*3, fp) == 0){
-		errorMsg("Can't read data pixel");
-		exit(EXIT_FAILURE);
+	unsigned char* data = (unsigned char*) image->pixelData;
+	for (int i=0; i<*w**h*3; i++)
+	{
+		if (fscanf(fp, "%u", data+i) != 1) {
+			errorMsg("Cannot read PPM : Invalid rgb component");
+		}
 	}
 
 	//printf("%d\n", image->pixelData[]);
@@ -89,11 +93,6 @@ Image* read_image(char *filename)
 	//Affect values to the structure
 	image->width = width;
 	image->height = height;
-	
-	/*if(fread(image->pixelData, sizeof(unsigned char), width*height*3, fp) == 0){
-		errorMsg("Can't read data pixel");
-		exit(EXIT_FAILURE);
-	}*/
 
  	fclose(fp);
  	return image;

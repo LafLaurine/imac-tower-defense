@@ -68,38 +68,43 @@ int main (int argc, char* argv[])
         int play = 0;
         int help = 0;
 
-        //Textures et surfaces associées
+        // Textures et surfaces associées
         SDL_Surface* surface;
         
-        //Map
+        // Map
         GLuint texture_map;
         SDL_Surface* s_map = NULL;
 
-        //Monster
+        // Monster
         GLuint texture_monster;
         SDL_Surface* s_monster = NULL; 
 
-        //Help
+        // Help
         GLuint help_txt;
         SDL_Surface* help_surface = NULL;   
 
         GLuint tower_texture;
 
-        //Init game
+        // Init game
         Game *game = new_game();
 
-        //Create NODE
+        // Create NODE
         List_Node* list_node = new_List_Node();
         add_node(list_node, 10, 10);
         Map* map = init_map(argv[1]);
 
         // Test check segment
-        //check_segment(300, 100, 450, 100, map);
+        if ((x2-x1) > (y2-y1)) {
+            check_segment_X(200, 200, 300, 100, map);
+	    } else {
+            check_segment_Y(200, 200, 300, 100, map);
+	    }
+
 
         // Create list monster
         List_Monster* l_monster = new_monster_list();
 
-        //Create list tower
+        // Create list tower
         List_Tower* l_tower =  new_tower_list();
 
         Monster* monster = NULL;
