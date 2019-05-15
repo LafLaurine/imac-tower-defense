@@ -227,16 +227,20 @@ int map_verification(Map* map, char* map_itd){
 		int node_x;
 		int node_y;
 		int compteur = 0;
-		// + int successeurs à ajouter
+		//int *successeurs = malloc(sizeof(int*));
 
 		while(fgets(ligne, 99, itd) != NULL){
+				
 				map->list_node = new_List_Node();
 				if(map->list_node != NULL){
+					
 					//Récupére les coordonnées
 					if(sscanf(ligne,"%d %d %d %d", &node_indice, &node_type, &node_x, &node_y) == 4){
-					//Vérifie que le noeud se trouve dans l'image
+						
+						//Vérifie que le noeud se trouve dans l'image
 						if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
-						//Vérifie que le noeud à bien été ajouté à la liste de noeud
+							
+							//Vérifie que le noeud à bien été ajouté à la liste de noeud
 							if(add_node(map->list_node, node_x, node_y) != 1) {
 								fprintf(stderr, "Nodes not added");
 								exit(EXIT_FAILURE);
@@ -249,7 +253,14 @@ int map_verification(Map* map, char* map_itd){
 					else {
 						printf("%s", "Unreadable file (at : node)");
 						exit(EXIT_FAILURE);
-					}	
+					}
+					/*
+					for (int i=0; i<3; i++)
+					{
+						if (sscanf(ligne, "%d", successeurs[i]) != 1) {
+							errorMsg("Cannot read successeurs in PPM ");
+						}
+					}*/
 				}
 			compteur++;
 		}
@@ -262,7 +273,7 @@ int map_verification(Map* map, char* map_itd){
 
 		fflush(itd);
 		fclose(itd);
-}
+	}
 	return 1;
 }
 
@@ -444,7 +455,7 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	return 1;
 }
 
-
+// Pas sur que ça fonctionne
 int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 	int x, y;
 	float erreur = -0.5;
@@ -454,11 +465,11 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 
 	x = x1;
 	y = y1;
-	x_err = (y2 - y1) / (x2 - x1);
-	y_err = -1;
+	x_err = -1;
+	y_err = (y2 - y1) / (x2 - x1);
 
 	while(x<x2){
-		x++;
+		y++;
 
 		if(check_pixel(x, y, map, color) == 0){
 			if (color.r == map->node.r)

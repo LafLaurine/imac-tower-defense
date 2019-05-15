@@ -61,8 +61,6 @@ Image* readPPMHeader(FILE* fp, int *w, int *h)
 		}
 	}
 
-	//printf("%d\n", image->pixelData[]);
-
 	return image;
 }
 

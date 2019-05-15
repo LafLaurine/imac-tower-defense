@@ -2,6 +2,7 @@
 #define NODE_H
 #include <stdio.h>
 #include <stdlib.h>
+#include "colors.h"
 #define NB_MIN_NOEUDS 2
 
 typedef enum{In, Out, Twist, Intersect} Node_Type;
@@ -13,6 +14,8 @@ typedef struct Node {
 	float y;
 	//Node type
 	Node_Type type;
+	//Node color
+	Color3f color;
 	//Next node
 	struct Node *next;
 }Node;

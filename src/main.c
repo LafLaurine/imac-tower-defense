@@ -94,10 +94,13 @@ int main (int argc, char* argv[])
         Map* map = init_map(argv[1]);
 
         // Test check segment
+        int x1, x2, y1, y2;
+        x1 = 200; y1 = 200; x2 = 300; y2 = 100;
+        
         if ((x2-x1) > (y2-y1)) {
-            check_segment_X(200, 200, 300, 100, map);
+            check_segment_X(x1, y1, x2, y2, map);
 	    } else {
-            check_segment_Y(200, 200, 300, 100, map);
+            check_segment_Y(x1, y1, x2, y2, map);
 	    }
 
 
@@ -109,6 +112,10 @@ int main (int argc, char* argv[])
 
         Monster* monster = NULL;
         Tower* tower = NULL;
+
+        s_map = load_sprite(map->img->path,&texture_map);
+        s_monster = load_sprite("./images/bactery.png", &texture_monster);
+        help_surface = load_sprite("./images/aide.jpg", &help_txt);
 
         int loop = 1;
 
@@ -122,9 +129,7 @@ int main (int argc, char* argv[])
             glMatrixMode(GL_MODELVIEW);
 
              // Check map
-            s_map = load_sprite(map->img->path,&texture_map);
-            s_monster = load_sprite("./images/monster.jpg", &texture_monster);
-            help_surface = load_sprite("./images/aide.jpg", &help_txt);
+
             display_map(&texture_map);
             display_path(map);
 
