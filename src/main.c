@@ -90,7 +90,8 @@ int main (int argc, char* argv[])
 
         // Create NODE
         List_Node* list_node = new_List_Node();
-        add_node(list_node, 10, 10);
+        int *successors = 0;
+        add_node(list_node, 3, 10, 10, successors);
         Map* map = init_map(argv[1]);
 
         // Test check segment

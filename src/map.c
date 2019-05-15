@@ -228,6 +228,8 @@ int map_verification(Map* map, char* map_itd){
 		int node_y;
 		int compteur = 0;
 		int *successors = malloc(sizeof(int*));
+		int inBool = 0; //boolean
+		int outBool = 0;
 
 		while(fgets(ligne, 99, itd) != NULL){
 				
@@ -244,6 +246,14 @@ int map_verification(Map* map, char* map_itd){
 
 						if(i == 0){
 							node_indice = token;
+
+							if(inBool == 0 && strcmp(token, "0")){
+								inBool = 1;
+							}
+
+							if(outBool == 0 && strcmp(token, "1")){
+								outBool = 1;
+							}
 						} else if(i == 1){
 							node_type == token;
 						} else if(i == 2){
@@ -258,7 +268,6 @@ int map_verification(Map* map, char* map_itd){
       					token = strtok(NULL, " ");
 						i++;
 					}
-					j = 0;
 
 					//Vérifie que le noeud se trouve dans l'image
 					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
@@ -276,7 +285,11 @@ int map_verification(Map* map, char* map_itd){
 				}
 			compteur++;
 		}
-
+		
+		if(inBool == 0 || outBool == 0){
+			fprintf(stderr, "Node in or node out inexistant");
+			exit(EXIT_FAILURE);	
+		}
 		
 		if(compteur > nb_node || compteur < nb_node){
 			printf("%s", "pas le bon nombre de node");
@@ -292,7 +305,6 @@ int map_verification(Map* map, char* map_itd){
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
 //Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
 int change_path_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-
 	int i, j;
 
 	// On parcourt les lignes du tableau
@@ -316,7 +328,6 @@ int change_path_color(Image* img, unsigned char* pixels, Map* map, float r, floa
 }
 
 int change_node_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-
 	int i, j;
 
 	// On parcourt les lignes du tableau
@@ -356,7 +367,6 @@ int change_construct_color(Image* img, unsigned char* pixels, Map* map, float r,
 				pixels[i*(img->width)*3+j*3] = ((map->construct).r)*255;
 				pixels[i*(img->width)*3+j*3+1] = ((map->construct).g)*255;
 				pixels[i*(img->width)*3+j*3+2] = ((map->construct).b)*255;
-				add_node(map->list_pixels, j, i);
 			}
 		}
 	}
