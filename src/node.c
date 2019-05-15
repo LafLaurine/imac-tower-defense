@@ -17,18 +17,21 @@ List_Node* new_List_Node() {
 
 /* Nv noeud dans liste */
 
-int add_node(List_Node* list_node, float x, float y) {
+int add_node(List_Node* list_node, Node_Type type, float x, float y, int *successors) {
 
 	// On vérifie si notre liste a été allouée
 	if (list_node!= NULL) {
 		//Création d'un nouveau noeud
-		Node* new_node = malloc(sizeof(Node)); 
+		Node* new_node = malloc(sizeof(Node));
+		int *successors = malloc(sizeof(int*));
 
 		// On vérifie si le malloc n'a pas échoué
 		if (new_node != NULL) {
-		
+			
+			new_node->type = type;
 			new_node->x = x; 
 			new_node->y = y; 
+			new_node->successors = successors;
 			// Rajoute à la fin : dernier élement de la liste 
 			new_node->next = NULL; 
 

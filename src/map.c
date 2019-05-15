@@ -227,7 +227,7 @@ int map_verification(Map* map, char* map_itd){
 		int node_x;
 		int node_y;
 		int compteur = 0;
-		int *successeurs = malloc(sizeof(int*));
+		int *successors = malloc(sizeof(int*));
 
 		while(fgets(ligne, 99, itd) != NULL){
 				
@@ -251,7 +251,7 @@ int map_verification(Map* map, char* map_itd){
 						} else if(i == 3){
 							node_y == token;
 						} else {
-							successeurs[j] = token;	
+							successors[j] = token;	
 							j++;
 						}
     
@@ -264,7 +264,7 @@ int map_verification(Map* map, char* map_itd){
 					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
 							
 						//Vérifie que le noeud à bien été ajouté à la liste de noeud
-						if(add_node(map->list_node, node_x, node_y) != 1) {
+						if(add_node(map->list_node, node_type, node_x, node_y, successors) != 1) {
 							fprintf(stderr, "Nodes not added");
 							exit(EXIT_FAILURE);
 						}
@@ -287,82 +287,6 @@ int map_verification(Map* map, char* map_itd){
 		fclose(itd);
 	}
 	return 1;
-}
-
-int countWords(const char sentence[ ])
-{
-    int counted = 0; // result
-
-    // state:
-    const char* it = sentence;
-    int inword = 0;
-
-    do switch(*it) {
-        case '\0': 
-        case ' ': case '\t': case '\n': case '\r': // TODO others?
-            if (inword) { inword = 0; counted++; }
-            break;
-        default: inword = 1;
-    } while(*it++);
-
-    return counted;
-}
-
-/*
-int getNthWord(char *word, const char *input, int n)
-{
-    int chars_used;
-
-    word[0] = '\0';    // In case n < 1 
-
-    while (n > 0 && sscanf(input, "%s%n", word, &chars_used) > 0)
-    {
-        input += chars_used;
-        n--;
-    }
-
-    if (n > 0)
-    {
-        printf("You didn't enter enough values\n");
-        return 0;
-    }
-
-    return 1;
-}*/
-
-void nthword(char *str, int num) 
-{ 
-char ret[80];            
-int i=0;     
-  
-/* Counter for the word number. */ 
-int wordnum=0;    
-  
-/* Pointer to character before *str. */ 
-/* Used to find first character of word. */  
-  char *prev; 
-  prev = NULL;   
-          
-  while ( *str != '\0' ) 
-  {                      
-     if (!isspace(*str) )               
-     {          
-        if ( (prev == NULL ) || isspace(prev) ) wordnum++; 
-        if (wordnum == num) ret[i] = *str;  
-        i++;
-        str++; 
-        prev = str - 1;         
-     } 
-     else if (isspace(*str) ) 
-     {                  
-       str++; 
-       prev = str - 1;                         
-     }   
-  }  
-  
-  ret[i] = '\0' ;     
-  printf("%s \n", ret); 
-                       
 }
 
 //si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 

@@ -16,6 +16,8 @@ typedef struct Node {
 	Node_Type type;
 	//Node color
 	Color3f color;
+	//Node successors
+	int *successors;
 	//Next node
 	struct Node *next;
 }Node;
@@ -31,7 +33,7 @@ typedef struct List_Node {
 //Init node's list
 List_Node* new_List_Node();
 //Add node to list
-int add_node(List_Node*, float x, float y);
+int add_node(List_Node*, Node_Type type, float x, float y, int *successors);
 //Delete one node
 List_Node* remove_node(List_Node* current_node, Node* current);
 //Delete list of node
