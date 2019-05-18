@@ -14,8 +14,6 @@ typedef struct Node {
 	float y;
 	//Node type
 	Node_Type type;
-	//Node color
-	Color3f color;
 	//Node successors
 	int *successors;
 	//Next node

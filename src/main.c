@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 #include "../include/image.h"
 #include "../include/map.h"
+#include "../include/monster.h"
 #include "../include/node.h"
 #include "../include/display.h"
 #include "../include/game.h"
@@ -67,6 +68,8 @@ int main (int argc, char* argv[])
 
         int play = 0;
         int help = 0;
+        int monsterTypeInt = 0;
+        int cpt = 1;
 
         // Textures et surfaces associées
         SDL_Surface* surface;
@@ -74,10 +77,6 @@ int main (int argc, char* argv[])
         // Map
         GLuint texture_map;
         SDL_Surface* s_map = NULL;
-
-        // Monster
-        GLuint texture_monster;
-        SDL_Surface* s_monster = NULL; 
 
         // Help
         GLuint help_txt;
@@ -88,11 +87,14 @@ int main (int argc, char* argv[])
         // Init game
         Game *game = new_game();
 
-        // Create NODE
-        List_Node* list_node = new_List_Node();
-        int *successors = 0;
-        add_node(list_node, 3, 10, 10, successors);
+     
         Map* map = init_map(argv[1]);
+        //récup fin de la liste de noeud
+        Node *root = map->list_node->tail;
+        Node *first = root;
+
+        float monster_x = root->x;
+        float monster_y = root->y;
 
         // Test check segment
         int x1, x2, y1, y2;
@@ -108,20 +110,35 @@ int main (int argc, char* argv[])
         // Create list monster
         List_Monster* l_monster = new_monster_list();
 
+        //création monstre
+        Monster_Type m_type = BACTERY;
+        Monster* new_m = create_monster(m_type, monster_x, monster_y, root->next, 0);
+
+        List_Monster* current_list = new_monster_list();
+        current_list->m_first = new_m;
+        current_list->nb_monsters = 1;
+        current_list->nb_monsters_send = 1;
+
+        // Création du tableau des listes de monstre
+        Wave wave;
+        wave.nb_lists = 1;
+        wave.lists[wave.nb_lists - 1] = current_list;
+        game->nb_lists_send = 1;
+
+
         // Create list tower
         List_Tower* l_tower =  new_tower_list();
 
-        Monster* monster = NULL;
         Tower* tower = NULL;
 
         s_map = load_sprite(map->img->path,&texture_map);
-        s_monster = load_sprite("./images/bactery.png", &texture_monster);
         help_surface = load_sprite("./images/aide.jpg", &help_txt);
 
         int loop = 1;
 
         while(loop) 
         {
+            root = first;
             /* Recuperation du temps au debut de la boucle */
             Uint32 startTime = SDL_GetTicks();
             
@@ -132,16 +149,49 @@ int main (int argc, char* argv[])
              // Check map
 
             display_map(&texture_map);
-            display_path(map);
+        
 
             //Vague monstre
+            if(cpt%50 == 0) {
+                monsterTypeInt = rand()%2;
+                if(monsterTypeInt == 0) {
+                    m_type = BACTERY;
+                 }
+                else {
+                    m_type = VIRUS;
+                }
+                Monster* newMonster = create_monster(m_type, monster_x, monster_y, root->next, game->nb_lists_send);
+                // Nouvelle liste de monstre
+                if(cpt%550 == 0 && game->nb_lists_send < WAVENUMBER) {
+                    List_Monster* newList = new_monster_list();
+                    new_m = newMonster;
+                    newList->m_first = new_m;
+                    newList->nb_monsters = 1;
+                    newList->nb_monsters_send = 1;
+                    current_list = newList;
+                    wave.nb_lists += 1;
+                    game->nb_lists_send += 1;
+                    wave.lists[wave.nb_lists - 1] = current_list;
+                    }
+                else if(current_list->nb_monsters_send < 10) {
+                // Ajout du monstre à la liste actuelle
+                new_m = add_monster(new_m, newMonster);
+                wave.lists[wave.nb_lists - 1]->m_first = new_m;
+                current_list->nb_monsters += 1;
+                current_list->nb_monsters_send += 1;
+                }
+            }
+            cpt++;
 
-            //Dessiner les monstres
+            /* ON ARRIVE A AVOIR DES VAGUES DE MONSTRES !
+            printf("Monsters : %d\n", current_list->nb_monsters);*/
 
             if(help == 1){
                 display_help(&help_txt);
             }
-        
+
+            //Affichage wave de monstres
+            display_wave(wave);
             
             /* Echange du front et du back buffer : mise a jour de la fenetre */
             SDL_GL_SwapBuffers();

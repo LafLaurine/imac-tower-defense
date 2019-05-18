@@ -22,7 +22,7 @@ typedef struct Map {
 	//couleur clé de la zone de sortie
 	Color3f out;
 	//Nombre de noeud
-	int number_node;
+	unsigned int number_node;
 	//Liste des noeuds
 	List_Node* list_node;
 

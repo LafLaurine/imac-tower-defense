@@ -14,7 +14,6 @@ int is_loaded(SDL_Surface *image)
         SDL_Quit();
         return 0;
     }
-    printf("%s\n", "Image loaded");
     return 1;
 }
 
@@ -34,11 +33,8 @@ void drawQuad(GLuint texture) {
         glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
 }
-
-
     
 //charge texture map
-
 SDL_Surface* load_map_texture(Map* map, GLuint *texture) {
     SDL_Surface *image = IMG_Load(map->img->path);
 

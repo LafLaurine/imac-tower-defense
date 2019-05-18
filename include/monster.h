@@ -4,8 +4,7 @@
 #include "node.h"
 #include "tower.h"
 
-#define WAVESIZE 10;
-#define WAVENUMBER 20;
+#define WAVENUMBER 20
 
 // enum type monster
 typedef enum{BACTERY, VIRUS} Monster_Type;
@@ -15,10 +14,7 @@ typedef struct Monster {
 	//position du monstre
 	float x;
 	float y;
-	//direction des sprites
-	int direction;
-    //son chemin = noeud
-    Node* node_prev;
+
 	//Noeud suivant (carte)
 	Node* node_next;
 	//point de vie courant
@@ -30,35 +26,40 @@ typedef struct Monster {
 	int speed;
 	//qd il meurt, player gagne ... argent
 	int money;
+
 	//type
 	Monster_Type type;
 	//resistance
 	int resist;
-	//type tour auquel il resiste
-	TowerType type_tower;
-	//monstre precedent
-	struct Monster* m_prev;
 	//monstre suivant
 	struct Monster* m_next;
 }Monster;
 
-
-//liste monstre = wave
 typedef struct List_Monster {
-
-	//Taille de la liste
-	size_t length;
-	Monster *m_first; //pointeur vers le premier element
-	Monster *m_last; //pointeur vers le dernier element
-
+	Monster* m_first;
+	int nb_monsters; // Nombre monstre dans la liste
+	int nb_monsters_send; // Nombre de monstre déjà envoyés
 }List_Monster;
 
+//wave
+typedef struct Wave {
+	List_Monster* lists[WAVENUMBER];
+	int nb_lists;
+}Wave;
+
+// Structure liste stockant les monstres à la portée d'une tour 
+/*
+typedef struct MonsterToReach {
+	int distance;
+	Monster* monster;
+	int listNum;
+	struct MonsterToReach* next;
+}MonsterToReach;*/
 
 List_Monster* new_monster_list();
-Monster* create_monster(List_Monster* list_monster, Monster *m, int pv, int pv_max, int resist, Monster_Type type, TowerType type_t, int speed, int money, Node* head);
-void add_monster_list(Monster* m, List_Monster* list_monster);
-Monster* level_up(Monster* m, int lvl);
-List_Monster* kill_monster(List_Monster* list_monster, Monster* m);
-void free_list_monster(List_Monster* list_monster);
+int count_monsters(Monster* m);
+Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, int nb_lists);
+Monster* add_monster(Monster* m, Monster* new_monster);
+Monster* kill_monster(Monster* monsterList, Monster* monster);
 
 #endif

@@ -5,7 +5,10 @@
 typedef struct game{
 	int money;
 	int monster_alive;
+	int nb_lists_send;
+	int nb_lists_killed; 
 	int time;
+	int over;
 }Game;
 
 Game* new_game();
