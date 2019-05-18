@@ -95,6 +95,10 @@ int main (int argc, char* argv[])
         float monster_x = root->x;
         float monster_y = root->y;
 
+        printf("Current root x %f\n", monster_x);
+        //C'EST ICI QUE CA SEG FAULT 
+        printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
+
         // Test check segment
         int x1, x2, y1, y2;
         x1 = 200; y1 = 200; x2 = 300; y2 = 100;
@@ -124,7 +128,7 @@ int main (int argc, char* argv[])
         wave.lists[wave.nb_lists - 1] = current_list;
         game->nb_lists_send = 1;
 
-        printf("%f\n", new_m->x);
+        printf("New monster x position %f\n", new_m->x);
 
 
         // Create list tower

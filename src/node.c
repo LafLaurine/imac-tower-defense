@@ -30,6 +30,7 @@ int add_node(List_Node* list_node, Node_Type type, float x, float y, int *succes
 			
 			new_node->type = type;
 			new_node->x = x; 
+			printf("New node position %f\n", new_node->x);
 			new_node->y = y; 
 			new_node->successors = successors;
 			// Rajoute à la fin : dernier élement de la liste 
