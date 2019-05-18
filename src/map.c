@@ -224,8 +224,8 @@ int map_verification(Map* map, char* map_itd){
 		// DERNIERES LIGNES : infos noeuds
 		int node_indice;
 		int node_type;
-		int node_x;
-		int node_y;
+		float node_x;
+		float node_y;
 		int compteur = 0;
 		int *successors = malloc(sizeof(int*));
 		int inBool = 0; //boolean
@@ -238,14 +238,17 @@ int map_verification(Map* map, char* map_itd){
 					
 					//Récupére les coordonnées
 					char *token;
+					float ftoken;
+					int itoken;
 					int i = 0;
 					int j = 0;
 					token = strtok(ligne, " ");
 
 					while( token != NULL ) {
-
+						ftoken = atof(token);
+						itoken = atoi(token);
 						if(i == 0){
-							node_indice = token;
+							node_indice = itoken;
 
 							if(inBool == 0 && strcmp(token, "0")){
 								inBool = 1;
@@ -255,13 +258,13 @@ int map_verification(Map* map, char* map_itd){
 								outBool = 1;
 							}
 						} else if(i == 1){
-							node_type == token;
+							node_type = itoken;
 						} else if(i == 2){
-							node_x == token;
+							node_x = ftoken;
 						} else if(i == 3){
-							node_y == token;
+							node_y = ftoken;
 						} else {
-							successors[j] = token;	
+							successors[j] = itoken;	
 							j++;
 						}
     

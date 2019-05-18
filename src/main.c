@@ -89,7 +89,7 @@ int main (int argc, char* argv[])
      
         Map* map = init_map(argv[1]);
         //récup fin de la liste de noeud
-        Node *root = map->list_node->tail;
+        Node *root = map->list_node->head;
         Node *first = root;
 
         float monster_x = root->x;
@@ -123,6 +123,8 @@ int main (int argc, char* argv[])
         wave.nb_lists = 1;
         wave.lists[wave.nb_lists - 1] = current_list;
         game->nb_lists_send = 1;
+
+        printf("%f\n", new_m->x);
 
 
         // Create list tower
