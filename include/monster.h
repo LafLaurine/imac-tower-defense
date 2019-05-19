@@ -4,7 +4,7 @@
 #include "node.h"
 #include "tower.h"
 
-#define WAVENUMBER 20
+#define WAVENUMBER 50
 
 // enum type monster
 typedef enum{BACTERY, VIRUS} Monster_Type;
@@ -57,9 +57,8 @@ typedef struct MonsterToReach {
 }MonsterToReach;*/
 
 List_Monster* new_monster_list();
-int count_monsters(Monster* m);
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, int nb_lists);
 Monster* add_monster(Monster* m, Monster* new_monster);
-Monster* kill_monster(Monster* monsterList, Monster* monster);
-
+Monster* kill_monsters(Monster* monsterList, Monster* monster);
+void kill_one_monster(Monster* m);
 #endif

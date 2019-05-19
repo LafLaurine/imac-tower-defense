@@ -14,8 +14,8 @@
 #include "../include/sprite.h"
 
 /* Dimensions initiales et titre de la fenetre */
-static unsigned int WINDOW_WIDTH = 500;
-static unsigned int WINDOW_HEIGHT = 300;
+static unsigned int WINDOW_WIDTH = 600;
+static unsigned int WINDOW_HEIGHT = 600;
 
 static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 
@@ -32,7 +32,7 @@ void reshape() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0., 500., 300., 0.);
+    gluOrtho2D(0., 600., 600., 0.);
 }
 
 void init_window() {
@@ -100,15 +100,16 @@ int main (int argc, char* argv[])
        // printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
 
         // Test check segment
+        /*
         int x1, x2, y1, y2;
-        x1 = 200; y1 = 200; x2 = 300; y2 = 100;
+        x1 = 173; y1 = 467; x2 = 173; y2 = 375;
         
         if ((x2-x1) > (y2-y1)) {
-            check_segment_X(x1, y1, x2, y2, map);
+            
 	    } else {
             check_segment_Y(x1, y1, x2, y2, map);
-	    }
-
+	    }*/
+        printf("Rouge du pixel : %u\n",map->node.r);
 
         // Create list monster
         List_Monster* l_monster = new_monster_list();
@@ -228,13 +229,16 @@ int main (int argc, char* argv[])
                     /* Clic souris */
                     case SDL_MOUSEBUTTONUP:
                         if(draw_type_tower != -1){
-                            if(tower_on_tower(l_tower, e.button.x, e.button.y)){
+                            if(tower_on_construct(map, e.button.x, e.button.y)) {
+                                if(tower_on_tower(l_tower, e.button.x, e.button.y)){
                                 Tower* new_tower = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
                                 printf("clic en (%d)\n", draw_type_tower);
                                 printf("clic en (%d, %d)\n", e.button.x, e.button.y);
-                            } else {
-                                printf("Tour sur une autre\n");
+                                } else {
+                                    printf("Tour sur une autre\n");
+                                }
                             }
+                            
                         }
                         break;
                     
@@ -248,6 +252,9 @@ int main (int argc, char* argv[])
                             
                             case 'z' :
                                 draw_type_tower = ROCKET;
+                                break;
+                            case 'n' :
+                                draw_type_tower = -1;
                                 break;
 
                             case 'p' :

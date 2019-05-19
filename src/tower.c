@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "../include/tower.h"
-#include "../include/geometry.h"
-
 
 List_Tower* new_tower_list() {
 	List_Tower *list_tower = malloc(sizeof(List_Tower));
@@ -152,61 +152,18 @@ void destroy_tower(List_Tower* list_tower) {
 	}
 }
 
-int tour_on_construct(List_Tower* list_tower, List_Node *list_node, Point2D pt1, Point2D pt2) {
-
-	if(list_tower != NULL && list_node != NULL) {
-
-		int i = 0;
-		int quad = 0;
-		Point2D point;
-
-		for(i = 0; i < 4; i++) {
-
-			//Vérifie avec les quatres points du quad
-			switch(i) {
-				case 0 : 
-					point.x = pt1.x; 
-					point.y = pt1.y;
-					break;
-				case 1 : 
-					point.x = pt1.x; 
-					point.y = pt2.y;
-					break;
-				case 2 :
-					point.x = pt2.x; 
-					point.y = pt2.y;
-					break;
-				case 3 :
-					point.x = pt2.x; 
-					point.y = pt1.y;
-					break;
+int tower_on_construct(Map* map, int x, int y) {
+	if(map->img->pixelData[(y*(map->img->width)+x)*3] == map->construct.r){
+		if(map->img->pixelData[(y*(map->img->width)+x)*3+1] == map->construct.g){
+			if(map->img->pixelData[(y*(map->img->width)+x)*3+2] == map->construct.b){
+				return 1;
 			}
-
-			Node* tmp = list_node->head;
-
-			while(tmp != NULL){
-
-				if(point.x == tmp->x && point.y == tmp->y)
-					quad++;
-
-				tmp = tmp->next;
-			}
-
 		}
-
-		//Si les 4 extremité sont dans la zone constructible
-		if(quad < 4)
-			return 0;
-		//la tour est bien dasn zone constructible
-
 	}
-	else {
-		fprintf(stderr, "Tower not on constructible material\n");
+	else{
+		fprintf(stderr, "zone non constructible\n");
 		return 0;
 	}
-
-	return 1;
-
 }
 
 int tower_on_tower(List_Tower* list_tower, float x, float y) {

@@ -22,16 +22,16 @@ int display_map(GLuint* texture) {
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
-			glVertex2f(500, 300);
+			glVertex2f(600, 600);
 
 			glTexCoord2f(1, 0);
-			glVertex2f(500, 0);
+			glVertex2f(600, 0);
 
 			glTexCoord2f(0, 0);
 			glVertex2f(0, 0);
 
 			glTexCoord2f(0, 1);
-			glVertex2f(0, 300);
+			glVertex2f(0, 600);
 
 			glEnd();
 
@@ -119,16 +119,16 @@ int display_help(GLuint* texture) {
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
-			glVertex2f(500, 300);
+			glVertex2f(600, 600);
 
 			glTexCoord2f(1, 0);
-			glVertex2f(500, 0);
+			glVertex2f(600, 0);
 
 			glTexCoord2f(0, 0);
 			glVertex2f(0, 0);
 
 			glTexCoord2f(0, 1);
-			glVertex2f(0, 300);
+			glVertex2f(0, 600);
 
 			glEnd();
 
@@ -191,10 +191,10 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 
 		glBegin(GL_QUADS);
 		glColor3ub(255, 255, 255); // couleur neutre
-		glTexCoord2d(0, 1); glVertex2d(m->x + img->w * 0.5, 300-m->y + img->h * 0.5);
-		glTexCoord2d(0, 0); glVertex2d(m->x + img->w * 0.5, 300-m->y - img->h * 0.5);
-		glTexCoord2d(1, 0); glVertex2d(m->x - img->w * 0.5, 300-m->y - img->h * 0.5);
-		glTexCoord2d(1, 1); glVertex2d(m->x - img->w * 0.5, 300-m->y + img->h * 0.5);
+		glTexCoord2d(0, 1); glVertex2d(m->x + img->w * 0.5, 600-m->y + img->h * 0.5);
+		glTexCoord2d(0, 0); glVertex2d(m->x + img->w * 0.5, 600-m->y - img->h * 0.5);
+		glTexCoord2d(1, 0); glVertex2d(m->x - img->w * 0.5, 600-m->y - img->h * 0.5);
+		glTexCoord2d(1, 1); glVertex2d(m->x - img->w * 0.5, 600-m->y + img->h * 0.5);
 		glEnd();
 
 		glBindTexture(GL_TEXTURE_2D, 0);

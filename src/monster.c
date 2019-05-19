@@ -17,15 +17,6 @@ List_Monster* new_monster_list() {
 	return list_monster;
 }
 
-int count_monsters(Monster* m) {
-    int cpt = 1;
-    while(m->m_next != NULL) {
-        cpt++;
-        m = m->m_next;
-    }
-    return cpt;
-}
-
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, int nb_lists){
     if(node_next == NULL) {
         fprintf(stderr, "pointer is NULL in createMonster function \n");
@@ -49,7 +40,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
             m->speed = 0;
             m->money = 10;
         }
-        //la resistance augmente en fonction des vagues
+        //la resistance et l'argent gagné augmente en fonction des vagues
         m->resist += 10*nb_lists;
         m->money += 5*nb_lists;
         m->type = type;
@@ -78,7 +69,7 @@ Monster* add_monster(Monster* m, Monster* new_monster){
     return new_monster;
 }
 
-Monster* kill_monster(Monster* monsterList, Monster* monster) {
+Monster* kill_monsters(Monster* monsterList, Monster* monster) {
     if(monsterList == NULL) {
         fprintf(stderr, "Cannot kill monster\n");
         exit(1);
@@ -115,6 +106,14 @@ Monster* kill_monster(Monster* monsterList, Monster* monster) {
     }
     return root;
 }
+
+void kill_one_monster(Monster* m) {
+    if(m != NULL) {
+        kill_one_monster(m->m_next);
+        free(m);
+    }
+}
+
 //IL FAUT ADAPTER DIJKSTRA 
 
 /*
