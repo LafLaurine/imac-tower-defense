@@ -407,3 +407,17 @@ int display_list_tower(List_Tower* list_tower) {
 		return success;
 	}
 }
+
+void drawCircle (int fill, int nbSeg) {
+    float teta = 0;
+    glBegin(GL_POLYGON);
+    if (fill)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    for (teta=0; teta<=2*PI; teta+=2*PI/nbSeg) {
+        glVertex2f(0.5*cos(teta),0.5*sin(teta));
+    }
+    glEnd();       
+}

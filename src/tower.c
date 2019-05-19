@@ -19,54 +19,47 @@ List_Tower* new_tower_list() {
 }
 
 Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
-	
-	if(tower_on_tower(l_tower, x, y) == 1) {
-		Tower* t = (Tower*)malloc(sizeof(Tower));
+	Tower* t = (Tower*)malloc(sizeof(Tower));
 		
-		if(t != NULL) {
-			t->type = type; //type
-			t->x = x; //coordonnee x
-			t->y = y; //coordonnee y
-			t->node_prev = head; //Pointeur vers le premier noeud
-			t->node_next = head->next; //Pointeur vers le second noeud
-			t->node_next = NULL; 
-			t->t_next = NULL;
+	if(t != NULL) {
+		t->type = type; //type
+		t->x = x; //coordonnee x
+		t->y = y; //coordonnee y
+		t->node_prev = head; //Pointeur vers le premier noeud
+		t->node_next = head->next; //Pointeur vers le second noeud
+		t->node_next = NULL; 
+		t->t_next = NULL;
 
-			if(type == LASER) {
-				t->rate = 10; //La vitesse de tir
-				t->power = 15; //puissance de l'attaque
-				t->range = 5; //portee
-				t->cost = 10; //prix
-			}
-			else if(type == ROCKET) {
-				t->rate = 15;
-				t->power = 10;
-				t->range = 5;
-				t->cost = 10;
-			}
-			else if(type == YELLOW) {
-				t->rate = 20;
-				t->power = 15;
-				t->range = 5;
-				t->cost = 10;
-			}
-			else if(type == BLUE) {
-				t->rate = 50;
-				t->power = 15;
-				t->range = 5;
-				t->cost = 100;
-			}
-			add_tower_list(t, l_tower);
-			printf("%s\n", "New tower");
-			return t;
+		if(type == LASER) {
+			t->rate = 10; //La vitesse de tir
+			t->power = 15; //puissance de l'attaque
+			t->range = 5; //portee
+			t->cost = 10; //prix
 		}
-		else {
-			printf("%s\n", "Not enough memory for tower");
-			exit(EXIT_FAILURE);
+		else if(type == ROCKET) {
+			t->rate = 15;
+			t->power = 10;
+			t->range = 5;
+			t->cost = 10;
 		}
-	} 
+		else if(type == YELLOW) {
+			t->rate = 20;
+			t->power = 15;
+			t->range = 5;
+			t->cost = 10;
+		}
+		else if(type == BLUE) {
+			t->rate = 50;
+			t->power = 15;
+			t->range = 5;
+			t->cost = 100;
+		}
+		add_tower_list(t, l_tower);
+		printf("%s\n", "New tower");
+		return t;
+	}
 	else {
-		fprintf(stderr, "Tower on other tower");
+		printf("%s\n", "Not enough memory for tower");
 		exit(EXIT_FAILURE);
 	}
 }
@@ -217,54 +210,15 @@ int tour_on_construct(List_Tower* list_tower, List_Node *list_node, Point2D pt1,
 }
 
 int tower_on_tower(List_Tower* list_tower, float x, float y) {
-
 	if(list_tower != NULL) {
-		//while
-		//is_intersect()
-/*
-		int i = 0;
-		int quad = 0;
-		Point2D point;
+		Tower* t = list_tower->t_first;
 
-		for(i = 0; i < 4; i++) {
-
-			//Vérifie avec les quatres points du quad
-			switch(i) {
-				case 0 : 
-					point.x = pt1.x; 
-					point.y = pt1.y;
-					break;
-				case 1 : 
-					point.x = pt1.x; 
-					point.y = pt2.y;
-					break;
-				case 2 :
-					point.x = pt2.x; 
-					point.y = pt2.y;
-					break;
-				case 3 :
-					point.x = pt2.x; 
-					point.y = pt1.y;
-					break;
+		while(t != NULL) {
+			if(is_intersect(x, y, t->x, t->y, 34) == 1){
+        		return 0;
 			}
-
-			Node* tmp = list_node->head;
-
-			while(tmp != NULL){
-
-				if(point.x == tmp->x && point.y == tmp->y)
-					quad++;
-
-				tmp = tmp->next;
-			}
-
-		}
-
-		//Si les 4 extremité sont dans la zone constructible
-		if(quad < 4)
-			return 0;
-		//la tour est bien dasn zone constructible
-*/
+			t = t->t_next;
+    	}
 		return 1;
 	}
 	else {
@@ -273,11 +227,7 @@ int tower_on_tower(List_Tower* list_tower, float x, float y) {
 	}
 }
 
-int is_intersect(float x1, float y1, float x2, float y2, float size){
-	float delta;
-	if(x1 + x2 == size){
-		return 1;
-	} else {
-		return 0;
-	}
+int is_intersect(float x1, float y1, float x2, float y2, float radius){
+	float distanceSquare = (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
+	return distanceSquare < radius*radius*4;
 }

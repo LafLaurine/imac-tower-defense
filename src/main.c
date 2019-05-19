@@ -228,9 +228,13 @@ int main (int argc, char* argv[])
                     /* Clic souris */
                     case SDL_MOUSEBUTTONUP:
                         if(draw_type_tower != -1){
-                            Tower* new_tower = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
-                            printf("clic en (%d)\n", draw_type_tower);
-                            printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                            if(tower_on_tower(l_tower, e.button.x, e.button.y)){
+                                Tower* new_tower = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
+                                printf("clic en (%d)\n", draw_type_tower);
+                                printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                            } else {
+                                printf("Tour sur une autre\n");
+                            }
                         }
                         break;
                     
