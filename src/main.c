@@ -65,7 +65,7 @@ int main (int argc, char* argv[])
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
     if (argc > 0) {
-
+        int cpt = 1;
         int play = 0;
         int help = 0;
         int monsterTypeInt = 0;
@@ -159,45 +159,43 @@ int main (int argc, char* argv[])
         
 
             //Vague monstre
-
-            monsterTypeInt = rand()%2;
-            if(monsterTypeInt == 0) {
-                m_type = BACTERY;
-             }
-            else {
-                m_type = VIRUS;
-            }
-            Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
-            // Nouvelle liste de monstre
-            if(game->nb_lists_send < WAVENUMBER) {
-                List_Monster* newList = new_monster_list();
-                new_m = newMonster;
-                newList->m_first = new_m;
-                newList->nb_monsters = 1;
-                newList->nb_monsters_send = 1;
-                current_list = newList;
-                wave.nb_lists += 1;
-                game->nb_lists_send += 1;
-                wave.lists[wave.nb_lists - 1] = current_list;
+            if(cpt%80 == 0) {
+                monsterTypeInt = rand()%2;
+                if(monsterTypeInt == 0) {
+                    m_type = BACTERY;
+                 }
+                else {
+                    m_type = VIRUS;
                 }
-            else if(current_list->nb_monsters_send < 10) {
-            // Ajout du monstre à la liste actuelle
-            new_m = add_monster(new_m, newMonster);
-            wave.lists[wave.nb_lists - 1]->m_first = new_m;
-            current_list->nb_monsters += 1;
-            current_list->nb_monsters_send += 1;
+                Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
+                // Nouvelle liste de monstre
+                if(game->nb_lists_send < WAVENUMBER) {
+                    List_Monster* newList = new_monster_list();
+                    new_m = newMonster;
+                    newList->m_first = new_m;
+                    newList->nb_monsters = 1;
+                    newList->nb_monsters_send = 1;
+                    current_list = newList;
+                    wave.nb_lists += 1;
+                    game->nb_lists_send += 1;
+                    wave.lists[wave.nb_lists - 1] = current_list;
+                    }
+                else if(current_list->nb_monsters_send < 10) {
+                // Ajout du monstre à la liste actuelle
+                new_m = add_monster(new_m, newMonster);
+                wave.lists[wave.nb_lists - 1]->m_first = new_m;
+                current_list->nb_monsters += 1;
+                current_list->nb_monsters_send += 1;
+                }
             }
-
-
-            /* ON ARRIVE A AVOIR DES VAGUES DE MONSTRES !
-            printf("Monsters : %d\n", current_list->nb_monsters);*/
+            cpt++;
 
             if(help == 1){
                 display_help(&help_txt);
             }
 
             //Affichage wave de monstres
-            //display_wave(wave);
+            display_wave(wave);
 
             //Affichage tours
             display_list_tower(l_tower);
