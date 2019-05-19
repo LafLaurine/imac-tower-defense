@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
 
      
         Map* map = init_map(argv[1]);
-        //récup fin de la liste de noeud
+        //récup 1er noeud de la liste de noeud pour y positioner le monstre
         Node *root = map->list_node->head;
         Node *first = root;
 

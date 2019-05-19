@@ -45,7 +45,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
             m->pv_max = 40;
             m->pv = 40;
             m->resist = 10;
-            m->move = 1;
+            m->move = 0;
             m->speed = 0;
             m->money = 10;
         }
@@ -68,7 +68,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
 
 Monster* add_monster(Monster* m, Monster* new_monster){
 	if (m != NULL && new_monster!= NULL) {
-		// Pointe la fin de la liste sur le nouveau monstre
+		// Pointe le monstre suivant de la liste sur le nouveau
 		m->m_next = new_monster; 
     }
 	else {
