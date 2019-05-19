@@ -38,13 +38,14 @@ typedef struct List_Tower {
 	size_t length;
 	Tower *t_first; //pointeur vers le premier element
 	Tower *t_last; //pointeur vers le dernier element
-
 } List_Tower;
 
 List_Tower* new_tower_list();
-Tower* create_tower(Tower* t, TowerType type, float x, float y, int rate, int power, int range, int cost, Node* head);
+Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower);
 void add_tower_list(Tower* t, List_Tower* list_tower);
 List_Tower* delete_from_position(List_Tower* list_tower, Tower* current);
 void destroy_tower(List_Tower* list_tower);
+int tower_on_tower(List_Tower* list_tower, float x, float y);
+int is_intersect(float x1, float y1, float x2, float y2, float size);
 
 #endif

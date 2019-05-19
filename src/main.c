@@ -133,6 +133,7 @@ int main (int argc, char* argv[])
 
         // Create list tower
         List_Tower* l_tower =  new_tower_list();
+        TowerType draw_type_tower = -1;
 
         Tower* tower = NULL;
 
@@ -195,7 +196,10 @@ int main (int argc, char* argv[])
             }
 
             //Affichage wave de monstres
-            display_wave(wave);
+            //display_wave(wave);
+
+            //Affichage tours
+            display_list_tower(l_tower);
             
             /* Echange du front et du back buffer : mise a jour de la fenetre */
             SDL_GL_SwapBuffers();
@@ -223,19 +227,32 @@ int main (int argc, char* argv[])
 
                     /* Clic souris */
                     case SDL_MOUSEBUTTONUP:
-                        printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                        if(draw_type_tower != -1){
+                            Tower* new_tower = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
+                            printf("clic en (%d)\n", draw_type_tower);
+                            printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                        }
                         break;
                     
                     /* Touche clavier */
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
+                            
+                            case 'a' :
+                                draw_type_tower = LASER;
+                                break;
+                            
+                            case 'z' :
+                                draw_type_tower = ROCKET;
+                                break;
+
                             case 'p' :
                                 if(play == 0)
                                     play = 1;
                                 else
                                     play = 0;
                                 break;
-
+                            
                             case 'h' :
                             if(help == 0)
                             {

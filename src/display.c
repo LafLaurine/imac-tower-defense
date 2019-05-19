@@ -270,9 +270,9 @@ TowerType choose_tower_type(int x, int y) {
 	return type;
 }*/
 
-/*
 
-void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
+/*
+int display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 	while(current != NULL) {
 		// Chargement de l'image de la tour en fonction de son type
 		if(current->type == ROCKET) {
@@ -281,7 +281,7 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 		        fprintf(stderr, "impossible de charger l'image \n");
 		        exit(1);
 		    }
-		    tourTexture = load_sprite("images/towers/rocket.png");
+		    tourImg = load_sprite("images/towers/rocket.png", tourTexture);
 		}
 		else if(current->type == LASER) {
 			tourImg = IMG_Load("");
@@ -289,7 +289,7 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 		        fprintf(stderr, "impossible de charger l'image\n");
 		        exit(1);
 		    }
-		    tourTexture = load_sprite("");		
+		    tourImg = load_sprite("images/towers/rocket.png", tourTexture);	
 		}
 		else if(current->type == YELLOW) {
 			tourImg = IMG_Load("");
@@ -297,7 +297,7 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 		        fprintf(stderr, "impossible de charger l'image\n");
 		        exit(1);
 		    }
-		    tourTexture = load_sprite("");
+		    tourImg = load_sprite("images/towers/rocket.png", tourTexture);
 		}
 		else if(current->type == BLUE) {
 			tourImg = IMG_Load("");
@@ -305,14 +305,14 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 		        fprintf(stderr, "impossible de charger l'image\n");
 		        exit(1);
 		    }
-		    tourTexture = load_sprite("");
+		    tourImg = load_sprite("images/towers/rocket.png", tourTexture);
 		}
 		
 		// Affichage de la texture sur la carte
 		glEnable(GL_TEXTURE_2D);
 	    glEnable(GL_BLEND);
 	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	    glBindTexture(GL_TEXTURE_2D, tourTexture);
+	    glBindTexture(GL_TEXTURE_2D, *tourTexture);
 	    
 		glBegin(GL_QUADS);
 			glColor4ub(255, 255, 255, 255); // Opacité 100%
@@ -329,6 +329,81 @@ void display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture) {
 	    current = current->t_next;
     }
 
-    glDeleteTextures(1, &tourTexture);
+    glDeleteTextures(1, tourTexture);
     SDL_FreeSurface(tourImg);
+
+	return 1;
 }*/
+
+int display_tower(Tower* t, SDL_Surface* tourImg, GLuint *tourTexture) {
+	if(t != NULL) {
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, *tourTexture);
+
+		glBegin(GL_QUADS);
+		glColor3ub(255, 255, 255); // couleur neutre
+		glTexCoord2d(0, 1); glVertex2d(t->x + tourImg->w * 0.5, t->y + tourImg->h * 0.5);
+		glTexCoord2d(0, 0); glVertex2d(t->x + tourImg->w * 0.5, t->y - tourImg->h * 0.5);
+		glTexCoord2d(1, 0); glVertex2d(t->x - tourImg->w * 0.5, t->y - tourImg->h * 0.5);
+		glTexCoord2d(1, 1); glVertex2d(t->x - tourImg->w * 0.5, t->y + tourImg->h * 0.5);
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+
+		return 1;
+	}
+	return 0;
+}
+
+int display_list_tower(List_Tower* list_tower) {
+	int success = 1;
+	
+	if(list_tower->t_first == NULL){
+		return success;
+	} else {
+		SDL_Surface* rocket = IMG_Load("./images/towers/rocket.png");
+
+		if(rocket == NULL) {
+			fprintf(stderr, "impossible de charger l'image rocket.png \n");
+			exit(1);
+		}
+		
+		SDL_Surface* laser = IMG_Load("./images/towers/laser.png");
+		if(laser == NULL) {
+			fprintf(stderr, "impossible de charger l'image laser.png \n");
+			exit(1);
+		}
+		GLuint texture_rocket;
+		load_sprite("./images/towers/rocket.png",&texture_rocket);
+		GLuint texture_laser;
+		load_sprite("./images/towers/laser.png",&texture_laser);
+
+		Tower* t;
+		t = list_tower->t_first;
+
+		while(t != NULL) {
+			if(t->type == ROCKET) {
+				if(display_tower(t, rocket, &texture_rocket) == 0) {
+					success = 0;
+				}
+			}
+			else if(t->type == LASER) {
+				if(display_tower(t, laser, &texture_laser) == 0) {
+					success = 0;
+				}
+			} else {
+				printf("NO");
+			}
+			t = t->t_next;
+		}
+
+		SDL_FreeSurface(rocket);
+		SDL_FreeSurface(laser);
+
+		return success;
+	}
+}
