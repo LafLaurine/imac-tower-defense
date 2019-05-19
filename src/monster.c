@@ -27,6 +27,10 @@ int count_monsters(Monster* m) {
 }
 
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, int nb_lists){
+    if(node_next == NULL) {
+        fprintf(stderr, "pointer is NULL in createMonster function \n");
+        exit(1);
+    }
     Monster* m = (Monster*)malloc(sizeof(Monster));
     if(m != NULL) {
         if(type == BACTERY) {

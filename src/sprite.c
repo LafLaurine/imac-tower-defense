@@ -69,17 +69,23 @@ SDL_Surface* load_sprite(char* file_name, GLuint *texture) {
     glBindTexture(GL_TEXTURE_2D,*texture);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
 
-    glTexImage2D(
-    GL_TEXTURE_2D,
-    0, 
-    GL_RGB,
-    image->w,
-    image->h, 
-    0, 
-    GL_RGB,
-    GL_UNSIGNED_BYTE, 
-    image->pixels);
+    GLenum format;
+    switch(image->format->BytesPerPixel) {
+        case 1:
+            format = GL_RED;
+            break;
+        case 3:
+            format = GL_RGB;
+            break;
+        case 4:
+            format = GL_RGBA;
+            break;
+        default:
+            fprintf(stderr, "Format des pixels de l’image non pris en charge\n");
+            exit(EXIT_FAILURE);
+    }
 
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, image->w, image->h, 0, format, GL_UNSIGNED_BYTE, image->pixels);
     SDL_FreeSurface(image);
     glBindTexture(GL_TEXTURE_2D,0);
     return image;

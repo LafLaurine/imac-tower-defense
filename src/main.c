@@ -97,7 +97,7 @@ int main (int argc, char* argv[])
 
         printf("Current root x %f\n", monster_x);
         //C'EST ICI QUE CA SEG FAULT 
-        printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
+       // printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
 
         // Test check segment
         int x1, x2, y1, y2;
@@ -115,7 +115,7 @@ int main (int argc, char* argv[])
 
         //création monstre
         Monster_Type m_type = BACTERY;
-        Monster* new_m = create_monster(m_type, monster_x, monster_y, root->next, 0);
+        Monster* new_m = create_monster(m_type, monster_x, monster_y, root, 0);
 
         List_Monster* current_list = new_monster_list();
         current_list->m_first = new_m;
@@ -165,7 +165,7 @@ int main (int argc, char* argv[])
             else {
                 m_type = VIRUS;
             }
-            Monster* newMonster = create_monster(m_type, monster_x, monster_y, root->next, game->nb_lists_send);
+            Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
             // Nouvelle liste de monstre
             if(game->nb_lists_send < WAVENUMBER) {
                 List_Monster* newList = new_monster_list();
