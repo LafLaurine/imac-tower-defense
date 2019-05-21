@@ -492,7 +492,7 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 	x_err = -1;
 	y_err = (x2 - x1) / (y2 - y1);
 
-	while(x<x2){
+	while(y<y2){
 		y++;
 
 		if(check_pixel(x, y, map, color) == 0){
