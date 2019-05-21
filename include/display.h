@@ -18,5 +18,6 @@ int display_list_tower(List_Tower* list_tower);
 int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instTexture);
 int display_list_installation(List_Installation* list_inst);
 void drawCircle (int fill, int nbSeg);
+int is_intersect(float x1, float y1, float x2, float y2, float radius);
 
 #endif

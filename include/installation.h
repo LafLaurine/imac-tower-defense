@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include "tower.h"
+#include "common.h"
 
 typedef enum{
 	RADAR, USINE, STOCK

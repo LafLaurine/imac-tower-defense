@@ -237,21 +237,28 @@ int main (int argc, char* argv[])
                             }   
                         }
                         if(draw_type_inst != -1){
-                            create_installation(draw_type_inst, e.button.x, e.button.y, l_inst, l_tower);
-                            printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
+                            if(installation_on_construct(map, e.button.x, e.button.y)) {
+                                if(inst_on_inst(l_inst, e.button.x, e.button.y)){
+                                    create_installation(draw_type_inst, e.button.x, e.button.y, l_inst, l_tower);
+                                    printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
+                                } else {
+                                    printf("Installation sur une autre\n");
+                                }
+                            }   
                         }
                         break;
                     
                     /* Touche clavier */
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
-                            
                             case 'a' :
                                 draw_type_tower = LASER;
+                                draw_type_inst = -1;
                                 break;
                             
                             case 'z' :
                                 draw_type_tower = ROCKET;
+                                draw_type_inst = -1;
                                 break;
                                 
                             case 'n' :
@@ -261,10 +268,12 @@ int main (int argc, char* argv[])
                             
                             case 'd' :
                                 draw_type_inst = RADAR;
+                                draw_type_tower = -1;
                                 break;
 
                             case 's' :
                                 draw_type_inst = USINE;
+                                draw_type_tower = -1;
                                 break;
 
                             case 'p' :
@@ -275,21 +284,21 @@ int main (int argc, char* argv[])
                                 break;
                             
                             case 'h' :
-                            if(help == 0)
-                            {
-                                help = 1;
-                            }
-                            else {
-                                help = 0;
-                            }
+                                if(help == 0)
+                                {
+                                    help = 1;
+                                }
+                                else {
+                                    help = 0;
+                                }
                                 break;
 
-                                case 'q' : 
-                                case SDLK_ESCAPE : 
+                            case 'q' : 
+                            case SDLK_ESCAPE : 
                                 loop = 0;
                                 break;
 
-                                default : break;
+                            default : break;
                         }
                         break;
                   

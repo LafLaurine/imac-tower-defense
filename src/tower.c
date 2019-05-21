@@ -188,8 +188,3 @@ int tower_on_tower(List_Tower* list_tower, float x, float y) {
 		return 0;
 	}
 }
-
-int is_intersect(float x1, float y1, float x2, float y2, float radius){
-	float distanceSquare = (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
-	return distanceSquare < radius*radius*4;
-}

@@ -3,6 +3,7 @@
 
 #include "node.h"
 #include "map.h"
+#include "common.h"
 
 typedef enum{
 	LASER, ROCKET, YELLOW, BLUE
@@ -48,6 +49,5 @@ List_Tower* delete_from_position(List_Tower* list_tower, Tower* current);
 void destroy_tower(List_Tower* list_tower);
 int tower_on_construct(Map* map, int posX, int posY);
 int tower_on_tower(List_Tower* list_tower, float x, float y);
-int is_intersect(float x1, float y1, float x2, float y2, float size);
 
 #endif

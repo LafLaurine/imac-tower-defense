@@ -7,7 +7,7 @@ BIN		=	./bin/
 INCL	=	./include/
 
 
-$(BIN)itd: $(OBJ)main.o $(OBJ)image.o $(OBJ)map.o $(OBJ)node.o $(OBJ)monster.o $(OBJ)tower.o $(OBJ)game.o $(OBJ)sprite.o $(OBJ)display.o $(OBJ)installation.o
+$(BIN)itd: $(OBJ)main.o $(OBJ)image.o $(OBJ)map.o $(OBJ)node.o $(OBJ)monster.o $(OBJ)tower.o $(OBJ)game.o $(OBJ)sprite.o $(OBJ)display.o $(OBJ)installation.o $(OBJ)common.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
 $(OBJ)main.o: $(SRC)main.c $(INCL)image.h $(INCL)map.h $(INCL)node.h $(INCL)monster.h $(INCL)tower.h $(INCL)game.h $(INCL)sprite.h $(INCL)display.h
@@ -39,5 +39,9 @@ $(OBJ)sprite.o: $(SRC)sprite.c $(INCL)sprite.h
 
 $(OBJ)display.o: $(SRC)display.c $(INCL)display.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
+
+$(OBJ)common.o: $(SRC)common.c $(INCL)common.h
+	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
+
 clean:
 	rm -rf $(OBJ)*.o

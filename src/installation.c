@@ -81,3 +81,40 @@ void destroy_installation(List_Installation* list_installation) {
 	}
 }
 
+int installation_on_construct(Map* map, int x, int y) {
+	if(map->img->pixelData[(y*(map->img->width)+x)*3] == map->construct.r){
+		if(map->img->pixelData[(y*(map->img->width)+x)*3+1] == map->construct.g){
+			if(map->img->pixelData[(y*(map->img->width)+x)*3+2] == map->construct.b){
+				return 1;
+			}
+		}
+		else {
+			fprintf(stderr, "zone non constructible\n");
+			return 0;
+		}
+	}
+	else{
+		fprintf(stderr, "zone non constructible\n");
+		return 0;
+	}
+	
+}
+
+int inst_on_inst(List_Installation* list_inst, float x, float y) {
+	if(list_inst != NULL) {
+		Installation* i = list_inst->i_first;
+		
+		while(i != NULL) {
+			if(is_intersect(x, y, i->x, i->y, 34) == 1){
+				printf("BONJOUR");
+        		return 0;
+			}
+			i = i->i_next;
+    	}
+		return 1;
+	}
+	else {
+		fprintf(stderr, "Installation not on constructible material\n");
+		return 0;
+	}
+}
