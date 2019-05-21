@@ -88,6 +88,8 @@ int main (int argc, char* argv[])
 
      
         Map* map = init_map(argv[1]);
+        printf("Construct r g b %d %d %d\n",map->construct.r,map->construct.g,map->construct.b);
+        printf("Path r g b %d %d %d\n",map->path.r,map->path.g,map->path.b);
         //récup 1er noeud de la liste de noeud pour y positioner le monstre
         Node *root = map->list_node->head;
         Node *first = root;
@@ -100,16 +102,15 @@ int main (int argc, char* argv[])
        // printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
 
         // Test check segment
-        /*
+        
         int x1, x2, y1, y2;
         x1 = 173; y1 = 467; x2 = 173; y2 = 375;
         
-        if ((x2-x1) > (y2-y1)) {
-            
+        /*if ((x2-x1) !=0) {
+             check_segment_X(x1, y1, x2, y2, map);
 	    } else {
             check_segment_Y(x1, y1, x2, y2, map);
 	    }*/
-        printf("Rouge du pixel : %u\n",map->node.r);
 
         // Create list monster
         List_Monster* l_monster = new_monster_list();

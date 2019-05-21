@@ -443,7 +443,6 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	float x_err, y_err;
 	int step = 1;
 	Color3f color = map->node;
-
 	x = x1;
 	y = y1;
 	x_err = (y2 - y1) / (x2 - x1);
@@ -491,7 +490,7 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 	x = x1;
 	y = y1;
 	x_err = -1;
-	y_err = (y2 - y1) / (x2 - x1);
+	y_err = (x2 - x1) / (y2 - y1);
 
 	while(x<x2){
 		y++;
