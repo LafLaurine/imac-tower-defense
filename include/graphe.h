@@ -7,8 +7,10 @@
 #define NEW_POIDS 3
 #define ORDRE 0
 #define DEGRE_ENTRANT 1
-
-
+#define PARCOURU 0
+#define ANTECEDENT 2
+#define NEW_POIDS 3
+#define ORDRE 0
 #define CHEMIN 0
 #define POIDS 1
 
@@ -21,12 +23,12 @@ typedef struct arc
 
 } arc;
 
-typedef struct graphe
+typedef struct graphe_chargement
 {
     int nombre_arc;
     int nombre_sommet;
     arc *arc_graphe;
-} graphe;
+} graphe_chargement;
 
 
 typedef struct matrice_adjacente
@@ -40,6 +42,6 @@ void initialisation_dijkstra(int ** distance, int sommet, int nb_sommet);
 void dijkstra(matrice_adjacente * m,int ** distance, int sommet);
 void update(int poidsPere, int poidsfils, int sommet_pere, int sommet_fils, int **etat_dji);
 void afficherCheminPlusCourt(int **etat_final, int sommet_depart, int sommet_final);
-void chargementGraphe(graphe_chargement *g, char * nom_fichier)
+void chargementGraphe(graphe_chargement *g, char * nom_fichier);
 
 #endif

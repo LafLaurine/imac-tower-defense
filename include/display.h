@@ -3,6 +3,7 @@
 #include "sprite.h"
 #include "colors.h"
 #include "monster.h"
+#include "geometry.h"
 #include "tower.h"
 #include "installation.h"
 #define PI 3.14

@@ -75,6 +75,15 @@ int main (int argc, char* argv[])
         GLuint texture_map;
         SDL_Surface* s_map = NULL;
 
+        //Tower
+        GLuint t_laser;
+        SDL_Surface* s_laser = NULL;
+        s_laser = load_sprite("./images/towers/laser.png",&t_laser);
+
+        GLuint t_rocket;
+        SDL_Surface* s_rocket = NULL;
+        s_rocket = load_sprite("./images/towers/rocket.png",&t_rocket);
+
         // Help
         GLuint help_txt;
         SDL_Surface* help_surface = NULL;
@@ -92,9 +101,6 @@ int main (int argc, char* argv[])
         float monster_y = root->y;
 
         printf("Current root x %f\n", monster_x);
-        //C'EST ICI QUE CA SEG FAULT 
-       // printf("GROS BUG ICI JSP PQ %f\n", root->next->x);
-
         // Test check segment
         
         int x1, x2, y1, y2;
@@ -126,7 +132,6 @@ int main (int argc, char* argv[])
 
         printf("New monster x position %f\n", new_m->x);
 
-
         // Create list tower
         List_Tower* l_tower =  new_tower_list();
         TowerType draw_type_tower = -1;
@@ -135,7 +140,6 @@ int main (int argc, char* argv[])
         List_Installation* l_inst =  new_installation_list();
         InstallationType draw_type_inst = -1;
 
-        
         s_map = load_sprite(map->img->path,&texture_map);
         help_surface = load_sprite("./images/aide.jpg", &help_txt);
 
@@ -156,7 +160,7 @@ int main (int argc, char* argv[])
         
 
             //Vague monstre
-            if(cpt%80 == 0) {
+            if(cpt%40 == 0) {
                 monsterTypeInt = rand()%2;
                 if(monsterTypeInt == 0) {
                     m_type = BACTERY;
@@ -190,10 +194,8 @@ int main (int argc, char* argv[])
             if(help == 1){
                 display_help(&help_txt);
             }
-
             //Affichage wave de monstres
             display_wave(wave);
-
             //Affichage tours
             display_list_tower(l_tower);
 
@@ -247,6 +249,13 @@ int main (int argc, char* argv[])
                             }   
                         }
                         break;
+
+                    case SDL_MOUSEMOTION:
+                        /*if(draw_type_tower == LASER){
+
+                        } */                      
+                    break;
+                    
                     
                     /* Touche clavier */
                     case SDL_KEYDOWN:

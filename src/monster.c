@@ -116,7 +116,6 @@ void kill_one_monster(Monster* m) {
 
 //IL FAUT ADAPTER DIJKSTRA 
 
-/*
 void initialisation_dijkstra(int ** distance, int sommet, int nb_sommet)
 {
     int i;
@@ -218,4 +217,4 @@ void plusCourtChemin(matrice_adjacente *m, int sommet, char nom[50])
         free(distance[i]);
     }
     free(distance);
-}*/
+}
