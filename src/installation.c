@@ -6,8 +6,8 @@ List_Installation* new_installation_list() {
 	List_Installation *list_installation = malloc(sizeof(List_Installation));
 	if (list_installation != NULL) {
 		list_installation->length = 0;
-		list_installation->t_first = NULL;
-		list_installation->t_last = NULL;
+		list_installation->i_first = NULL;
+		list_installation->i_last = NULL;
 	}
 	else {
 		printf("%s\n", "Not enough memory");
@@ -16,40 +16,54 @@ List_Installation* new_installation_list() {
 	return list_installation;
 }
 
-Installation* create_installation(Installation* t, InstallationType type, float x, float y, List_Tower list_tower){
-	t->type = type; //type
-	t->x = x; //coordonnee x
-	t->y = y; //coordonnee y
-	switch(type){
-		case RADAR :
-			break;
-		case USINE : 
-			break;
-		case STOCK : 
-			break;
-		default : 
-			printf("NOT WORKING");
-			exit(EXIT_FAILURE);
-			break;
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst, List_Tower* list_tower){
+	Installation* i = (Installation*)malloc(sizeof(Installation));
+
+	if(i != NULL){
+		i->type = type; //type
+		i->x = x; //coordonnee x
+		i->y = y; //coordonnee y
+		i->i_next = NULL;
+
+		switch(type){
+			case RADAR :
+				break;
+			case USINE : 
+				break;
+			case STOCK : 
+				break;
+			default : 
+				printf("NOT WORKING");
+				exit(EXIT_FAILURE);
+				break;
+		}
+
+		add_installation_list(i, list_inst);
+		printf("%s\n", "New installation");
+
+	} else {
+		printf("%s\n", "Not enough memory for installation");
+		exit(EXIT_FAILURE);
 	}
-	return t;
+
+	return i;
 }
 
-void add_installation_list(Installation* t, List_Installation* list_installation){
+void add_installation_list(Installation* i, List_Installation* list_installation){
 	if (list_installation != NULL) {
-		if (list_installation->t_last == NULL) {
+		if (list_installation->i_last == NULL) {
 				// Pointe la tête de la liste sur le nouveau monstre
-				list_installation->t_first = t; 
-				t->t_prev = NULL;
+				list_installation->i_first = i; 
+				i->i_prev = NULL;
 			}
 			// Cas où des éléments sont déjà présents dans la  liste
 			else {
-				t->t_prev = list_installation->t_last; 
-				list_installation->t_last->t_next = t;  
+				i->i_prev = list_installation->i_last; 
+				list_installation->i_last->i_next = i;  
 			}
 			
 			// Pointe la fin de la liste sur le nouveau monstre
-			list_installation->t_last = t; 
+			list_installation->i_last = i; 
 
 			// On augmente de 1 la taille de la liste
 			list_installation->length++; 

@@ -12,6 +12,7 @@
 #include "../include/display.h"
 #include "../include/game.h"
 #include "../include/sprite.h"
+#include "../include/installation.h"
 
 /* Dimensions initiales et titre de la fenetre */
 static unsigned int WINDOW_WIDTH = 600;
@@ -69,9 +70,6 @@ int main (int argc, char* argv[])
         int play = 0;
         int help = 0;
         int monsterTypeInt = 0;
-
-        // Textures et surfaces associées
-        SDL_Surface* surface;
         
         // Map
         GLuint texture_map;
@@ -79,9 +77,7 @@ int main (int argc, char* argv[])
 
         // Help
         GLuint help_txt;
-        SDL_Surface* help_surface = NULL;   
-
-        GLuint tower_texture;
+        SDL_Surface* help_surface = NULL;
 
         // Init game
         Game *game = new_game();
@@ -135,8 +131,11 @@ int main (int argc, char* argv[])
         List_Tower* l_tower =  new_tower_list();
         TowerType draw_type_tower = -1;
 
-        Tower* tower = NULL;
+        // Create list installation
+        List_Installation* l_inst =  new_installation_list();
+        InstallationType draw_type_inst = -1;
 
+        
         s_map = load_sprite(map->img->path,&texture_map);
         help_surface = load_sprite("./images/aide.jpg", &help_txt);
 
@@ -153,7 +152,6 @@ int main (int argc, char* argv[])
             glMatrixMode(GL_MODELVIEW);
 
              // Check map
-
             display_map(&texture_map);
         
 
@@ -198,6 +196,9 @@ int main (int argc, char* argv[])
 
             //Affichage tours
             display_list_tower(l_tower);
+
+            //Affichage installations
+            display_list_installation(l_inst);
             
             /* Echange du front et du back buffer : mise a jour de la fenetre */
             SDL_GL_SwapBuffers();
@@ -228,14 +229,16 @@ int main (int argc, char* argv[])
                         if(draw_type_tower != -1){
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_tower(l_tower, e.button.x, e.button.y)){
-                                Tower* new_tower = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
-                                printf("clic en (%d)\n", draw_type_tower);
-                                printf("clic en (%d, %d)\n", e.button.x, e.button.y);
+                                    create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
+                                    printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
                                     printf("Tour sur une autre\n");
                                 }
-                            }
-                            
+                            }   
+                        }
+                        if(draw_type_inst != -1){
+                            create_installation(draw_type_inst, e.button.x, e.button.y, l_inst, l_tower);
+                            printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
                         }
                         break;
                     
@@ -250,8 +253,18 @@ int main (int argc, char* argv[])
                             case 'z' :
                                 draw_type_tower = ROCKET;
                                 break;
+                                
                             case 'n' :
                                 draw_type_tower = -1;
+                                draw_type_inst = -1;
+                                break;
+                            
+                            case 'd' :
+                                draw_type_inst = RADAR;
+                                break;
+
+                            case 's' :
+                                draw_type_inst = USINE;
                                 break;
 
                             case 'p' :

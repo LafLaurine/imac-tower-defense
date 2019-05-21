@@ -222,7 +222,7 @@ int map_verification(Map* map, char* map_itd){
 		}
 
 		// DERNIERES LIGNES : infos noeuds
-		int node_indice;
+		//int node_indice;
 		int node_type;
 		float node_x;
 		float node_y;
@@ -248,7 +248,7 @@ int map_verification(Map* map, char* map_itd){
 						ftoken = atof(token);
 						itoken = atoi(token);
 						if(i == 0){
-							node_indice = itoken;
+							//node_indice = itoken;
 
 							if(inBool == 0 && strcmp(token, "0")){
 								inBool = 1;

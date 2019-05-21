@@ -247,6 +247,8 @@ int display_wave(Wave wave) {
 	return success;
 }
 
+// TOWERS
+
 int display_tower(Tower* t, SDL_Surface* tourImg, GLuint *tourTexture) {
 	if(t != NULL) {
 		glEnable(GL_TEXTURE_2D);
@@ -319,6 +321,83 @@ int display_list_tower(List_Tower* list_tower) {
 		return success;
 	}
 }
+
+// INSTALLATION
+
+int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instTexture) {
+	if(i != NULL) {
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glBindTexture(GL_TEXTURE_2D, *instTexture);
+
+		glBegin(GL_QUADS);
+		glColor3ub(255, 255, 255); // couleur neutre
+		glTexCoord2d(0, 1); glVertex2d(i->x + instImg->w * 0.5, i->y + instImg->h * 0.5);
+		glTexCoord2d(0, 0); glVertex2d(i->x + instImg->w * 0.5, i->y - instImg->h * 0.5);
+		glTexCoord2d(1, 0); glVertex2d(i->x - instImg->w * 0.5, i->y - instImg->h * 0.5);
+		glTexCoord2d(1, 1); glVertex2d(i->x - instImg->w * 0.5, i->y + instImg->h * 0.5);
+		glEnd();
+
+		glBindTexture(GL_TEXTURE_2D, 0);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+
+		return 1;
+	}
+	return 0;
+}
+
+int display_list_installation(List_Installation* list_inst) {
+	int success = 1;
+	
+	if(list_inst->i_first == NULL){
+		return success;
+	} else {
+		SDL_Surface* radar = IMG_Load("./images/installations/radar.png");
+
+		if(radar == NULL) {
+			fprintf(stderr, "impossible de charger l'image radar.png \n");
+			exit(1);
+		}
+		
+		SDL_Surface* usine = IMG_Load("./images/installations/usine.png");
+		if(usine == NULL) {
+			fprintf(stderr, "impossible de charger l'image usine.png \n");
+			exit(1);
+		}
+		
+		GLuint texture_radar;
+		load_sprite("./images/installations/radar.png",&texture_radar);
+		GLuint texture_usine;
+		load_sprite("./images/installations/usine.png",&texture_usine);
+
+		Installation* i;
+		i = list_inst->i_first;
+
+		while(i != NULL) {
+			if(i->type == RADAR) {
+				if(display_installation(i, radar, &texture_radar) == 0) {
+					success = 0;
+				}
+			}
+			else if(i->type == USINE) {
+				if(display_installation(i, usine, &texture_usine) == 0) {
+					success = 0;
+				}
+			} else {
+				printf("NO");
+			}
+			i = i->i_next;
+		}
+
+		SDL_FreeSurface(radar);
+		SDL_FreeSurface(usine);
+
+		return success;
+	}
+}
+
 
 void drawCircle (int fill, int nbSeg) {
     float teta = 0;
