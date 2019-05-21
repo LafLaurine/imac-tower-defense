@@ -159,11 +159,16 @@ int tower_on_construct(Map* map, int x, int y) {
 				return 1;
 			}
 		}
+		else {
+			fprintf(stderr, "zone non constructible\n");
+			return 0;
+		}
 	}
 	else{
 		fprintf(stderr, "zone non constructible\n");
 		return 0;
 	}
+	
 }
 
 int tower_on_tower(List_Tower* list_tower, float x, float y) {
