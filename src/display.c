@@ -329,9 +329,10 @@ int display_list_tower(List_Tower* list_tower) {
 
 int display_range_tower(Tower* t) {
 	if(t != NULL) {
-		
 		glPushMatrix();
-			glColor3f(255,0,0);
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			glColor4f(1.0,0.0,0.0,0.5);
 			glTranslatef(t->x,t->y, 0.0);
 			glScalef(t->range+64,t->range+64,0);
 			drawCircle(1, 50);
