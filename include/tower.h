@@ -16,11 +16,11 @@ typedef struct Tower {
 	//Type de la tour
 	TowerType type;
 	//cadence 
-	int rate;
+	float rate;
     //puissance de tir de la tour
-	int power;
+	float power;
     //porté de la tour
-	int range;
+	float range;
 	//cout de la tour
 	int cost;
     //son chemin = noeud
