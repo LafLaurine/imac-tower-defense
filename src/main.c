@@ -195,8 +195,10 @@ int main (int argc, char* argv[])
             if(help == 1){
                 display_help(&help_txt);
             }
+
             //Affichage wave de monstres
             display_wave(wave);
+
             //Affichage tours
             display_list_tower(l_tower);
 
@@ -233,7 +235,7 @@ int main (int argc, char* argv[])
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
                                     Tower* t = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
-                                    check_tower(t, l_inst);
+                                    check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
                                     printf("Tour sur une autre\n");
@@ -244,7 +246,7 @@ int main (int argc, char* argv[])
                             if(installation_on_construct(map, e.button.x, e.button.y)) {
                                 if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
                                     Installation* i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
-                                    //check_tower_around_inst(i, l_tower);
+                                    check_around_inst(i, l_tower);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
                                     printf("Installation sur une autre\n");
