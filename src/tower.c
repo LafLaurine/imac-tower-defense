@@ -170,21 +170,3 @@ int tower_on_construct(Map* map, int x, int y) {
 	}
 	
 }
-
-int tower_on_tower(List_Tower* list_tower, float x, float y) {
-	if(list_tower != NULL) {
-		Tower* t = list_tower->t_first;
-
-		while(t != NULL) {
-			if(is_intersect(x, y, t->x, t->y, 34) == 1){
-        		return 0;
-			}
-			t = t->t_next;
-    	}
-		return 1;
-	}
-	else {
-		fprintf(stderr, "Tower not on constructible material\n");
-		return 0;
-	}
-}

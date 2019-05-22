@@ -228,7 +228,7 @@ int main (int argc, char* argv[])
                     case SDL_MOUSEBUTTONUP:
                         if(draw_type_tower != -1){
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
-                                if(tower_on_tower(l_tower, e.button.x, e.button.y)){
+                                if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
                                     create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
@@ -238,8 +238,8 @@ int main (int argc, char* argv[])
                         }
                         if(draw_type_inst != -1){
                             if(installation_on_construct(map, e.button.x, e.button.y)) {
-                                if(inst_on_inst(l_inst, e.button.x, e.button.y)){
-                                    create_installation(draw_type_inst, e.button.x, e.button.y, l_inst, l_tower);
+                                if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
+                                    create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
                                     printf("Installation sur une autre\n");

@@ -412,3 +412,64 @@ void drawCircle (int fill, int nbSeg) {
     }
     glEnd();       
 }
+
+int tower_on_building(List_Tower* list_tower, float x, float y, List_Installation* list_inst) {
+	if(list_tower != NULL) {
+		Tower* t = list_tower->t_first;
+
+		while(t != NULL) {
+			if(is_intersect(x, y, t->x, t->y, 34) == 1){
+        		return 0;
+			}
+			t = t->t_next;
+    	}
+
+		if(list_inst != NULL) {
+			Installation* i = list_inst->i_first;
+
+			while(i != NULL) {
+				if(is_intersect(x, y, i->x, i->y, 34) == 1){
+					return 0;
+				}
+				i = i->i_next;
+			}
+		}
+
+		return 1;
+	}
+	else {
+		fprintf(stderr, "Tower not on constructible material\n");
+		return 0;
+	}
+}
+
+int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower* list_tower) {
+	if(list_inst != NULL) {
+		Installation* i = list_inst->i_first;
+		
+		while(i != NULL) {
+			if(is_intersect(x, y, i->x, i->y, 34) == 1){
+				printf("BONJOUR");
+        		return 0;
+			}
+			i = i->i_next;
+    	}
+
+		if(list_tower != NULL) {
+			Tower* t = list_tower->t_first;
+
+			while(t != NULL) {
+				if(is_intersect(x, y, t->x, t->y, 34) == 1){
+					return 0;
+				}
+				t = t->t_next;
+			}
+		}
+
+		return 1;
+	}
+	else {
+		fprintf(stderr, "Installation not on constructible material\n");
+		return 0;
+	}
+}

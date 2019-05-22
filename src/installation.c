@@ -16,7 +16,7 @@ List_Installation* new_installation_list() {
 	return list_installation;
 }
 
-Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst, List_Tower* list_tower){
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst){
 	Installation* i = (Installation*)malloc(sizeof(Installation));
 
 	if(i != NULL){
@@ -98,23 +98,4 @@ int installation_on_construct(Map* map, int x, int y) {
 		return 0;
 	}
 	
-}
-
-int inst_on_inst(List_Installation* list_inst, float x, float y) {
-	if(list_inst != NULL) {
-		Installation* i = list_inst->i_first;
-		
-		while(i != NULL) {
-			if(is_intersect(x, y, i->x, i->y, 34) == 1){
-				printf("BONJOUR");
-        		return 0;
-			}
-			i = i->i_next;
-    	}
-		return 1;
-	}
-	else {
-		fprintf(stderr, "Installation not on constructible material\n");
-		return 0;
-	}
 }
