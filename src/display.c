@@ -322,6 +322,7 @@ int display_list_tower(List_Tower* list_tower) {
 	}
 }
 
+
 // INSTALLATION
 
 int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instTexture) {
