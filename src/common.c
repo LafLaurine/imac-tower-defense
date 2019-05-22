@@ -13,7 +13,7 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range)){
+			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range) == 1){
 				update_tower(t, i->type);
 			}
 			i = i->i_next;

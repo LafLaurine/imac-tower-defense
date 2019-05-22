@@ -16,6 +16,7 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture);
 int display_wave(Wave wave);
 int display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture);
 int display_list_tower(List_Tower* list_tower);
+int display_range_tower(Tower* t);
 int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instTexture);
 int display_list_installation(List_Installation* list_inst);
 void drawCircle (int fill, int nbSeg);

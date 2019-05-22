@@ -148,6 +148,7 @@ int display_help(GLuint* texture) {
 
 }
 
+// MONSTER
 
 int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 	if(m->node_next != NULL) {
@@ -190,11 +191,11 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 		glBindTexture(GL_TEXTURE_2D, texture);
 
 		glBegin(GL_QUADS);
-		glColor3ub(255, 255, 255); // couleur neutre
-		glTexCoord2d(0, 1); glVertex2d(m->x + img->w * 0.5, 600-m->y + img->h * 0.5);
-		glTexCoord2d(0, 0); glVertex2d(m->x + img->w * 0.5, 600-m->y - img->h * 0.5);
-		glTexCoord2d(1, 0); glVertex2d(m->x - img->w * 0.5, 600-m->y - img->h * 0.5);
-		glTexCoord2d(1, 1); glVertex2d(m->x - img->w * 0.5, 600-m->y + img->h * 0.5);
+			glColor3ub(255, 255, 255); // couleur neutre
+			glTexCoord2d(0, 1); glVertex2d(m->x + img->w * 0.5, 600-m->y + img->h * 0.5);
+			glTexCoord2d(0, 0); glVertex2d(m->x + img->w * 0.5, 600-m->y - img->h * 0.5);
+			glTexCoord2d(1, 0); glVertex2d(m->x - img->w * 0.5, 600-m->y - img->h * 0.5);
+			glTexCoord2d(1, 1); glVertex2d(m->x - img->w * 0.5, 600-m->y + img->h * 0.5);
 		glEnd();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -247,21 +248,25 @@ int display_wave(Wave wave) {
 	return success;
 }
 
+
 // TOWERS
 
 int display_tower(Tower* t, SDL_Surface* tourImg, GLuint *tourTexture) {
 	if(t != NULL) {
+
+		display_range_tower(t);
+		
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glBindTexture(GL_TEXTURE_2D, *tourTexture);
 
 		glBegin(GL_QUADS);
-		glColor3ub(255, 255, 255); // couleur neutre
-		glTexCoord2d(0, 1); glVertex2d(t->x + tourImg->w * 0.5, t->y + tourImg->h * 0.5);
-		glTexCoord2d(0, 0); glVertex2d(t->x + tourImg->w * 0.5, t->y - tourImg->h * 0.5);
-		glTexCoord2d(1, 0); glVertex2d(t->x - tourImg->w * 0.5, t->y - tourImg->h * 0.5);
-		glTexCoord2d(1, 1); glVertex2d(t->x - tourImg->w * 0.5, t->y + tourImg->h * 0.5);
+			glColor3ub(255, 255, 255); // couleur neutre
+			glTexCoord2d(0, 1); glVertex2d(t->x + tourImg->w * 0.5, t->y + tourImg->h * 0.5);
+			glTexCoord2d(0, 0); glVertex2d(t->x + tourImg->w * 0.5, t->y - tourImg->h * 0.5);
+			glTexCoord2d(1, 0); glVertex2d(t->x - tourImg->w * 0.5, t->y - tourImg->h * 0.5);
+			glTexCoord2d(1, 1); glVertex2d(t->x - tourImg->w * 0.5, t->y + tourImg->h * 0.5);
 		glEnd();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -322,6 +327,21 @@ int display_list_tower(List_Tower* list_tower) {
 	}
 }
 
+int display_range_tower(Tower* t) {
+	if(t != NULL) {
+		
+		glPushMatrix();
+			glColor3f(255,0,0);
+			glTranslatef(t->x,t->y, 0.0);
+			glScalef(t->range+64,t->range+64,0);
+			drawCircle(1, 50);
+		glPopMatrix();
+
+		return 1;
+	}
+	return 0;
+}
+
 
 // INSTALLATION
 
@@ -333,11 +353,11 @@ int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instText
 		glBindTexture(GL_TEXTURE_2D, *instTexture);
 
 		glBegin(GL_QUADS);
-		glColor3ub(255, 255, 255); // couleur neutre
-		glTexCoord2d(0, 1); glVertex2d(i->x + instImg->w * 0.5, i->y + instImg->h * 0.5);
-		glTexCoord2d(0, 0); glVertex2d(i->x + instImg->w * 0.5, i->y - instImg->h * 0.5);
-		glTexCoord2d(1, 0); glVertex2d(i->x - instImg->w * 0.5, i->y - instImg->h * 0.5);
-		glTexCoord2d(1, 1); glVertex2d(i->x - instImg->w * 0.5, i->y + instImg->h * 0.5);
+			glColor3ub(255, 255, 255); // couleur neutre
+			glTexCoord2d(0, 1); glVertex2d(i->x + instImg->w * 0.5, i->y + instImg->h * 0.5);
+			glTexCoord2d(0, 0); glVertex2d(i->x + instImg->w * 0.5, i->y - instImg->h * 0.5);
+			glTexCoord2d(1, 0); glVertex2d(i->x - instImg->w * 0.5, i->y - instImg->h * 0.5);
+			glTexCoord2d(1, 1); glVertex2d(i->x - instImg->w * 0.5, i->y + instImg->h * 0.5);
 		glEnd();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -400,19 +420,7 @@ int display_list_installation(List_Installation* list_inst) {
 }
 
 
-void drawCircle (int fill, int nbSeg) {
-    float teta = 0;
-    glBegin(GL_POLYGON);
-    if (fill)
-        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-    else {
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    }
-    for (teta=0; teta<=2*PI; teta+=2*PI/nbSeg) {
-        glVertex2f(0.5*cos(teta),0.5*sin(teta));
-    }
-    glEnd();       
-}
+// CHECK IF DISPLAY IS POSSIBLE
 
 int tower_on_building(List_Tower* list_tower, float x, float y, List_Installation* list_inst) {
 	if(list_tower != NULL) {
@@ -473,4 +481,21 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 		fprintf(stderr, "Installation not on constructible material\n");
 		return 0;
 	}
+}
+
+
+// OTHER
+
+void drawCircle (int fill, int nbSeg) {
+    float teta = 0;
+    glBegin(GL_POLYGON);
+    if (fill)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    else {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    for (teta=0; teta<=2*PI; teta+=2*PI/nbSeg) {
+        glVertex2f(0.5*cos(teta),0.5*sin(teta));
+    }
+    glEnd();       
 }
