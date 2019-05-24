@@ -7,6 +7,15 @@ int is_intersect(float x1, float y1, float x2, float y2, float radius){
 	return distanceSquare < radius*radius*4;
 }
 
+
+int square_intersect_circle(float x1, float x2, float y1, float y2, int size_1, int size_2){
+    if(x1 + (size_1 + size_2) >= x2 && x1 - (size_1 + size_2) <= x2 && y1 + (size_1 + size_2) >= y2 && y1 - (size_1 + size_2) <= y2){
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 int check_around_tower(Tower* t, List_Installation* list_inst){
 
 	if(list_inst != NULL) {
@@ -24,6 +33,23 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 		fprintf(stderr, "Installation not on constructible material\n");
 		return 0;
 	}
+}
+
+int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y) {
+	if(l_tower != NULL) {
+		if(current != NULL) {
+			if(tower_on_select(current,l_tower,x,y)) {
+				game->money += current->cost;
+				l_tower = delete_from_position(l_tower, current);
+				}
+		}
+		}
+		else {
+			fprintf(stderr, "Erreur la tour courante\n");
+			return 0;
+		}
+	return 1;
+
 }
 
 int check_around_inst(Installation* i, List_Tower* list_tower){

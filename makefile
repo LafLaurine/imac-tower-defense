@@ -31,7 +31,7 @@ $(OBJ)tower.o: $(SRC)tower.c $(INCL)tower.h $(INCL)geometry.h
 $(OBJ)installation.o: $(SRC)installation.c $(INCL)installation.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
-$(OBJ)game.o: $(SRC)game.c $(INCL)game.h
+$(OBJ)game.o: $(SRC)game.c $(INCL)game.h $(INCL)monster.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 $(OBJ)sprite.o: $(SRC)sprite.c $(INCL)sprite.h

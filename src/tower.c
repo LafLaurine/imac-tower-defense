@@ -18,9 +18,8 @@ List_Tower* new_tower_list() {
 	return list_tower;
 }
 
-Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
-	Tower* t = (Tower*)malloc(sizeof(Tower));
-		
+int create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
+	Tower* t = malloc(sizeof(Tower)); 
 	if(t != NULL) {
 		t->type = type; //type
 		t->x = x; //coordonnee x
@@ -40,13 +39,13 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 			t->rate = 15;
 			t->power = 10;
 			t->range = 50;
-			t->cost = 10;
+			t->cost = 20;
 		}
 		else if(type == YELLOW) {
 			t->rate = 20;
 			t->power = 15;
 			t->range = 200;
-			t->cost = 10;
+			t->cost = 50;
 		}
 		else if(type == BLUE) {
 			t->rate = 50;
@@ -56,7 +55,7 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 		}
 		add_tower_list(t, l_tower);
 		printf("%s\n", "New tower");
-		return t;
+		return 1;
 	}
 	else {
 		printf("%s\n", "Not enough memory for tower");
@@ -86,6 +85,35 @@ void add_tower_list(Tower* t, List_Tower* list_tower){
 	else {
 		printf("%s\n", "Fail to add to list tower");
 	}
+}
+
+
+Tower* clickTower(List_Tower* p_ltower, float x, float y) {
+	
+	//Vérifie que la liste de tours existe
+	if(p_ltower != NULL) {
+
+		//Tour temporaire pour parcourir la liste de tour
+		Tower* p_tmp = p_ltower->t_first;
+		
+		while(p_tmp != NULL) {
+
+			//Si on a cliqué sur une tour
+			if(x <= (p_tmp->x + 20) && x >= (p_tmp->x - 20) && y <= (p_tmp->y + 20) && y >= (p_tmp->y - 20)) {
+				return p_tmp;	
+			}
+
+			p_tmp = p_tmp->t_next;
+
+		}
+	}
+	else {
+		fprintf(stderr, "Erreur :wrong liste tour\n");
+		return NULL;
+	}
+
+	return NULL;
+
 }
 
 //delete tower from list and return list of tower
@@ -144,12 +172,22 @@ List_Tower* delete_from_position(List_Tower* list_tower, Tower* current) {
 	return list_tower; 
 }
 
-
 void destroy_tower(List_Tower* list_tower) {
 	//Si la liste n'est pas vide
 	if (list_tower->length != 0) {
 		free(list_tower);
 	}
+}
+
+
+Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y){
+	while(t != NULL){
+		if(square_intersect_circle(t->x, x, t->y, y, l_tower->length, 0)){
+		    return l_tower;
+		}
+		l_tower = l_tower->t_first->t_next;
+	}
+    return 0;
 }
 
 int tower_on_construct(Map* map, int x, int y) {
