@@ -3,6 +3,7 @@
 #include <math.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "../include/image.h"
@@ -47,7 +48,7 @@ void init_window() {
 
 int main (int argc, char* argv[])
 {
-    if(-1 == SDL_Init(SDL_INIT_VIDEO)) 
+    if(-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) 
     {
         fprintf(
             stderr, 
@@ -56,11 +57,19 @@ int main (int argc, char* argv[])
     }
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     init_window();
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+    {
+      printf("Erreur de son %s", Mix_GetError());
+    }
     reshape();
     glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapBuffers();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    Mix_Music *musique; //Création du pointeur de type Mix_Music
+    musique = Mix_LoadMUS("./images/la_vie.mp3"); //Chargement de la musique
+    Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -322,6 +331,14 @@ int main (int argc, char* argv[])
                                 else {
                                     help = 0;
                                 }
+                                if(Mix_PausedMusic() == 1)//Si la musique est en pause
+                                {
+                                    Mix_ResumeMusic(); //Reprendre la musique
+                                }
+                                else
+                                {
+                                    Mix_PauseMusic(); //Mettre en pause la musique
+                                }
                                 break;
 
                             case 'q' : 
@@ -358,6 +375,8 @@ int main (int argc, char* argv[])
         game_end(game);
     }
     /* Liberation des ressources associees a la SDL */ 
+    Mix_FreeMusic(musique); //Libération de la musique
+    Mix_CloseAudio();
     SDL_Quit();
     return EXIT_SUCCESS;
 }

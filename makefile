@@ -1,6 +1,6 @@
 CC		=	gcc
 CFLAGS	=	-Wall -O2 -g
-LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm
+LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm -lSDL_mixer
 SRC		=	./src/
 OBJ		=	./obj/
 BIN		=	./bin/
