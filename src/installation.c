@@ -16,7 +16,7 @@ List_Installation* new_installation_list() {
 	return list_installation;
 }
 
-int create_installation(InstallationType type, float x, float y, List_Installation* list_inst){
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst){
 	Installation* i = (Installation*)malloc(sizeof(Installation));
 	if(i != NULL){
 		i->type = type; //type
@@ -48,7 +48,7 @@ int create_installation(InstallationType type, float x, float y, List_Installati
 		exit(EXIT_FAILURE);
 	}
 
-	return 1;
+	return i;
 }
 
 Installation* click_installation(List_Installation* l_install, float x, float y) {

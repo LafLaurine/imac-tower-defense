@@ -243,13 +243,11 @@ int main (int argc, char* argv[])
 
                     /* Clic souris */
                     case SDL_MOUSEBUTTONDOWN:
-                    t = click_tower(l_tower, e.button.x, e.button.y);
-                    i = click_installation(l_inst,e.button.x,e.button.y);
                     if(e.button.button == SDL_BUTTON_LEFT) {
                         if(draw_type_tower != -1){
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
-                                    create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
+                                    t = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
                                     construct_tower = 1;
                                     check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
@@ -261,7 +259,7 @@ int main (int argc, char* argv[])
                         if(draw_type_inst != -1){
                             if(installation_on_construct(map, e.button.x, e.button.y)) {
                                 if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
-                                    create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
+                                    i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
                                     construct_install = 1;
                                     check_around_inst(i, l_tower);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);

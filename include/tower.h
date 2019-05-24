@@ -44,7 +44,7 @@ typedef struct List_Tower {
 } List_Tower;
 
 List_Tower* new_tower_list();
-int create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower);
+Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower);
 void add_tower_list(Tower* t, List_Tower* list_tower);
 List_Tower* delete_from_position(List_Tower* list_tower, Tower* current);
 Tower* click_tower(List_Tower* p_ltower, float x, float y);

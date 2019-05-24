@@ -18,7 +18,7 @@ List_Tower* new_tower_list() {
 	return list_tower;
 }
 
-int create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
+Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
 	Tower* t = malloc(sizeof(Tower)); 
 	if(t != NULL) {
 		t->type = type; //type
@@ -55,7 +55,7 @@ int create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tow
 		}
 		add_tower_list(t, l_tower);
 		printf("%s\n", "New tower");
-		return 1;
+		return t;
 	}
 	else {
 		printf("%s\n", "Not enough memory for tower");
