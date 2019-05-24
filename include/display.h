@@ -5,6 +5,7 @@
 #include "monster.h"
 #include "geometry.h"
 #include "tower.h"
+#include "game.h"
 #include "installation.h"
 #define PI 3.14
 
@@ -23,5 +24,11 @@ void drawCircle (int fill, int nbSeg);
 int is_intersect(float x1, float y1, float x2, float y2, float radius);
 int tower_on_building(List_Tower* list_tower, float x, float y, List_Installation* list_inst);
 int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower* list_tower);
+
+int check_around_tower(Tower* t, List_Installation* list_inst);
+void update_tower(Tower* t, InstallationType);
+int check_around_inst(Installation* i, List_Tower* list_tower);
+int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y);
+int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y);
 
 #endif

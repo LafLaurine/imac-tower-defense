@@ -3,6 +3,9 @@
 
 #include "node.h"
 #include "map.h"
+#include "common.h"
+
+
 typedef enum{
 	LASER, ROCKET, YELLOW, BLUE
 }TowerType;
@@ -44,7 +47,7 @@ List_Tower* new_tower_list();
 int create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower);
 void add_tower_list(Tower* t, List_Tower* list_tower);
 List_Tower* delete_from_position(List_Tower* list_tower, Tower* current);
-Tower* clickTower(List_Tower* p_ltower, float x, float y);
+Tower* click_tower(List_Tower* p_ltower, float x, float y);
 void destroy_tower(List_Tower* list_tower);
 Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y);
 int tower_on_construct(Map* map, int posX, int posY);

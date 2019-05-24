@@ -56,7 +56,7 @@ Image* readPPMHeader(FILE* fp, int *w, int *h)
 	unsigned char* data = (unsigned char*) image->pixelData;
 	for (int i=0; i<*w**h*3; i++)
 	{
-		if (fscanf(fp, "%u", data+i) != 1) {
+		if (fscanf(fp, "%hhu", data+i) != 1) {
 			errorMsg("Cannot read PPM : Invalid rgb component");
 		}
 	}

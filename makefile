@@ -40,7 +40,7 @@ $(OBJ)sprite.o: $(SRC)sprite.c $(INCL)sprite.h
 $(OBJ)display.o: $(SRC)display.c $(INCL)display.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
-$(OBJ)common.o: $(SRC)common.c $(INCL)common.h
+$(OBJ)common.o: $(SRC)common.c $(INCL)common.h $(INCL)installation.h $(INCL)tower.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 clean:

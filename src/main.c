@@ -69,6 +69,7 @@ int main (int argc, char* argv[])
         int cpt = 1;
         int play = 0;
         int construct_tower = 0;
+        int construct_install = 0;
         int help = 0;
         int monsterTypeInt = 0;
         
@@ -144,6 +145,7 @@ int main (int argc, char* argv[])
         s_map = load_sprite(map->img->path,&texture_map);
         help_surface = load_sprite("./images/aide.jpg", &help_txt);
 	    Tower* t;
+        Installation* i;
         int loop = 1;
 
         while(loop) 
@@ -231,17 +233,14 @@ int main (int argc, char* argv[])
                         break;
 
                     /* Clic souris */
-                    case SDL_MOUSEBUTTONUP:
-                    t = clickTower(l_tower, e.button.x, e.button.y);
+                    case SDL_MOUSEBUTTONDOWN:
+                    t = click_tower(l_tower, e.button.x, e.button.y);
+                    i = click_installation(l_inst,e.button.x,e.button.y);
                     if(e.button.button == SDL_BUTTON_LEFT) {
                         if(draw_type_tower != -1){
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
                                     create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower);
-                                    if(t!=NULL) {
-                                        printf("yes laulau c pas vide \n");
-                                        printf("%d\n",t->cost);
-                                    }
                                     construct_tower = 1;
                                     check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
@@ -253,7 +252,8 @@ int main (int argc, char* argv[])
                         if(draw_type_inst != -1){
                             if(installation_on_construct(map, e.button.x, e.button.y)) {
                                 if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
-                                    Installation* i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
+                                    create_installation(draw_type_inst, e.button.x, e.button.y, l_inst);
+                                    construct_install = 1;
                                     check_around_inst(i, l_tower);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
                                 } else {
@@ -263,12 +263,14 @@ int main (int argc, char* argv[])
                         }
                     }
                     if(e.button.button == SDL_BUTTON_RIGHT) {
-                        //le problème ici étant que t est null mais ne devrait pas l'être
-                         if(t != NULL && construct_tower == 1) {
-                                printf("COUCOU");
-								//Test click pour supprimer une tour
-								click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
-							}
+                        if(t != NULL && construct_tower == 1){
+                            //Test click pour supprimer une tour
+                            click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+						}
+                        if(i != NULL && construct_install == 1) {
+							//Test click pour supprimer une installation
+							click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+						}
                     }
                         break;
 
@@ -276,14 +278,6 @@ int main (int argc, char* argv[])
                         /*if(draw_type_tower == LASER){
 
                         } */                      
-                    break;
-
-                    case SDL_BUTTON_RIGHT:
-                   
-                    /*temp_t = tower_on_select(l_tower, e.button.x, e.button.y);
-                    if(temp_t != NULL){
-                       temp_t =  delete_from_position(l_tower,temp_t->t_first);
-                    } */
                     break;
                     
                     /* Touche clavier */

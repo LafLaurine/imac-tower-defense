@@ -3,6 +3,8 @@
 
 #include "node.h"
 #include "map.h"
+#include "common.h"
+
 
 typedef enum{
 	RADAR, USINE, STOCK
@@ -21,6 +23,7 @@ typedef struct Installation {
 	struct Installation* i_prev;
 	//tour suivante
 	struct Installation* i_next;
+	int cost;
 } Installation;
 
 //liste tour
@@ -33,7 +36,10 @@ typedef struct List_Installation {
 } List_Installation;
 
 List_Installation* new_installation_list();
-Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst);
+int create_installation(InstallationType type, float x, float y, List_Installation* list_inst);
+Installation* installation_on_select(Installation* i, List_Installation* l_inst, float x, float y);
+Installation* click_installation(List_Installation* l_install, float x, float y);
+List_Installation* delete_install_from_position(List_Installation* l_inst, Installation* current);
 void add_installation_list(Installation* t, List_Installation* list_installation);
 void destroy_installation(List_Installation* list_installation);
 int installation_on_construct(Map* map, int x, int y);

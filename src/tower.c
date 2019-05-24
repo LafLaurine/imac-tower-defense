@@ -88,7 +88,7 @@ void add_tower_list(Tower* t, List_Tower* list_tower){
 }
 
 
-Tower* clickTower(List_Tower* p_ltower, float x, float y) {
+Tower* click_tower(List_Tower* p_ltower, float x, float y) {
 	
 	//Vérifie que la liste de tours existe
 	if(p_ltower != NULL) {
@@ -99,7 +99,7 @@ Tower* clickTower(List_Tower* p_ltower, float x, float y) {
 		while(p_tmp != NULL) {
 
 			//Si on a cliqué sur une tour
-			if(x <= (p_tmp->x + 20) && x >= (p_tmp->x - 20) && y <= (p_tmp->y + 20) && y >= (p_tmp->y - 20)) {
+			if(x <= (p_tmp->x + 50) && x >= (p_tmp->x - 50) && y <= (p_tmp->y + 50) && y >= (p_tmp->y - 50)) {
 				return p_tmp;	
 			}
 
@@ -183,9 +183,9 @@ void destroy_tower(List_Tower* list_tower) {
 Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y){
 	while(t != NULL){
 		if(square_intersect_circle(t->x, x, t->y, y, l_tower->length, 0)){
-		    return l_tower;
+		    return t;
 		}
-		l_tower = l_tower->t_first->t_next;
+		t = l_tower->t_first->t_next;
 	}
     return 0;
 }
@@ -206,5 +206,5 @@ int tower_on_construct(Map* map, int x, int y) {
 		fprintf(stderr, "zone non constructible\n");
 		return 0;
 	}
-	
+	return 1;
 }
