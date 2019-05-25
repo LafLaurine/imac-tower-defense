@@ -25,8 +25,8 @@ static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 /* Nombre de bits par pixel de la fenetre */
 static const unsigned int BIT_PER_PIXEL = 32;
 
-/* Nombre minimal de millisecondes separant le rendu de deux images */
-static const Uint32 FRAMERATE_MILLISECONDS = 1000 / 40;
+/* Nombre minimal de millisecondes separant le rendu de deux images. 100 ms = 1/10eme seconde */
+static const Uint32 FRAMERATE_MILLISECONDS = 100;
 static const Uint32 FRAMERATE_MILLISECONDS_FAST = 1000 / 60;
 
 
@@ -68,7 +68,7 @@ int main (int argc, char* argv[])
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     Mix_Music *musique; //Création du pointeur de type Mix_Music
-    musique = Mix_LoadMUS("./images/la_vie.mp3"); //Chargement de la musique
+    musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
     Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */
@@ -103,10 +103,7 @@ int main (int argc, char* argv[])
     // Help
     GLuint help_txt;
     SDL_Surface* help_surface = load_sprite("./images/aide.jpg", &help_txt);
-    
-    // Init game
-    Game *game = new_game();
-    
+
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
     Node *first = root;
@@ -136,7 +133,12 @@ int main (int argc, char* argv[])
     Wave wave;
     wave.nb_lists = 1;
     wave.lists[wave.nb_lists - 1] = current_list;
+    
+    // Init game
+    Game *game = new_game();
+    game->money = 200;
     game->nb_lists_send = 1;
+    
     
     printf("New monster x position %f\n", new_m->x);
     
@@ -166,7 +168,7 @@ int main (int argc, char* argv[])
         display_map(&texture_map);
         
         //Vague monstre
-        if(cpt%40 == 0) {
+        if(cpt%50 == 0) {
             monsterTypeInt = rand()%2;
             if(monsterTypeInt == 0) {
                 m_type = BACTERY;
@@ -175,7 +177,7 @@ int main (int argc, char* argv[])
             }
             Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
             // Nouvelle liste de monstre
-            if(game->nb_lists_send < WAVENUMBER) {
+            if(cpt%550 == 0  && game->nb_lists_send < WAVENUMBER) {
                 List_Monster* newList = new_monster_list();
                 new_m = newMonster;
                 newList->m_first = new_m;
@@ -261,12 +263,17 @@ int main (int argc, char* argv[])
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
                         if(t != NULL && construct_tower == 1){
-                            //Test click pour supprimer une tour
-                            click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+                            if(click_tower(l_tower,e.button.x,e.button.y)) {
+                                //Test click pour supprimer une tour
+                                click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+                            }
+                            
 						}
                         if(i != NULL && construct_install == 1) {
-							//Test click pour supprimer une installation
-							click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                            if(click_installation(l_inst,e.button.x,e.button.y)) {
+                                //Test click pour supprimer une installation
+                                click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                            }
 						}
                     }
                     break;
