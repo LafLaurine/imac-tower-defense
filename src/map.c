@@ -136,8 +136,6 @@ int map_verification(Map* map, char* map_itd){
 		int construct_r; int construct_g; int construct_b;
 
 		if((fgets(ligne, 99, itd) != NULL) && (sscanf(ligne,"%s %d %d %d", construct, &construct_r, &construct_g, &construct_b) == 4)){
-			List_Node* list_pixels = new_List_Node();
-			map->list_pixels = list_pixels;
 			if(construct_r < 0 || construct_r > 255) {
 				fprintf(stderr, "Red value from construct out of range\n");
 				exit(EXIT_FAILURE);
@@ -424,7 +422,7 @@ int change_out_color(Image* img, unsigned char* pixels, Map* map, float r, float
 
 	return 1;
 }
-
+/*
 int change_map_color(Image* img, unsigned char* pixels, Map* map) {
 
 	change_path_color(img, pixels, map,255,255,255);
@@ -434,7 +432,7 @@ int change_map_color(Image* img, unsigned char* pixels, Map* map) {
 	change_out_color(img, pixels, map,200,0,0);
 	return 1;
 
-}
+}*/
 
 //bressenham
 int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
@@ -541,8 +539,8 @@ void free_map(Map* map) {
 	//Si la map existe
 	if (map != NULL) {
 		free(map->img);
-		free_all_node(map->list_pixels);
-		free_all_node(map->list_node);
+/*		free_all_node(map->list_pixels);
+		free_all_node(map->list_node);*/
 		free(map);
 	}
 }

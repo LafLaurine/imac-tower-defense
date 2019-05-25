@@ -39,6 +39,12 @@ int player_money_update(Game* game, int cost) {
 	return 1;
 }
 
+// Affichage du budget
+void display_budget() {
+	
+}
+
+
 void game_end(Game* game) {
 	if (game != NULL) {
 		free(game);

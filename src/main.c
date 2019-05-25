@@ -61,6 +61,13 @@ int main (int argc, char* argv[])
     {
       printf("Erreur de son %s", Mix_GetError());
     }
+
+    /*Initializing TTF */
+    if(TTF_Init() == -1)
+    {
+        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
+        exit(EXIT_FAILURE);
+    }        
     reshape();
     glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapBuffers();
@@ -70,6 +77,11 @@ int main (int argc, char* argv[])
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
     Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+
+    //Textes
+    TTF_Font* new_font;
+    SDL_Surface *text;
+    initFont(new_font,text);
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -111,7 +123,7 @@ int main (int argc, char* argv[])
     float monster_x = root->x;
     float monster_y = root->y;
     
-    printf("Current root x %f\n", monster_x);
+    
     // Test check segment
     int x1, x2, y1, y2;
     x1 = 173; y1 = 375; x2 = 173; y2 = 467;
@@ -123,7 +135,7 @@ int main (int argc, char* argv[])
       
     //création monstre
     Monster_Type m_type = BACTERY;
-    Monster* new_m = create_monster(m_type, monster_x, monster_y, root, 0);
+    Monster* new_m = create_monster(m_type, monster_x, monster_y, root, 1);
     List_Monster* current_list = new_monster_list();
     current_list->m_first = new_m;
     current_list->nb_monsters = 1;
@@ -177,8 +189,9 @@ int main (int argc, char* argv[])
             }
             Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
             // Nouvelle liste de monstre
-            if(cpt%550 == 0  && game->nb_lists_send < WAVENUMBER) {
+            if( game->nb_lists_send < WAVENUMBER) {
                 List_Monster* newList = new_monster_list();
+                printf("Current root x %f\n", monster_x);
                 new_m = newMonster;
                 newList->m_first = new_m;
                 newList->nb_monsters = 1;
