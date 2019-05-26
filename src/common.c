@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include "../include/common.h"
 
+TTF_Font *fonts[MAX_FONTS];
+
+
 int is_intersect(float x1, float y1, float x2, float y2, float radius){
 	float distanceSquare = (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
 	return distanceSquare < radius*radius*4;
@@ -23,23 +26,24 @@ int square_intersect_square(float x1, float x2, float y1, float y2, int size_1, 
     }
 }
 
-void initFont(TTF_Font* font, SDL_Surface* texte) {
-    font = loadFont(FONT,24);
-    SDL_Color white = {255, 255, 255};
-    texte = TTF_RenderText_Blended(font, "Appuyez sur h pour obtenir de l'aide !",white);
+void init_text()
+{
+	TTF_Font* font = TTF_OpenFont("bitmap.TTF", 24);
+	if(font == NULL)
+	{
+		fprintf(stderr,"Erreur au chargement de la police");
+		exit(-1);
+	}
+	fonts[FONT_24] = font;
+	fonts[FONT_32] = TTF_OpenFont("bitmap.TTF", 32);
+	fonts[FONT_48] = TTF_OpenFont("bitmap.TTF", 48);
 }
 
-TTF_Font* loadFont(const char* fontName, int size) {
-    char fontPath[80] = "fonts/";
-    strcat(fontPath, fontName);
-    strcat(fontPath, ".TTF");
-
-    TTF_Font* font = TTF_OpenFont(fontPath, size);
-
-    if(!font) {
-        fprintf(stderr, "TTF: %s\n", TTF_GetError());
-        exit (EXIT_FAILURE);
-    }
-
-    return font;
+void free_text()
+{
+	int i;
+	for(i = 0; i<MAX_FONTS; i++)
+	{
+		TTF_CloseFont(fonts[i]);
+	}
 }

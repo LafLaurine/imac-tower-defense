@@ -79,9 +79,8 @@ int main (int argc, char* argv[])
     Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     //Textes
-    TTF_Font* new_font;
-    SDL_Surface *text;
-    initFont(new_font,text);
+    SDL_Color textColor = {255,255,255};
+
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -221,7 +220,7 @@ int main (int argc, char* argv[])
         
         //Affichage installations
         display_list_installation(l_inst);
-        
+
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
             
@@ -255,6 +254,7 @@ int main (int argc, char* argv[])
                                     construct_tower = 1;
                                     check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
+                                    game->money -= t->cost;
                                 } else {
                                     printf("Tour sur une autre\n");
                                 }
@@ -267,6 +267,7 @@ int main (int argc, char* argv[])
                                     construct_install = 1;
                                     check_around_inst(i, l_tower);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
+                                    game->money -= i->cost;
                                 } else {
                                     printf("Installation sur une autre\n");
                                     }
@@ -279,6 +280,7 @@ int main (int argc, char* argv[])
                             if(click_tower(l_tower,e.button.x,e.button.y)) {
                                 //Test click pour supprimer une tour
                                 click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+                                game->money += t->cost;
                             }
                             
 						}
@@ -286,6 +288,7 @@ int main (int argc, char* argv[])
                             if(click_installation(l_inst,e.button.x,e.button.y)) {
                                 //Test click pour supprimer une installation
                                 click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                                game->money += i->cost;
                             }
 						}
                     }
@@ -389,6 +392,8 @@ int main (int argc, char* argv[])
     /* Liberation des ressources associees a la SDL */ 
     Mix_FreeMusic(musique); //Libération de la musique
     Mix_CloseAudio();
+    free_text();
+    TTF_Quit();
     SDL_Quit();
     return EXIT_SUCCESS;
 }
