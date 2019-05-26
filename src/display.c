@@ -297,7 +297,7 @@ int display_list_tower(List_Tower* list_tower) {
 			exit(1);
 		}
 		GLuint texture_rocket;
-		load_sprite("./images/towers/rocket.png",&texture_rocket);
+		load_sprite("./images/towers/tower_3.png",&texture_rocket);
 		GLuint texture_laser;
 		load_sprite("./images/towers/laser.png",&texture_laser);
 
@@ -391,6 +391,8 @@ int display_list_installation(List_Installation* list_inst) {
 		load_sprite("./images/installations/radar.png",&texture_radar);
 		GLuint texture_usine;
 		load_sprite("./images/installations/usine.png",&texture_usine);
+		GLuint texture_stock;
+		load_sprite("./images/installations/usine.png",&texture_stock);
 
 		Installation* i;
 		i = list_inst->i_first;
@@ -405,7 +407,13 @@ int display_list_installation(List_Installation* list_inst) {
 				if(display_installation(i, usine, &texture_usine) == 0) {
 					success = 0;
 				}
-			} else {
+			}
+			else if(i->type == STOCK) {
+				if(display_installation(i, usine, &texture_stock) == 0) {
+					success = 0;
+				}
+			}  
+			else {
 				printf("NO");
 			}
 			i = i->i_next;
@@ -456,7 +464,6 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 		
 		while(i != NULL) {
 			if(is_intersect(x, y, i->x, i->y, 34) == 1){
-				printf("BONJOUR");
         		return 0;
 			}
 			i = i->i_next;
@@ -539,7 +546,6 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x,
 int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y) {
 	if(l_inst != NULL) {
 		if(current != NULL) {
-			printf("t une schlag");
 			if(installation_on_select(current,l_inst,x,y)) {
 				game->money += current->cost;
 				l_inst = delete_install_from_position(l_inst, current);
