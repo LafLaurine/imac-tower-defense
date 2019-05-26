@@ -28,7 +28,7 @@ int square_intersect_square(float x1, float x2, float y1, float y2, int size_1, 
 
 void init_text()
 {
-	TTF_Font* font = TTF_OpenFont("bitmap.TTF", 24);
+	TTF_Font* font = TTF_OpenFont("./fonts/bitmap.TTF", 24);
 	if(font == NULL)
 	{
 		fprintf(stderr,"Erreur au chargement de la police");

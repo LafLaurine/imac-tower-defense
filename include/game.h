@@ -10,6 +10,7 @@ typedef struct game{
 	int nb_lists_killed; 
 	int time;
 	int over;
+	int wave;
 }Game;
 
 Game* new_game();

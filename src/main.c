@@ -80,7 +80,7 @@ int main (int argc, char* argv[])
 
     //Textes
     SDL_Color textColor = {255,255,255};
-
+    init_text();
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -121,6 +121,7 @@ int main (int argc, char* argv[])
     
     float monster_x = root->x;
     float monster_y = root->y;
+    printf("Monster root y %f",monster_y);
     
     
     // Test check segment
@@ -149,9 +150,6 @@ int main (int argc, char* argv[])
     Game *game = new_game();
     game->money = 200;
     game->nb_lists_send = 1;
-    
-    
-    printf("New monster x position %f\n", new_m->x);
     
     // Create list tower
     List_Tower* l_tower =  new_tower_list();
@@ -190,7 +188,7 @@ int main (int argc, char* argv[])
             // Nouvelle liste de monstre
             if( game->nb_lists_send < WAVENUMBER) {
                 List_Monster* newList = new_monster_list();
-                printf("Current root x %f\n", monster_x);
+                printf("Current root y %f\n", monster_y);
                 new_m = newMonster;
                 newList->m_first = new_m;
                 newList->nb_monsters = 1;
