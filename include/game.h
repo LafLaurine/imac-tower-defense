@@ -15,7 +15,8 @@ typedef struct game{
 
 Game* new_game();
 int game_update(Game* game, Monster* m_alive);
-int player_money_update(Game* game, int cost);
+int player_money_up_update(Game* game, int cost);
+int player_money_down_update(Game* game, int cost);
 void game_end(Game* game);
 
 #endif

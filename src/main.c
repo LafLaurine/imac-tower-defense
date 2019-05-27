@@ -252,7 +252,7 @@ int main (int argc, char* argv[])
                                     construct_tower = 1;
                                     check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
-                                    game->money -= t->cost;
+                                    player_money_up_update(game,t->cost);
                                 } else {
                                     printf("Tour sur une autre\n");
                                 }
@@ -265,7 +265,7 @@ int main (int argc, char* argv[])
                                     construct_install = 1;
                                     check_around_inst(i, l_tower);
                                     printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
-                                    game->money -= i->cost;
+                                    player_money_up_update(game,i->cost);
                                 } else {
                                     printf("Installation sur une autre\n");
                                     }
@@ -278,7 +278,7 @@ int main (int argc, char* argv[])
                             if(click_tower(l_tower,e.button.x,e.button.y)) {
                                 //Test click pour supprimer une tour
                                 click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
-                                game->money += t->cost;
+                                player_money_down_update(game,t->cost);
                             }
                             
 						}
@@ -286,16 +286,16 @@ int main (int argc, char* argv[])
                             if(click_installation(l_inst,e.button.x,e.button.y)) {
                                 //Test click pour supprimer une installation
                                 click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
-                                game->money += i->cost;
+                                player_money_down_update(game,i->cost);
                             }
 						}
                     }
                     break;
 
                     case SDL_MOUSEMOTION:
-                        /*if(draw_type_tower == LASER){
+                       /* if(draw_type_tower == LASER){
 
-                        } */                      
+                        } */                  
                     break;
                     
                     /* Touche clavier */
