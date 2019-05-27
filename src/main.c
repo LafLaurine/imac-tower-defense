@@ -49,12 +49,11 @@ void init_window() {
 
 int main (int argc, char* argv[])
 {
-    glutInit(&argc,argv); // initialisation de GLUT
+    int taille = 1;
+    char* vecteur[] = {"Tab texte"};
+    glutInit(&taille,vecteur); // initialisation de GLUT
 
-    //Textes
-    glColor3d(1,1,1); // Texte en blanc
-	vBitmapOutput(500,400,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
-
+    
     if(-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) 
     {
         fprintf(
@@ -168,10 +167,18 @@ int main (int argc, char* argv[])
         
         /*code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
+        glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-        
+            
         // Check map
         display_map(&texture_map);
+
+        //Textes
+        glColor3d(1,1,1); // Texte en blanc
+        vBitmapOutput(100,100,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+        //vBitmapOutput(100,200,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+        char txt[30];
+        char touch = '\0';
         
         //Vague monstre
         if(cpt%50 == 0) {

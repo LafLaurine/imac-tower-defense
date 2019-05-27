@@ -11,6 +11,6 @@ int square_intersect_circle(float x1, float x2, float y1, float y2, int size_1, 
 int square_intersect_square(float x1, float x2, float y1, float y2, int size_1, int size_2);
 void vBitmapOutput(int x, int y, char *string, void *font);
 void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font);
-
+void affichage_touche(char txt[30], char touch);
 
 #endif

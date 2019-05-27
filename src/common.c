@@ -29,7 +29,6 @@ void vBitmapOutput(int x, int y, char *string, void *font)
 	len = (int) strlen(string); // Calcule la longueur de la chaîne
 	for (i = 0; i < len; i++) {
 		glutBitmapCharacter(font,string[i]); // Affiche chaque caractère de la chaîne
-		printf("ça fonctionne");
 	}
 }
 
@@ -42,4 +41,9 @@ void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
 	for (p = string; *p; p++) 
 		glutStrokeCharacter(font, *p); // Affiche chaque caractère de la chaîne
 	glPopMatrix();
+}
+
+void affichage_touche(char txt[30], char touch) {
+	sprintf(txt,"Appuyé sur : %c ", touch);
+	vBitmapOutput(20,65,txt,GLUT_BITMAP_HELVETICA_18);
 }
