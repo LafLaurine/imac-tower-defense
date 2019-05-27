@@ -1,6 +1,6 @@
 CC		=	gcc
 CFLAGS	=	-Wall -O2 -g
-LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm -lSDL_mixer -lSDL_ttf
+LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm -lSDL_mixer -lglut
 SRC		=	./src/
 OBJ		=	./obj/
 BIN		=	./bin/
@@ -40,7 +40,7 @@ $(OBJ)sprite.o: $(SRC)sprite.c $(INCL)sprite.h
 $(OBJ)display.o: $(SRC)display.c $(INCL)display.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
-$(OBJ)common.o: $(SRC)common.c $(INCL)common.h $(INCL)installation.h $(INCL)tower.h
+$(OBJ)common.o: $(SRC)common.c $(INCL)common.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 clean:

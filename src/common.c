@@ -1,9 +1,4 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "../include/common.h"
-
-TTF_Font *fonts[MAX_FONTS];
-
 
 int is_intersect(float x1, float y1, float x2, float y2, float r1, float r2){
 	float distanceSquare = (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
@@ -26,24 +21,25 @@ int square_intersect_square(float x1, float x2, float y1, float y2, int size_1, 
     }
 }
 
-void init_text()
+void vBitmapOutput(int x, int y, char *string, void *font)
 {
-	TTF_Font* font = TTF_OpenFont("./fonts/bitmap.TTF", 24);
-	if(font == NULL)
-	{
-		fprintf(stderr,"Erreur au chargement de la police");
-		exit(-1);
+	int len,i; // len donne la longueur de la chaîne de caractères
+
+	glRasterPos2f(x,y); // Positionne le premier caractère de la chaîne
+	len = (int) strlen(string); // Calcule la longueur de la chaîne
+	for (i = 0; i < len; i++) {
+		glutBitmapCharacter(font,string[i]); // Affiche chaque caractère de la chaîne
+		printf("ça fonctionne");
 	}
-	fonts[FONT_24] = font;
-	fonts[FONT_32] = TTF_OpenFont("bitmap.TTF", 32);
-	fonts[FONT_48] = TTF_OpenFont("bitmap.TTF", 48);
 }
 
-void free_text()
+void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
 {
-	int i;
-	for(i = 0; i<MAX_FONTS; i++)
-	{
-		TTF_CloseFont(fonts[i]);
-	}
+	char *p;
+
+	glPushMatrix();	
+	glTranslatef(x, y, 0); // Positionne le premier caractère de la chaîne
+	for (p = string; *p; p++) 
+		glutStrokeCharacter(font, *p); // Affiche chaque caractère de la chaîne
+	glPopMatrix();
 }

@@ -6,6 +6,7 @@
 #include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <GL/glut.h>
 #include "../include/image.h"
 #include "../include/map.h"
 #include "../include/monster.h"
@@ -48,6 +49,12 @@ void init_window() {
 
 int main (int argc, char* argv[])
 {
+    glutInit(&argc,argv); // initialisation de GLUT
+
+    //Textes
+    glColor3d(1,1,1); // Texte en blanc
+	vBitmapOutput(500,400,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+
     if(-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) 
     {
         fprintf(
@@ -57,17 +64,11 @@ int main (int argc, char* argv[])
     }
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     init_window();
-   /* if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
     {
       printf("Erreur de son %s", Mix_GetError());
-    }*/
+    }
 
-    /*Initializing TTF */
-    if(TTF_Init() == -1)
-    {
-        fprintf(stderr, "Erreur d'initialisation de TTF_Init : %s\n", TTF_GetError());
-        exit(EXIT_FAILURE);
-    }        
     reshape();
     glClear(GL_COLOR_BUFFER_BIT);
     SDL_GL_SwapBuffers();
@@ -77,10 +78,6 @@ int main (int argc, char* argv[])
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
     Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
-
-    //Textes
-    SDL_Color textColor = {255,255,255};
-    init_text();
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -390,8 +387,6 @@ int main (int argc, char* argv[])
     /* Liberation des ressources associees a la SDL */ 
     Mix_FreeMusic(musique); //Libération de la musique
     Mix_CloseAudio();
-    free_text();
-    TTF_Quit();
     SDL_Quit();
     return EXIT_SUCCESS;
 }
