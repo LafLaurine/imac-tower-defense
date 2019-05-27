@@ -99,6 +99,10 @@ int main (int argc, char* argv[])
     // Map
     GLuint texture_map;
     SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
+
+    //Argent
+    GLuint texture_money;
+    SDL_Surface* s_money = load_sprite("./images/money.png",&texture_money);
     
     //Tower
     GLuint t_laser;
@@ -144,7 +148,6 @@ int main (int argc, char* argv[])
     
     // Init game
     Game *game = new_game();
-    game->money = 200;
     game->nb_lists_send = 1;
     
     // Create list tower
@@ -173,12 +176,13 @@ int main (int argc, char* argv[])
         // Check map
         display_map(&texture_map);
 
+        //Display argent
+        display_money(&texture_money);
+
         //Textes
         glColor3d(1,1,1); // Texte en blanc
-        vBitmapOutput(100,100,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
-        //vBitmapOutput(100,200,"Appuie sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
-        char txt[30];
-        char touch = '\0';
+        vBitmapOutput(320,50,"Appuyez sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+        vBitmapOutput(320,80,"Argent : ",GLUT_BITMAP_HELVETICA_18);
         
         //Vague monstre
         if(cpt%50 == 0) {

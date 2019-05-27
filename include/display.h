@@ -12,6 +12,7 @@
 int display_map(GLuint* texture);
 void draw_perim(float rayon);
 int display_path(Map* map);
+int display_money(GLuint* texture);
 int display_help(GLuint* texture);
 int display_monster(Monster* m, SDL_Surface* img, GLuint texture);
 int display_wave(Wave wave);

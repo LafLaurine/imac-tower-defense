@@ -42,8 +42,3 @@ void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
 		glutStrokeCharacter(font, *p); // Affiche chaque caractère de la chaîne
 	glPopMatrix();
 }
-
-void affichage_touche(char txt[30], char touch) {
-	sprintf(txt,"Appuyé sur : %c ", touch);
-	vBitmapOutput(20,65,txt,GLUT_BITMAP_HELVETICA_18);
-}
