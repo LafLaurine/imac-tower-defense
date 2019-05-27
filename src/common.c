@@ -5,9 +5,9 @@
 TTF_Font *fonts[MAX_FONTS];
 
 
-int is_intersect(float x1, float y1, float x2, float y2, float radius){
+int is_intersect(float x1, float y1, float x2, float y2, float r1, float r2){
 	float distanceSquare = (x1-x2) * (x1-x2) + (y1-y2) * (y1-y2);
-	return distanceSquare < radius*radius*4;
+	return distanceSquare < (r1+r2)*(r1+r2);
 }
 
 int square_intersect_circle(float x1, float x2, float y1, float y2, int size_1, int size_2){

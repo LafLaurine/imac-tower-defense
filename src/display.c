@@ -255,7 +255,7 @@ int display_tower(Tower* t, SDL_Surface* tourImg, GLuint *tourTexture) {
 	if(t != NULL) {
 
 		display_range_tower(t);
-		
+
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -433,7 +433,7 @@ int tower_on_building(List_Tower* list_tower, float x, float y, List_Installatio
 		Tower* t = list_tower->t_first;
 
 		while(t != NULL) {
-			if(is_intersect(x, y, t->x, t->y, 34) == 1){
+			if(is_intersect(x, y, t->x, t->y, 34, 34) == 1){
         		return 0;
 			}
 			t = t->t_next;
@@ -443,7 +443,7 @@ int tower_on_building(List_Tower* list_tower, float x, float y, List_Installatio
 			Installation* i = list_inst->i_first;
 
 			while(i != NULL) {
-				if(is_intersect(x, y, i->x, i->y, 34) == 1){
+				if(is_intersect(x, y, i->x, i->y, 34, 34) == 1){
 					return 0;
 				}
 				i = i->i_next;
@@ -463,7 +463,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(x, y, i->x, i->y, 34) == 1){
+			if(is_intersect(x, y, i->x, i->y, 34, 34) == 1){
         		return 0;
 			}
 			i = i->i_next;
@@ -473,7 +473,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 			Tower* t = list_tower->t_first;
 
 			while(t != NULL) {
-				if(is_intersect(x, y, t->x, t->y, 34) == 1){
+				if(is_intersect(x, y, t->x, t->y, 34, 34) == 1){
 					return 0;
 				}
 				t = t->t_next;
@@ -513,7 +513,7 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range) == 1){
+			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range, 34) == 1){
 				update_tower(t, i->type);
 			}
 			i = i->i_next;
@@ -566,7 +566,7 @@ int check_around_inst(Installation* i, List_Tower* list_tower){
 		Tower* t = list_tower->t_first;
 		
 		while(t != NULL) {
-			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range)){
+			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range, 34)){
 				update_tower(t, i->type);
 			}
 			t = t->t_next;

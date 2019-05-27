@@ -57,10 +57,10 @@ int main (int argc, char* argv[])
     }
     /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
     init_window();
-    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
+   /* if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
     {
       printf("Erreur de son %s", Mix_GetError());
-    }
+    }*/
 
     /*Initializing TTF */
     if(TTF_Init() == -1)
