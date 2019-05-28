@@ -30,6 +30,8 @@ void vBitmapOutput(int x, int y, char *string, void *font)
 	for (i = 0; i < len; i++) {
 		glutBitmapCharacter(font,string[i]); // Affiche chaque caractère de la chaîne
 	}
+	// Réinitialise la position du premier caractère de la chaîne
+	glRasterPos2f(0, 0);
 }
 
 void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)

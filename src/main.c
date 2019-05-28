@@ -177,13 +177,20 @@ int main (int argc, char* argv[])
         display_map(&texture_map);
 
         //Display argent
-        display_money(&texture_money);
+        glPushMatrix();
+            glTranslatef(440,68,0);
+            display_money(&texture_money);
+        glPopMatrix();
 
         //Textes
         glColor3d(1,1,1); // Texte en blanc
         vBitmapOutput(320,50,"Appuyez sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+        int money = game->money;
+        char string[100];
+        sprintf(string, "%d", money);
         vBitmapOutput(320,80,"Argent : ",GLUT_BITMAP_HELVETICA_18);
-        
+        vBitmapOutput(400,80,string,GLUT_BITMAP_HELVETICA_18);
+
         //Vague monstre
         if(cpt%50 == 0) {
             monsterTypeInt = rand()%2;

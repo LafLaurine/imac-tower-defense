@@ -156,27 +156,18 @@ int display_money(GLuint* texture) {
 		glEnable(GL_TEXTURE_2D);
 		//appel de la texture
 		glBindTexture(GL_TEXTURE_2D, *texture);
-			
 			glBegin(GL_QUADS);
-			//couleur neutre
-			glColor3ub(255,255,255);
-			glTranslatef(50,50,0);
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
 			glVertex2f(30, 13);
-
 			glTexCoord2f(1, 0);
 			glVertex2f(30, 0);
-
 			glTexCoord2f(0, 0);
 			glVertex2f(0, 0);
-
 			glTexCoord2f(0, 1);
 			glVertex2f(0, 13);
-
 			glEnd();
-
 		//Déblinder la texture
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//Désactive le texturage 2D
