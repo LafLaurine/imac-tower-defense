@@ -239,6 +239,30 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 		glDisable(GL_BLEND);
 		glDisable(GL_TEXTURE_2D);
 
+		// Jauge de vie
+		glBegin(GL_QUADS);
+		glColor3ub(255, 0, 0);
+		glVertex2d(m->x, m->y + 30);
+		glVertex2d(m->x, m->y + 40);
+		if(m->pv_max > 0 && m->pv_max < 1) {
+			glVertex2d(m->x + 1, m->y + 30);
+			glVertex2d(m->x + 1, m->y + 40);
+		}
+		else {
+			glVertex2d(m->x + m->pv_max / 2, m->y + 30);
+			glVertex2d(m->x + m->pv_max / 2, m->y + 40);
+		}	
+		glEnd();
+
+		// Contour de la jauge
+		glBegin(GL_LINE_LOOP);
+		glColor3ub(30, 30, 30);
+		glVertex2d(m->x, m->y + 30);
+		glVertex2d(m->x, m->y + 40);
+		glVertex2d(m->x + m->pv / 2 , m->y + 30);
+		glVertex2d(m->x + m->pv / 2, m->y + 40);
+		glEnd();
+
 		return 1;
 	}
 	return 0;
@@ -625,3 +649,8 @@ void update_tower(Tower* t, InstallationType type_inst){
 		t->rate += (t->rate)*0.25;		
 	}
 }
+
+/*
+int shot_monster(List_Monster* l_monster, Tower* p_courant) {
+
+}*/
