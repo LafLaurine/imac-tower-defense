@@ -31,6 +31,7 @@ int check_around_inst(Installation* i, List_Tower* list_tower);
 int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y);
 int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y);
 
-void display_text();
+int shot_monster(Monster* m, Tower* t);
+
 
 #endif

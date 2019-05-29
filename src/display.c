@@ -650,7 +650,11 @@ void update_tower(Tower* t, InstallationType type_inst){
 	}
 }
 
-/*
-int shot_monster(List_Monster* l_monster, Tower* p_courant) {
-
-}*/
+int shot_monster(Monster* m, Tower* t) {
+	if(is_intersect(m->x, m->y, t->x, t->y, 34+t->range, 34) == 1) {
+		m->pv = m->pv - t->power;
+		printf("PV MONSTRE %d",m->pv);
+		return 1;
+	}
+	return 0;
+}
