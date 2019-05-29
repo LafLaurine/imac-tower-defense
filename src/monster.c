@@ -45,7 +45,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
         m->money += 5*nb_lists;
         m->type = type;
         m->x = x;
-        printf("LE MONSTRE EN X%f",m->x);
+        printf("LE MONSTRE EN X%f",x);
         m->y = y;
         printf("LE MONSTRE EN Y%f",m->x);
         m->node_next = node_next;

@@ -20,7 +20,7 @@ List_Node* new_List_Node() {
 int add_node(List_Node* list_node, Node_Type type, float x, float y, int *successors) {
 
 	// On vérifie si notre liste a été allouée
-	if (list_node!= NULL) {
+	if (list_node != NULL) {
 		//Création d'un nouveau noeud
 		Node* new_node = malloc(sizeof(Node));
 		int *successors = malloc(sizeof(int*));
@@ -37,15 +37,18 @@ int add_node(List_Node* list_node, Node_Type type, float x, float y, int *succes
 			new_node->next = NULL; 
 
 			// Cas où notre liste est vide (pointeur vers fin de liste à  NULL)
-			if (list_node->tail == NULL) 
+			if (list_node->tail == NULL) {
 				list_node->head = new_node; // Pointe la tête de la liste sur le nouveau noeud
-
+				list_node->tail = new_node; 
+				
 			// Cas où des éléments sont déjà présents dans la  liste
-			else 
-				list_node->tail->next = new_node;  // Relie le dernier de la liste au nouveau noeud
+			} else {
+				new_node->next = list_node->head;
+				list_node->head = new_node;  // Relie le dernier de la liste au nouveau noeud
+			}
 
 			// Pointe la fin de la liste sur le nouveau noeud
-			list_node->tail = new_node; 
+			
 
 			// On augmente de 1 la taille de la liste
 			list_node->length++; 
