@@ -25,7 +25,7 @@ typedef struct List_Node {
 	//lenght of list
 	size_t length;
 	Node *head; //pointeur to first element
-	Node *tail; //pointeur to last element
+	//Node *tail; //pointeur to last element
 }List_Node;
 
 //Init node's list

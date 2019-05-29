@@ -119,10 +119,9 @@ int main (int argc, char* argv[])
     Node *root = map->list_node->head;
     Node *first = root;
     
-    float monster_x = 100;
-    float monster_y = 200;
+    float monster_x = 0;
+    float monster_y = 0;
     printf("Monster root head y %f", map->list_node->head->y);
-    printf("Monster root tail y %f", map->list_node->tail->y);
     
     
     // Test check segment

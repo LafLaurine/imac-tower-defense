@@ -10,7 +10,7 @@ List_Node* new_List_Node() {
 	if (new_lnode != NULL) {
 		new_lnode->length = 0;
 		new_lnode->head = NULL;
-		new_lnode->tail = NULL;
+		//new_lnode->tail = NULL;
 	}
 	return new_lnode;
 }
@@ -37,12 +37,9 @@ int add_node(List_Node* list_node, Node_Type type, float x, float y, int *succes
 			new_node->next = NULL; 
 
 			// Cas où notre liste est vide (pointeur vers fin de liste à  NULL)
-			if (list_node->tail == NULL) {
+			if (list_node->head == NULL) {
 				list_node->head = new_node; // Pointe la tête de la liste sur le nouveau noeud
-				list_node->tail = new_node; 
-				
-			// Cas où des éléments sont déjà présents dans la  liste
-			} else {
+			} else { // Cas où des éléments sont déjà présents dans la  liste
 				new_node->next = list_node->head;
 				list_node->head = new_node;  // Relie le dernier de la liste au nouveau noeud
 			}
@@ -77,10 +74,10 @@ List_Node* remove_node(List_Node* current_node, Node* current) {
 
 			//Pointe la tête de la liste vers le noeud suivante
 			current_node->head = current->next;
-
+/*
 			if(current_node->head == NULL) 
 				current_node->tail = NULL;
-			
+			*/
 			free(current);
 			//Décrémente de un la taille de la liste
 			current_node->length--;
@@ -116,10 +113,10 @@ List_Node* free_node_by_position(List_Node* list_node, Node* current) {
 
 			//Pointe la tête de la liste vers le noeud suivante
 			list_node->head = current->next;
-
+/*
 			if(list_node->head == NULL) 
 				list_node->tail = NULL;
-			
+			*/
 			//Libère espace mémoire : supprime la tour
 			free(current);
 			//Décrémente de un la taille de la liste
