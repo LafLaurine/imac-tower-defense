@@ -253,6 +253,7 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 					m->y -= 1;
 				}
 			}
+
 			if(m->x == m->node_next->x && m->y == m->node_next->y) {
 				m->node_next = m->node_next->next;
 			}
@@ -309,7 +310,7 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 	return 0;
 }
 
-int display_wave(Wave wave) {
+int display_wave(List_Monster *l_monster) {
 	SDL_Surface* bactery = IMG_Load("./images/bactery.png");
 	if(bactery == NULL) {
 		fprintf(stderr, "impossible de charger l'image bactery.png \n");
@@ -325,7 +326,7 @@ int display_wave(Wave wave) {
 	GLuint texture_virus;
 	load_sprite("./images/virus.png",&texture_virus);
 
-	Monster* m;
+	/*Monster* m;
 	int success = 1;
 	for(int i = 0; i < wave.nb_lists; i++) {
 		m = wave.lists[i]->m_first;
@@ -342,7 +343,25 @@ int display_wave(Wave wave) {
 			}
 			m = m->m_next;
 		}
-	}
+	}*/
+
+	Monster* m;
+	int success = 1;
+	m = l_monster->m_first;
+
+		while(m != NULL) {
+			if(m->type == BACTERY) {
+				if(display_monster(m, bactery, texture_bactery) == 0) {
+					success = 0;
+				}
+			}
+			else {
+				if(display_monster(m, virus, texture_bactery) == 0) {
+					success = 0;
+				}
+			}
+			m = m->m_next;
+		}
 
 	SDL_FreeSurface(bactery);
 	SDL_FreeSurface(virus);
@@ -691,8 +710,42 @@ void update_tower(Tower* t, InstallationType type_inst){
 	}
 }
 
+// MONSTER AND TOWERS
+
+int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
+	if(list_tower != NULL) {
+		Tower* t = list_tower->t_first;
+		int compteurTour = 0;
+		int compteurMonstre = 0;
+
+		while(t != NULL){
+
+			if(list_monster != NULL) {
+				Monster* m = list_monster->m_first;
+
+				while(m != NULL) {
+					if(shot_monster(m,t)){
+						if(m->pv <= 0){
+							kill_monster(list_monster, m);
+						}
+					}
+					m = m->m_next;
+					compteurMonstre++;
+				}
+			}
+			compteurTour++;
+			t = t->t_next;
+		}
+		return 1;
+	}
+	else {
+		fprintf(stderr, "No monsters here\n");
+		return 0;
+	}
+}
+
 int shot_monster(Monster* m, Tower* t) {
-	if(is_intersect(m->x, m->y, t->x, t->y, 34+t->range, 34) == 1) {
+	if(is_intersect(t->x, t->y, m->x, m->y, 34+t->range, 34)) {
 		m->pv = m->pv - t->power;
 		printf("PV MONSTRE %d",m->pv);
 		return 1;

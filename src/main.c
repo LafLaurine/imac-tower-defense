@@ -138,17 +138,17 @@ int main (int argc, char* argv[])
     }
       
     //création monstre
+    List_Monster* l_monster = new_monster_list();
     Monster_Type m_type = BACTERY;
-    Monster* new_m = create_monster(m_type, monster_x, monster_y, root, 1);
-    List_Monster* current_list = new_monster_list();
-    current_list->m_first = new_m;
-    current_list->nb_monsters = 1;
-    current_list->nb_monsters_send = 1;
+    /*Monster* new_m = create_monster(m_type, monster_x, monster_y, root, l_monster);
+    l_monster->m_first = new_m;
+    l_monster->nb_monsters = 1;
+    l_monster->nb_monsters_send = 1;*/
     
     // Création de la vague des monstres
     Wave wave;
     wave.nb_lists = 1;
-    wave.lists[wave.nb_lists - 1] = current_list;
+    wave.lists[wave.nb_lists - 1] = l_monster;
     
     // Init game
     Game *game = new_game();
@@ -210,6 +210,8 @@ int main (int argc, char* argv[])
 
 
         //Vague monstre
+        int waveBool = 0;
+
         if(cpt%80 == 0) {
             monsterTypeInt = rand()%2;
             if(monsterTypeInt == 0) {
@@ -217,8 +219,19 @@ int main (int argc, char* argv[])
             } else {
                 m_type = VIRUS;
             }
-            Monster* newMonster = create_monster(m_type, monster_x, monster_y, root, game->nb_lists_send);
+
             // Nouvelle liste de monstre
+            while((l_monster->nb_monsters < 10) && (waveBool == 0)){
+                create_monster(m_type, monster_x, monster_y, root, l_monster);
+            }
+
+            if(l_monster->nb_monsters == 10){
+                waveBool = 1;
+            } else if (l_monster->nb_monsters == 0) {
+                waveBool = 0;
+            }
+
+            /*
             if( game->nb_lists_send < WAVENUMBER) {
                 List_Monster* newList = new_monster_list();
                 printf("Current root y %f\n", monster_y);
@@ -226,25 +239,29 @@ int main (int argc, char* argv[])
                 newList->m_first = new_m;
                 newList->nb_monsters = 1;
                 newList->nb_monsters_send = 1;
-                current_list = newList;
+                l_monster = newList;
                 wave.nb_lists += 1;
                 game->nb_lists_send += 1;
-                wave.lists[wave.nb_lists - 1] = current_list;
-            } else if(current_list->nb_monsters_send < 10) {
+                wave.lists[wave.nb_lists - 1] = l_monster;
+            } else if(l_monster->nb_monsters_send < 10) {
                 // Ajout du monstre à la liste actuelle
                 new_m = add_monster(new_m, newMonster);
                 wave.lists[wave.nb_lists - 1]->m_first = new_m;
-                current_list->nb_monsters += 1;
-                current_list->nb_monsters_send += 1;
-                }
+                l_monster->nb_monsters += 1;
+                l_monster->nb_monsters_send += 1;
+            }*/
         }
         cpt++;
+
+        monster_on_tower(l_monster, l_tower);
+        
+
         if(help == 1){
             display_help(&help_txt);
         }
 
         //Affichage wave de monstres
-        display_wave(wave);
+        display_wave(l_monster);
         
         //Affichage tours
         display_list_tower(l_tower);

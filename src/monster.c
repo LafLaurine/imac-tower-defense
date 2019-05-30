@@ -17,7 +17,7 @@ List_Monster* new_monster_list() {
 	return list_monster;
 }
 
-Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, int nb_lists){
+Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, List_Monster *l_monster){
     if(node_next == NULL) {
         fprintf(stderr, "pointer is NULL in createMonster function \n");
         exit(1);
@@ -41,8 +41,6 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
             m->money = 10;
         }
         //la resistance et l'argent gagné augmente en fonction des vagues
-        m->resist += 10*nb_lists;
-        m->money += 5*nb_lists;
         m->type = type;
         m->x = x;
         printf("LE MONSTRE EN X%f",x);
@@ -50,15 +48,16 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, in
         printf("LE MONSTRE EN Y%f",m->x);
         m->node_next = node_next;
         m->m_next = NULL;
-    }
 
+        add_monster_list(m, l_monster);
+    }
     else {
         printf("%s\n", "Not enough memory for monster");
     }
 	return m;
 }
 
-
+/*
 Monster* add_monster(Monster* m, Monster* new_monster){
 	if (m != NULL && new_monster!= NULL) {
 		// Pointe le monstre suivant de la liste sur le nouveau
@@ -69,8 +68,29 @@ Monster* add_monster(Monster* m, Monster* new_monster){
         exit(EXIT_FAILURE);
 	}
     return new_monster;
+}*/
+
+void add_monster_list(Monster* m, List_Monster* list_monster){
+	if (list_monster != NULL) {
+		if (list_monster->m_first == NULL) {
+				// Pointe la tête de la liste sur le nouveau monstre
+				list_monster->m_first = m;
+			}
+			// Cas où des éléments sont déjà présents dans la  liste
+			else {
+				list_monster->m_first->m_next = m; 
+			}
+
+			// On augmente de 1 la taille de la liste
+			list_monster->nb_monsters++;
+            printf("NB MONSTRES :%d\n", list_monster->nb_monsters); 
+		}
+	else {
+		printf("%s\n", "Fail to add to list tower");
+	}
 }
 
+/*
 Monster* kill_monsters(Monster* monsterList, Monster* monster) {
     if(monsterList == NULL) {
         fprintf(stderr, "Cannot kill monster\n");
@@ -111,8 +131,34 @@ Monster* kill_monsters(Monster* monsterList, Monster* monster) {
 
 void kill_one_monster(Monster* m) {
     if(m != NULL) {
-        kill_one_monster(m->m_next);
+        //kill_one_monster(m->m_next);
         free(m);
     }
 }
+*/
 
+void kill_monster(List_Monster *l_monster, Monster* m) {
+    if (l_monster != NULL) {
+        // If monster to kill is the first of the list
+		if (l_monster->m_first == m) {
+                l_monster->m_first = m->m_next;
+                free(m);
+			}
+			// Cas où des éléments sont déjà présents dans la  liste
+			else {
+                Monster *mCheck = l_monster->m_first;
+                while(mCheck->m_next != m && mCheck->m_next != NULL){
+                    mCheck = mCheck->m_next;
+                }
+                if(mCheck->m_next == m){
+                    mCheck->m_next = m->m_next;
+                }
+			}
+
+			// On diminue de 1 la taille de la liste
+			l_monster->nb_monsters--; 
+		}
+	else {
+		printf("%s\n", "Cannot kill monster");
+	}
+}

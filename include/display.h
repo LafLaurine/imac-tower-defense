@@ -15,7 +15,7 @@ int display_path(Map* map);
 int display_money(GLuint* texture);
 int display_help(GLuint* texture);
 int display_monster(Monster* m, SDL_Surface* img, GLuint texture);
-int display_wave(Wave wave);
+int display_wave(List_Monster *l_monster);
 int display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture);
 int display_list_tower(List_Tower* list_tower);
 int display_range_tower(Tower* t);
@@ -33,6 +33,7 @@ int click_installation_delete(List_Installation* l_inst, Installation* current, 
 
 int shot_monster(Monster* m, Tower* t);
 int display_cross(GLuint* texture);
+int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower);
 
 
 #endif
