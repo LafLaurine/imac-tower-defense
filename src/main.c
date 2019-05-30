@@ -128,6 +128,10 @@ int main (int argc, char* argv[])
     GLuint game_win;
     game_win = load_sprite("images/game_win.jpg",&game_win);
 
+    //Game start
+    GLuint game_start;
+    game_start = load_sprite("images/game_start.jpg",&game_start);
+
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
     Node *first = root;
@@ -177,6 +181,7 @@ int main (int argc, char* argv[])
     
     while(loop) 
     {
+            
         root = first;
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
@@ -217,13 +222,18 @@ int main (int argc, char* argv[])
         vBitmapOutput(320,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
         vBitmapOutput(540,100,string_wave,GLUT_BITMAP_HELVETICA_18);
 
-        if(game->over == 1) {
+        if(game->start == 0) {
+			display_help(&game_start);
+		}
+        else if(game->over == 1) {
             display_help(&game_over);
 		}
 
-        if(game->win == 1) {
+        else if(game->win == 1) {
             display_help(&game_win);
         }
+
+        else {
 
 
         //Vague monstre
@@ -289,6 +299,7 @@ int main (int argc, char* argv[])
         display_list_installation(l_inst);
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
+        }
         SDL_GL_SwapBuffers();
         }
             
@@ -405,10 +416,14 @@ int main (int argc, char* argv[])
                                 draw_type_tower = -1;
                                 break;
 
-                            case 's' :
+                            case 'u' :
                                 draw_type_inst = USINE;
                                 draw_type_tower = -1;
                                 break;
+                            
+                            case 's' :
+                               game->start = 1;
+                            break;
 
                             case 'a' :
                                 if(speed == 0)
