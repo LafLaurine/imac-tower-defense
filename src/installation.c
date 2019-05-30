@@ -116,7 +116,6 @@ Installation* installation_on_select(Installation* i, List_Installation* l_inst,
 //delete installation from list and return list of installation
 List_Installation* delete_install_from_position(List_Installation* l_inst, Installation* current) {
 	if (l_inst != NULL) {
-		printf("OUI TQT LAU");
 		if(current != NULL) {
 			//Si c'est la dernièl'installation de la liste
 			if (current->i_next == NULL) {

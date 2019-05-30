@@ -154,6 +154,8 @@ int display_money(GLuint* texture) {
 
 		//Active le texturage 2D
 		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//appel de la texture
 		glBindTexture(GL_TEXTURE_2D, *texture);
 			glBegin(GL_QUADS);
