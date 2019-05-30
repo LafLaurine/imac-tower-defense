@@ -10,13 +10,13 @@ List_Node* new_List_Node() {
 	if (new_lnode != NULL) {
 		new_lnode->length = 0;
 		new_lnode->head = NULL;
-		//new_lnode->tail = NULL;
+		new_lnode->tail = NULL;
 	}
 	return new_lnode;
 }
 
 /* Nv noeud dans liste */
-
+/*
 int add_node(List_Node* list_node, Node_Type type, float x, float y, int *successors) {
 
 	// On vérifie si notre liste a été allouée
@@ -35,6 +35,8 @@ int add_node(List_Node* list_node, Node_Type type, float x, float y, int *succes
 			new_node->successors = successors;
 			// Rajoute à la fin : dernier élement de la liste 
 			new_node->next = NULL; 
+
+			add_node_list(new_node, list_node);
 
 			// Cas où notre liste est vide (pointeur vers fin de liste à  NULL)
 			if (list_node->head == NULL) {
@@ -62,6 +64,49 @@ int add_node(List_Node* list_node, Node_Type type, float x, float y, int *succes
 
 	printf("Node added\n");
 	return 1; 
+}*/
+
+int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node){
+	Node* n = malloc(sizeof(Node));
+	//int *n_successors = malloc(sizeof(int*));
+
+	if(n != NULL) {
+		n->type = type; //type
+		n->x = x; //coordonnee x
+		n->y = y; //coordonnee y
+		n->successors = successors;
+		n->next = NULL;
+		printf("New node y position %f\n", n->y);
+
+		add_node_list(n, l_node);
+		return 1;
+	} else {
+		printf("%s\n", "Not enough memory for node");
+		return 0;
+	}
+}
+
+void add_node_list(Node* n, List_Node* list_node){
+	if (list_node != NULL) {
+		if (list_node->tail == NULL) { 
+				// Pointe la tête de la liste sur le nouveau monstre
+				list_node->head = n;
+			}
+			// Cas où des éléments sont déjà présents dans la  liste
+			else {
+				n->prev = list_node->tail; 
+				list_node->tail->next = n;
+			}
+			
+			// Pointe la fin de la liste sur le nouveau monstre
+			list_node->tail = n;
+
+			// On augmente de 1 la taille de la liste
+			list_node->length++; 
+		}
+	else {
+		printf("%s\n", "Fail to add to list node");
+	}
 }
 
 

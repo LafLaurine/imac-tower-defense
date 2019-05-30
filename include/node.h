@@ -18,6 +18,8 @@ typedef struct Node {
 	int *successors;
 	//Next node
 	struct Node *next;
+	//Next node
+	struct Node *prev;
 }Node;
 
 //List of node struct
@@ -25,13 +27,16 @@ typedef struct List_Node {
 	//lenght of list
 	size_t length;
 	Node *head; //pointeur to first element
-	//Node *tail; //pointeur to last element
+	Node *tail; //pointeur to last element
 }List_Node;
 
 //Init node's list
 List_Node* new_List_Node();
+//Create node
+int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node);
+//int add_node(List_Node*, Node_Type type, float x, float y, int *successors);
 //Add node to list
-int add_node(List_Node*, Node_Type type, float x, float y, int *successors);
+void add_node_list(Node* n, List_Node* list_node);
 //Delete one node
 List_Node* remove_node(List_Node* current_node, Node* current);
 //Delete list of node

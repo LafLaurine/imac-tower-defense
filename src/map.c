@@ -229,9 +229,9 @@ int map_verification(Map* map, char* map_itd){
 		int inBool = 0; //boolean
 		int outBool = 0;
 
+		map->list_node = new_List_Node();
 		while(fgets(ligne, 99, itd) != NULL){
 				
-				map->list_node = new_List_Node();
 				if(map->list_node != NULL){
 					
 					//Récupére les coordonnées
@@ -274,7 +274,7 @@ int map_verification(Map* map, char* map_itd){
 					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
 							
 						//Vérifie que le noeud à bien été ajouté à la liste de noeud
-						if(add_node(map->list_node, node_type, node_x, node_y, successors) != 1) {
+						if(create_node(node_type, node_x, node_y, successors, map->list_node) != 1) {
 							fprintf(stderr, "Nodes not added");
 							exit(EXIT_FAILURE);
 						}

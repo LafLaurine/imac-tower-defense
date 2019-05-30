@@ -119,8 +119,8 @@ int main (int argc, char* argv[])
     Node *root = map->list_node->head;
     Node *first = root;
     
-    float monster_x = 0;
-    float monster_y = 0;
+    float monster_x = root->x;
+    float monster_y = root->y;
     printf("Monster root head y %f", map->list_node->head->y);
     
     
