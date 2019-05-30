@@ -12,6 +12,7 @@ typedef struct game{
 	int nb_lists_killed; 
 	int start;
 	int win;
+	int pause;
 	int over;
 	int wave;
 }Game;

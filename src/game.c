@@ -12,6 +12,7 @@ Game* new_game() {
 		n_game->nb_lists_send = 0;
 		n_game->nb_lists_killed = 0; 
 		n_game->wave = 0;
+		n_game->pause = 0;
 		n_game->start = 0;
 		n_game->win = 0;
 		n_game->over = 0;

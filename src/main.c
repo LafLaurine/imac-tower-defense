@@ -92,6 +92,7 @@ int main (int argc, char* argv[])
     int construct_install = 0;
     int help = 0;
     int monsterTypeInt = 0;
+    int waveBool = 0;
 
     //Init map
     Map* map = init_map(argv[1]);
@@ -122,6 +123,10 @@ int main (int argc, char* argv[])
     //Game over
     GLuint game_over;
     game_over = load_sprite("images/game_over.jpeg",&game_over);
+
+    //Game win
+    GLuint game_win;
+    game_win = load_sprite("images/game_win.jpg",&game_win);
 
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
@@ -216,10 +221,14 @@ int main (int argc, char* argv[])
             display_help(&game_over);
 		}
 
+        if(game->win == 1) {
+            display_help(&game_win);
+        }
+
 
         //Vague monstre
-        int waveBool = 0;
 
+        if(game->pause == 0) {
         if(cpt%80 == 0) {
             monsterTypeInt = rand()%2;
             if(monsterTypeInt == 0) {
@@ -260,7 +269,7 @@ int main (int argc, char* argv[])
             }*/
         }
         cpt++;
-
+      
         monster_on_tower(l_monster, l_tower);
         
 
@@ -281,6 +290,7 @@ int main (int argc, char* argv[])
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
+        }
             
         /* Boucle traitant les evenements */
         SDL_Event e;
@@ -354,6 +364,7 @@ int main (int argc, char* argv[])
                             }
 						}
                     }
+                    
 
                    
                     break;
@@ -371,6 +382,13 @@ int main (int argc, char* argv[])
                                 draw_type_tower = LASER;
                                 draw_type_inst = -1;
                                 break;
+                            
+                            case 'p' :
+                                 if(game->pause == 0)
+                                    game->pause = 1;
+                                else
+                                    game->pause = 0;
+                                break;     
                             
                             case 'z' :
                                 draw_type_tower = ROCKET;
@@ -414,6 +432,10 @@ int main (int argc, char* argv[])
                                 {
                                     Mix_PauseMusic(); //Mettre en pause la musique
                                 }
+                                 if(game->pause == 0)
+                                    game->pause = 1;
+                                else
+                                    game->pause = 0;
                                 break;
 
                             case 'q' : 
