@@ -148,6 +148,7 @@ int display_help(GLuint* texture) {
 
 }
 
+//display money
 int display_money(GLuint* texture) {
 
 	if(texture != NULL) {
@@ -178,7 +179,45 @@ int display_money(GLuint* texture) {
 		
 	}
 	else {
-		fprintf(stderr, "Couldn't find help\n");
+		fprintf(stderr, "Couldn't find money\n");
+		return 0;
+	}
+
+	return 1;
+}
+
+//display cross
+int display_cross(GLuint* texture) {
+
+	if(texture != NULL) {
+
+		//Active le texturage 2D
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//appel de la texture
+		glBindTexture(GL_TEXTURE_2D, *texture);
+			glBegin(GL_QUADS);
+			//coordonée de la texture
+			glTexCoord2f(1, 1);
+			//Cordonnée du quadrilatère 
+			glVertex2f(20, 20);
+			glTexCoord2f(1, 0);
+			glVertex2f(20, 0);
+			glTexCoord2f(0, 0);
+			glVertex2f(0, 0);
+			glTexCoord2f(0, 1);
+			glVertex2f(0, 20);
+			glEnd();
+		//Déblinder la texture
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//Désactive le texturage 2D
+		glDisable(GL_TEXTURE_2D);
+
+		
+	}
+	else {
+		fprintf(stderr, "Couldn't find cross\n");
 		return 0;
 	}
 

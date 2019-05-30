@@ -32,6 +32,7 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x,
 int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y);
 
 int shot_monster(Monster* m, Tower* t);
+int display_cross(GLuint* texture);
 
 
 #endif

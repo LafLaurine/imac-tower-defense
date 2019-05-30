@@ -103,6 +103,10 @@ int main (int argc, char* argv[])
     //Argent
     GLuint texture_money;
     SDL_Surface* s_money = load_sprite("./images/money.png",&texture_money);
+
+    //Croix pour quitter
+    GLuint texture_cross;
+    SDL_Surface* s_cross = load_sprite("./images/cross.png",&texture_cross);
     
     //Tower
     GLuint t_laser;
@@ -182,17 +186,31 @@ int main (int argc, char* argv[])
             display_money(&texture_money);
         glPopMatrix();
 
+        //Display cross
+        glPushMatrix();
+            glTranslatef(580,0,0);
+            display_cross(&texture_cross);
+        glPopMatrix();
+
         //Textes
         glColor3d(1,1,1); // Texte en blanc
         vBitmapOutput(320,50,"Appuyez sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
         int money = game->money;
-        char string[100];
-        sprintf(string, "%d", money);
+        char string_money[100];
+        sprintf(string_money, "%d", money);
         vBitmapOutput(320,80,"Argent : ",GLUT_BITMAP_HELVETICA_18);
-        vBitmapOutput(400,80,string,GLUT_BITMAP_HELVETICA_18);
+        //affichage nb argent qu'on a 
+        vBitmapOutput(400,80,string_money,GLUT_BITMAP_HELVETICA_18);
+        
+        int nb_wave = wave.nb_lists;
+        char string_wave[100];
+        sprintf(string_wave, "%d", nb_wave);
+        vBitmapOutput(320,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
+        vBitmapOutput(540,100,string_wave,GLUT_BITMAP_HELVETICA_18);
+
 
         //Vague monstre
-        if(cpt%50 == 0) {
+        if(cpt%80 == 0) {
             monsterTypeInt = rand()%2;
             if(monsterTypeInt == 0) {
                 m_type = BACTERY;
@@ -286,6 +304,10 @@ int main (int argc, char* argv[])
                                     }
                             }   
                         }
+
+                        if(e.button.x <= 600 && e.button.x >= 580 && e.button.y <= 20 && e.button.y >= 0) {
+                            loop = 0;
+                        }
                     }
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
@@ -305,6 +327,8 @@ int main (int argc, char* argv[])
                             }
 						}
                     }
+
+                   
                     break;
 
                     case SDL_MOUSEMOTION:
