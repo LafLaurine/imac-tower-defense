@@ -10,7 +10,8 @@ typedef struct game{
 	int monster_alive;
 	int nb_lists_send;
 	int nb_lists_killed; 
-	int time;
+	int start;
+	int win;
 	int over;
 	int wave;
 }Game;

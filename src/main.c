@@ -87,7 +87,7 @@ int main (int argc, char* argv[])
 	}
 
     int cpt = 1;
-    int play = 0;
+    int speed = 0;
     int construct_tower = 0;
     int construct_install = 0;
     int help = 0;
@@ -118,6 +118,10 @@ int main (int argc, char* argv[])
     // Help
     GLuint help_txt;
     SDL_Surface* help_surface = load_sprite("./images/aide.jpg", &help_txt);
+
+    //Game over
+    GLuint game_over;
+    game_over = load_sprite("images/game_over.jpeg",&game_over);
 
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
@@ -208,6 +212,10 @@ int main (int argc, char* argv[])
         vBitmapOutput(320,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
         vBitmapOutput(540,100,string_wave,GLUT_BITMAP_HELVETICA_18);
 
+        if(game->over == 1) {
+            display_help(&game_over);
+		}
+
 
         //Vague monstre
         int waveBool = 0;
@@ -261,7 +269,9 @@ int main (int argc, char* argv[])
         }
 
         //Affichage wave de monstres
-        display_wave(l_monster);
+        if (display_wave(l_monster) == 0) {
+            game->over = 1; 
+        }
         
         //Affichage tours
         display_list_tower(l_tower);
@@ -357,7 +367,7 @@ int main (int argc, char* argv[])
                     /* Touche clavier */
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
-                            case 'a' :
+                            case 'l' :
                                 draw_type_tower = LASER;
                                 draw_type_inst = -1;
                                 break;
@@ -382,11 +392,11 @@ int main (int argc, char* argv[])
                                 draw_type_tower = -1;
                                 break;
 
-                            case 'p' :
-                                if(play == 0)
-                                    play = 1;
+                            case 'a' :
+                                if(speed == 0)
+                                    speed = 1;
                                 else
-                                    play = 0;
+                                    speed = 0;
                                 break;                            
                             case 'h' :
                                 if(help == 0)
@@ -423,12 +433,12 @@ int main (int argc, char* argv[])
         /* Calcul du temps ecoule */
         Uint32 elapsedTime = SDL_GetTicks() - startTime;
         /* Si trop peu de temps s'est ecoule, on met en pause le programme */
-        if(play == 0) {
+        if(speed == 0) {
             if(elapsedTime < FRAMERATE_MILLISECONDS) {
                 SDL_Delay(FRAMERATE_MILLISECONDS - elapsedTime);
             }
         }
-        else if(play == 2) {
+        else if(speed == 2) {
             if(elapsedTime < FRAMERATE_MILLISECONDS_FAST) {
                 SDL_Delay(FRAMERATE_MILLISECONDS_FAST - elapsedTime);
             }
