@@ -1,14 +1,17 @@
 CC		=	gcc
 CFLAGS	=	-Wall -O2 -g
-LDFLAGS	= -lSDL -lSDL_image -lGLU -lGL -lm -lSDL_mixer -lglut
+LDFLAGS	= -Llib/lib -lSDL -lSDL_image -lGLU -lGL -lm -lSDL_mixer -lglut
 SRC		=	./src/
 OBJ		=	./obj/
 BIN		=	./bin/
 INCL	=	./include/
+INCLUDE = -Ilib/include
 
 
 $(BIN)itd: $(OBJ)main.o $(OBJ)image.o $(OBJ)map.o $(OBJ)node.o $(OBJ)monster.o $(OBJ)tower.o $(OBJ)game.o $(OBJ)sprite.o $(OBJ)display.o $(OBJ)installation.o $(OBJ)common.o
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	@echo "If you don't have the library : export LD_LIBRARY_PATH=lib/lib"
+	@echo "Executable :./bin/itd ./data/map01.itd"
 
 $(OBJ)main.o: $(SRC)main.c $(INCL)image.h $(INCL)map.h $(INCL)node.h $(INCL)monster.h $(INCL)tower.h $(INCL)game.h $(INCL)sprite.h $(INCL)display.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
