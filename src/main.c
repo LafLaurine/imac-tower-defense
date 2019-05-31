@@ -17,7 +17,7 @@
 #include "../include/common.h"
 
 /* Dimensions initiales et titre de la fenetre */
-static unsigned int WINDOW_WIDTH = 600;
+static unsigned int WINDOW_WIDTH = 1000;
 static unsigned int WINDOW_HEIGHT = 600;
 
 static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
@@ -35,7 +35,7 @@ void reshape() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluOrtho2D(0., 600., 600., 0.);
+    gluOrtho2D(0., 1000., 600., 0.);
 }
 
 void init_window() {
@@ -53,7 +53,6 @@ int main (int argc, char* argv[])
     char* vecteur[] = {"Tab texte"};
     glutInit(&taille,vecteur); // initialisation de GLUT
 
-    
     if(-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) 
     {
         fprintf(
@@ -76,7 +75,7 @@ int main (int argc, char* argv[])
 
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
-    Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+  //  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -122,15 +121,14 @@ int main (int argc, char* argv[])
 
     //Game over
     GLuint game_over;
-    game_over = load_sprite("images/game_over.jpeg",&game_over);
-
+    SDL_Surface* s_over = load_sprite("./images/game_over.png",&game_over);
     //Game win
     GLuint game_win;
-    game_win = load_sprite("images/game_win.jpg",&game_win);
+    SDL_Surface* s_win = load_sprite("./images/game_win.png",&game_win);
 
     //Game start
     GLuint game_start;
-    game_start = load_sprite("images/game_start.jpg",&game_start);
+    SDL_Surface* s_start = load_sprite("./images/game_start.png",&game_start);
 
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
@@ -190,51 +188,59 @@ int main (int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-            
-        // Check map
+          // Display map
         display_map(&texture_map);
-
-        //Display argent
-        glPushMatrix();
-            glTranslatef(440,68,0);
-            display_money(&texture_money);
-        glPopMatrix();
-
-        //Display cross
-        glPushMatrix();
-            glTranslatef(580,0,0);
-            display_cross(&texture_cross);
-        glPopMatrix();
-
-        //Textes
-        glColor3d(1,1,1); // Texte en blanc
-        vBitmapOutput(320,50,"Appuyez sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
-        int money = game->money;
-        char string_money[100];
-        sprintf(string_money, "%d", money);
-        vBitmapOutput(320,80,"Argent : ",GLUT_BITMAP_HELVETICA_18);
-        //affichage nb argent qu'on a 
-        vBitmapOutput(400,80,string_money,GLUT_BITMAP_HELVETICA_18);
         
-        int nb_wave = wave.nb_lists;
-        char string_wave[100];
-        sprintf(string_wave, "%d", nb_wave);
-        vBitmapOutput(320,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
-        vBitmapOutput(540,100,string_wave,GLUT_BITMAP_HELVETICA_18);
-
         if(game->start == 0) {
-			display_help(&game_start);
+			display_full(&game_start);
 		}
         else if(game->over == 1) {
-            display_help(&game_over);
+            display_full(&game_over);
 		}
 
         else if(game->win == 1) {
-            display_help(&game_win);
+            display_full(&game_win);
         }
 
         else {
+        //display right column
+        glPushMatrix();
+            glTranslatef(600,0,0);
+            display_right_column();
+        glPopMatrix();
 
+        //Display argent
+        glPushMatrix();
+            glTranslatef(620,68,0);
+            display_money(&texture_money);
+        glPopMatrix();        
+
+        //Display cross
+        glPushMatrix();
+            glTranslatef(980,0,0);
+            display_cross(&texture_cross);
+        glPopMatrix();
+
+        glPushMatrix();
+            //Textes
+            glColor3d(0,0,0); // Texte en blanc
+            vBitmapOutput(620,50,"Appuyez sur h pour afficher l'aide",GLUT_BITMAP_HELVETICA_18);
+            int money = game->money;
+            char string_money[100];
+            sprintf(string_money, "%d", money);
+            //affichage nb argent qu'on a 
+            vBitmapOutput(700,80,string_money,GLUT_BITMAP_HELVETICA_18);
+            
+            int nb_wave = wave.nb_lists;
+            char string_wave[100];
+            sprintf(string_wave, "%d", nb_wave);
+            vBitmapOutput(620,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
+            vBitmapOutput(800,100,string_wave,GLUT_BITMAP_HELVETICA_18);
+        glPopMatrix();
+
+         if(help == 1){
+            display_full(&help_txt);
+        }
 
         //Vague monstre
 
@@ -283,9 +289,7 @@ int main (int argc, char* argv[])
         monster_on_tower(l_monster, l_tower);
         
 
-        if(help == 1){
-            display_help(&help_txt);
-        }
+        
 
         //Affichage wave de monstres
         if (display_wave(l_monster) == 0) {
@@ -353,7 +357,7 @@ int main (int argc, char* argv[])
                             }   
                         }
 
-                        if(e.button.x <= 600 && e.button.x >= 580 && e.button.y <= 20 && e.button.y >= 0) {
+                        if(e.button.x <= 1000 && e.button.x >= 980 && e.button.y <= 20 && e.button.y >= 0) {
                             loop = 0;
                         }
                     }
@@ -411,7 +415,7 @@ int main (int argc, char* argv[])
                                 draw_type_inst = -1;
                                 break;
                             
-                            case 'd' :
+                            case 'r' :
                                 draw_type_inst = RADAR;
                                 draw_type_tower = -1;
                                 break;
@@ -447,7 +451,7 @@ int main (int argc, char* argv[])
                                 {
                                     Mix_PauseMusic(); //Mettre en pause la musique
                                 }
-                                 if(game->pause == 0)
+                                if(game->pause == 0)
                                     game->pause = 1;
                                 else
                                     game->pause = 0;

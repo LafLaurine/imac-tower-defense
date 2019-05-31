@@ -10,10 +10,11 @@
 #define PI 3.14
 
 int display_map(GLuint* texture);
+void display_right_column();
 void draw_perim(float rayon);
 int display_path(Map* map);
 int display_money(GLuint* texture);
-int display_help(GLuint* texture);
+int display_full(GLuint* texture);
 int display_monster(Monster* m, SDL_Surface* img, GLuint texture);
 int display_wave(List_Monster *l_monster);
 int display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture);

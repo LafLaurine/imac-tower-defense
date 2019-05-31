@@ -104,34 +104,28 @@ int display_path(Map* map) {
 
 }
 
-int display_help(GLuint* texture) {
+int display_full(GLuint* texture) {
 
 	if(texture != NULL) {
 
 		//Active le texturage 2D
 		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//appel de la texture
 		glBindTexture(GL_TEXTURE_2D, *texture);
-
 			glBegin(GL_QUADS);
-			//couleur neutre
-			glColor3ub(255,255,255);
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
-			glVertex2f(600, 600);
-
+			glVertex2f(30, 13);
 			glTexCoord2f(1, 0);
-			glVertex2f(600, 0);
-
+			glVertex2f(30, 0);
 			glTexCoord2f(0, 0);
 			glVertex2f(0, 0);
-
 			glTexCoord2f(0, 1);
-			glVertex2f(0, 600);
-
+			glVertex2f(0, 13);
 			glEnd();
-
 		//Déblinder la texture
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//Désactive le texturage 2D
@@ -140,12 +134,11 @@ int display_help(GLuint* texture) {
 		
 	}
 	else {
-		fprintf(stderr, "Couldn't find help\n");
+		fprintf(stderr, "Couldn't find money\n");
 		return 0;
 	}
 
 	return 1;
-
 }
 
 //display money
@@ -223,6 +216,21 @@ int display_cross(GLuint* texture) {
 
 	return 1;
 
+}
+
+//display right column
+void display_right_column() {
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor3ub(255,255,255);
+	glBegin(GL_QUADS);
+		//Cordonnée du quadrilatère 
+		glVertex2f(400, 600);
+		glVertex2f(400, 0);
+		glVertex2f(0, 0);
+		glVertex2f(0, 600);
+	glEnd();
 }
 
 
