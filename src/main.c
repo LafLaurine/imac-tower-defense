@@ -179,16 +179,16 @@ int main (int argc, char* argv[])
     
     while(loop) 
     {
-            
         root = first;
         /* Recuperation du temps au debut de la boucle */
         Uint32 startTime = SDL_GetTicks();
-        
+
         /*code de dessin */
         glClear(GL_COLOR_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-          // Display map
+        
+        // Display map
         display_map(&texture_map);
         
         if(game->start == 0) {
@@ -197,7 +197,6 @@ int main (int argc, char* argv[])
         else if(game->over == 1) {
             display_full(&game_over);
 		}
-
         else if(game->win == 1) {
             display_full(&game_win);
         }
@@ -230,6 +229,13 @@ int main (int argc, char* argv[])
             sprintf(string_money, "%d", money);
             //affichage nb argent qu'on a 
             vBitmapOutput(700,80,string_money,GLUT_BITMAP_HELVETICA_18);
+
+            int time = startTime/1000;
+            char string_time[100];
+            sprintf(string_time, "%d", time);
+            vBitmapOutput(620,130,"Temps : ",GLUT_BITMAP_HELVETICA_18);
+            vBitmapOutput(700,130,string_time,GLUT_BITMAP_HELVETICA_18);
+            vBitmapOutput(740,130,"secondes",GLUT_BITMAP_HELVETICA_18);
             
             int nb_wave = wave.nb_lists;
             char string_wave[100];
@@ -254,7 +260,7 @@ int main (int argc, char* argv[])
             }
 
             // Nouvelle liste de monstre
-            while((l_monster->nb_monsters < 10) && (waveBool == 0)){
+            while((l_monster->nb_monsters < 10) && (waveBool == 0)) {
                 create_monster(m_type, monster_x, monster_y, root, l_monster);
             }
 
@@ -287,9 +293,6 @@ int main (int argc, char* argv[])
         cpt++;
       
         monster_on_tower(l_monster, l_tower);
-        
-
-        
 
         //Affichage wave de monstres
         if (display_wave(l_monster) == 0) {

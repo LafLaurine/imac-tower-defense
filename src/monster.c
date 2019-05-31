@@ -25,16 +25,16 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, Li
     Monster* m = (Monster*)malloc(sizeof(Monster));
     if(m != NULL) {
         if(type == BACTERY) {
-            m->pv_max = 20;
-            m->pv = 20;
+            m->pv_max = 100;
+            m->pv = 100;
             m->resist = 5;
             m->move = 1;
             m->speed = 1;
             m->money = 5;
         }
         else if(type == VIRUS) {
-            m->pv_max = 40;
-            m->pv = 40;
+            m->pv_max = 50;
+            m->pv = 50;
             m->resist = 10;
             m->move = 0;
             m->speed = 0;
@@ -43,12 +43,9 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, Li
         //la resistance et l'argent gagné augmente en fonction des vagues
         m->type = type;
         m->x = x;
-        printf("LE MONSTRE EN X%f",x);
         m->y = y;
-        printf("LE MONSTRE EN Y%f",m->x);
         m->node_next = node_next;
         m->m_next = NULL;
-
         add_monster_list(m, l_monster);
     }
     else {

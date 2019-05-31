@@ -31,25 +31,25 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 
 		if(type == LASER) {
 			t->rate = 10; //La vitesse de tir
-			t->power = 15; //puissance de l'attaque
+			t->power = 5; //puissance de l'attaque
 			t->range = 50; //portee
 			t->cost = 10; //prix
 		}
 		else if(type == ROCKET) {
 			t->rate = 15;
-			t->power = 10;
+			t->power = 15;
 			t->range = 50;
 			t->cost = 20;
 		}
 		else if(type == YELLOW) {
 			t->rate = 20;
-			t->power = 15;
+			t->power = 5;
 			t->range = 200;
 			t->cost = 50;
 		}
 		else if(type == BLUE) {
 			t->rate = 50;
-			t->power = 15;
+			t->power = 10;
 			t->range = 250;
 			t->cost = 100;
 		}
