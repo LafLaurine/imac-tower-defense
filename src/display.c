@@ -101,13 +101,10 @@ int display_path(Map* map) {
 	}
 
 	return 1;
-
 }
 
 int display_full(GLuint* texture) {
-
 	if(texture != NULL) {
-
 		//Active le texturage 2D
 		glEnable(GL_TEXTURE_2D);
 		glEnable(GL_BLEND);
@@ -129,12 +126,10 @@ int display_full(GLuint* texture) {
 		//Déblinder la texture
 		glBindTexture(GL_TEXTURE_2D, 0);
 		//Désactive le texturage 2D
-		glDisable(GL_TEXTURE_2D);
-
-		
+		glDisable(GL_TEXTURE_2D);		
 	}
 	else {
-		fprintf(stderr, "Couldn't find money\n");
+		fprintf(stderr, "Couldn't find texture\n");
 		return 0;
 	}
 
