@@ -94,7 +94,7 @@ int main (int argc, char* argv[])
     int help = 0;
     int monsterTypeInt = 0;
     int waveBool = 0;
-    Tower* t_selected = (Tower *)malloc(sizeof(Tower));
+    Tower* t_selected = NULL;
 
     //Init map
     Map* map = init_map(argv[1]);
@@ -190,21 +190,21 @@ int main (int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-        
+                
         // Display map
         display_map(&texture_map);
         
-        if(game->start == 0) {
+        /*if(game->start == 0) {
 			display_full(&game_start);
-		}
-        else if(game->over == 1) {
+		}*/
+        if(game->over == 1) {
             display_full(&game_over);
 		}
         else if(game->win == 1) {
             display_full(&game_win);
         }
 
-        else {
+      
         //display right column
         glPushMatrix();
             glTranslatef(600,0,0);
@@ -254,8 +254,7 @@ int main (int argc, char* argv[])
         //Vague monstre
 
         if(game->pause == 0) {
-            if(cpt%40 == 0) {
-                
+            if(cpt%80 == 0) {
                 monsterTypeInt = rand()%2;
                 if(monsterTypeInt == 0) {
                     m_type = BACTERY;
@@ -306,13 +305,13 @@ int main (int argc, char* argv[])
         //Affichage tours
         display_list_tower(l_tower);
 
-        if(l_tower != NULL) {
+    /*    if(l_tower != NULL) {
             t_selected = constructTowerSelected(t, xOver, yOver);
             if(t_selected != NULL) {
                 printf("YAY");
                 displayTowerFeatures(t_selected);
             }
-        }
+        }*/
      
         //Affichage installations
         display_list_installation(l_inst);
@@ -320,7 +319,7 @@ int main (int argc, char* argv[])
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         }
         SDL_GL_SwapBuffers();
-        }
+        
             
         /* Boucle traitant les evenements */
         SDL_Event e;
@@ -447,9 +446,9 @@ int main (int argc, char* argv[])
                                 draw_type_tower = -1;
                                 break;
                             
-                            case 's' :
+                           /* case 's' :
                                game->start = 1;
-                            break;
+                            break;*/
 
                             case 'a' :
                                 if(speed == 0)
@@ -510,7 +509,7 @@ int main (int argc, char* argv[])
     }
 
     game_end(game);
-        /*SDL_FreeSurface(s_laser);
+     /*   SDL_FreeSurface(s_laser);
         SDL_FreeSurface(s_rocket);
         SDL_FreeSurface(help_surface);
         glDeleteTextures(1,&texture_map);
