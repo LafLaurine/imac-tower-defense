@@ -69,14 +69,18 @@ Monster* add_monster(Monster* m, Monster* new_monster){
 
 void add_monster_list(Monster* m, List_Monster* list_monster){
 	if (list_monster != NULL) {
-		if (list_monster->m_first == NULL) {
+		if (list_monster->m_last == NULL) {
 				// Pointe la tête de la liste sur le nouveau monstre
 				list_monster->m_first = m;
+                m->m_prev = NULL;
 			}
 			// Cas où des éléments sont déjà présents dans la  liste
 			else {
-				list_monster->m_first->m_next = m; 
+                m->m_prev = list_monster->m_last;
+				list_monster->m_last->m_next = m; 
 			}
+
+            list_monster->m_last = m;
 
 			// On augmente de 1 la taille de la liste
 			list_monster->nb_monsters++;
@@ -86,7 +90,6 @@ void add_monster_list(Monster* m, List_Monster* list_monster){
 		printf("%s\n", "Fail to add to list tower");
 	}
 }
-
 /*
 Monster* kill_monsters(Monster* monsterList, Monster* monster) {
     if(monsterList == NULL) {

@@ -33,10 +33,13 @@ typedef struct Monster {
 	int resist;
 	//monstre suivant
 	struct Monster* m_next;
+	//monstre precedant
+	struct Monster* m_prev;
 }Monster;
 
 typedef struct List_Monster {
 	Monster* m_first;
+	Monster* m_last;
 	int nb_monsters; // Nombre monstre dans la liste
 	int nb_monsters_send; // Nombre de monstre déjà envoyés
 }List_Monster;

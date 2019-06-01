@@ -343,7 +343,7 @@ int display_wave(List_Monster *l_monster) {
 
 	Monster* m;
 	int success = 1;
-	m = l_monster->m_first;
+	m = l_monster->m_last;
 
 		while(m != NULL) {
 			if(m->type == BACTERY) {
@@ -352,11 +352,11 @@ int display_wave(List_Monster *l_monster) {
 				}
 			}
 			else {
-				if(display_monster(m, virus, texture_bactery) == 0) {
+				if(display_monster(m, virus, texture_virus) == 0) {
 					success = 0;
 				}
 			}
-			m = m->m_next;
+			m = m->m_prev;
 		}
 
 	SDL_FreeSurface(bactery);
