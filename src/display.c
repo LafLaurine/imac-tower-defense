@@ -414,7 +414,7 @@ int display_list_tower(List_Tower* list_tower) {
 			exit(1);
 		}
 		GLuint texture_rocket;
-		load_sprite("./images/towers/tower_3.png",&texture_rocket);
+		load_sprite("./images/towers/rocket.png",&texture_rocket);
 		GLuint texture_laser;
 		load_sprite("./images/towers/laser.png",&texture_laser);
 
@@ -747,4 +747,90 @@ int shot_monster(Monster* m, Tower* t) {
 		return 1;
 	}
 	return 0;
+}
+
+
+// Sélection d'une tour construite
+Tower* constructTowerSelected(Tower* t_first, int x, int y) {
+	if(t_first != NULL) {
+		Tower* currTower = t_first;
+		while(currTower != NULL) {
+			// Est-ce que la souris survole une tour ?
+			if(x >= ((*currTower).x - 50) && x <= ((*currTower).x + 50) && y >= ((*currTower).y - 50) && y <= ((*currTower).y + 50)) {
+				return currTower;
+			}
+			else {
+				currTower = (*currTower).t_next;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+// Affichage des caractéristiques de la tour survolée
+void displayTowerFeatures(Tower* t) {
+	SDL_Surface* featuresImg;
+	GLuint featuresTexture;
+
+	if(t != NULL) {
+		// Chargement des caractéristiqes de la tour en fonction de son type
+		if((*t).type == ROCKET) {
+			featuresImg = IMG_Load("./images/tower/rocket.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image tower/rocket.png \n");
+		        exit(1);
+		    }
+		    load_sprite("./images/tower/rocket.png",&featuresTexture);
+		}
+		else if((*t).type == LASER) {
+			featuresImg = IMG_Load("./images/tower/laser.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image tower/laser.png \n");
+		        exit(1);
+			}
+		    load_sprite("./images/tower/laser.png",&featuresTexture);		
+		}
+		else if((*t).type == YELLOW) {
+			featuresImg = IMG_Load("./images/tower/yellow.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image tower/yellow.png \n");
+		        exit(1);
+		    }
+		    load_sprite("./images/tower/yellow.png",&featuresTexture);
+		}
+		else if((*t).type == BLUE) {
+			featuresImg = IMG_Load("./images/tower/blue.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image tower/blue.png \n");
+		        exit(1);
+		    }
+		    load_sprite("./images/towers/blue.png",&featuresTexture);
+		}
+		
+		// Affichage de la texture sur la carte
+		glEnable(GL_TEXTURE_2D);
+	    glEnable(GL_BLEND);
+	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	    glBindTexture(GL_TEXTURE_2D, featuresTexture);
+	    
+		glBegin(GL_QUADS);
+			glColor4ub(255, 255, 255, 255); // Opacité 100%
+			glTexCoord2d(0, 0); 
+			glVertex2f((*t).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(0, 1);
+			glVertex2f((*t).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(1, 1); 
+			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(1, 0);
+			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
+		glEnd();
+	    
+	    glBindTexture(GL_TEXTURE_2D, 0);
+	    glDisable(GL_BLEND);
+	    glDisable(GL_TEXTURE_2D);
+    }
+
+    glDeleteTextures(1, &featuresTexture);
+    SDL_FreeSurface(featuresImg);
 }

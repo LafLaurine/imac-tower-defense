@@ -85,13 +85,16 @@ int main (int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-    int cpt = 1;
+    int cpt = 0;
+    int xOver = 0;
+    int yOver = 0;
     int speed = 0;
     int construct_tower = 0;
     int construct_install = 0;
     int help = 0;
     int monsterTypeInt = 0;
     int waveBool = 0;
+    Tower* t_selected = (Tower *)malloc(sizeof(Tower));
 
     //Init map
     Map* map = init_map(argv[1]);
@@ -302,7 +305,15 @@ int main (int argc, char* argv[])
         
         //Affichage tours
         display_list_tower(l_tower);
-        
+
+        if(l_tower != NULL) {
+            t_selected = constructTowerSelected(t, xOver, yOver);
+            if(t_selected != NULL) {
+                printf("YAY");
+                displayTowerFeatures(t_selected);
+            }
+        }
+     
         //Affichage installations
         display_list_installation(l_inst);
 
@@ -321,6 +332,12 @@ int main (int argc, char* argv[])
                 loop = 0;
                 break;
             }
+
+			if(e.type == SDL_MOUSEMOTION) {
+				xOver = e.motion.x;
+	        	yOver = 600-e.motion.y;
+			}
+		
         
             /* Quelques exemples de traitement d'evenements : */
             switch(e.type) {
@@ -342,6 +359,7 @@ int main (int argc, char* argv[])
                                     check_around_tower(t, l_inst);
                                     printf("clic tour en (%d, %d)\n", e.button.x, e.button.y);
                                     player_money_up_update(game,t->cost);
+                                    
                                 } else {
                                     printf("Tour sur une autre\n");
                                 }
@@ -488,6 +506,7 @@ int main (int argc, char* argv[])
                 SDL_Delay(FRAMERATE_MILLISECONDS_FAST - elapsedTime);
             }
         }
+        cpt++;
     }
 
     game_end(game);
