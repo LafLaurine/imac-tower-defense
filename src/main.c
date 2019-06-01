@@ -154,6 +154,8 @@ int main (int argc, char* argv[])
     //création monstre
     List_Monster* l_monster = new_monster_list();
     Monster_Type m_type = BACTERY;
+    int pvMonster = 50;
+    int moneyMonster = 5;
     
     // Création de la vague des monstres
     Wave wave;
@@ -249,9 +251,9 @@ int main (int argc, char* argv[])
         }
 
         //Vague monstre
-
         if(game->pause == 0) {
             if(cpt%80 == 0) {
+                
                 monsterTypeInt = rand()%2;
                 if(monsterTypeInt == 0) {
                     m_type = BACTERY;
@@ -261,7 +263,7 @@ int main (int argc, char* argv[])
 
                 // Nouvelle liste de monstre
                 if((l_monster->nb_monsters < 10) && (waveBool == 0) && (nb_monsters_to_send != 0)) {
-                    create_monster(m_type, monster_x, monster_y, root, l_monster);
+                    create_monster(m_type, monster_x, monster_y, pvMonster, moneyMonster, root, l_monster);
                     nb_monsters_to_send--;
                 }
 
@@ -271,9 +273,16 @@ int main (int argc, char* argv[])
                     waveBool = 0;
                     nb_monsters_to_send = 10;
                     wave.nb_lists++;
+                    pvMonster = pvMonster*wave.nb_lists;
+                    moneyMonster = moneyMonster*wave.nb_lists;
                 }
             }
             cpt++;
+
+            // Au bout de 50 vagues : Game Over
+            if(wave.nb_lists == 50){
+                game->over = 1;
+            }
         
             monster_on_tower(l_monster, l_tower);
 

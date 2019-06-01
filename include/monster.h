@@ -52,7 +52,7 @@ typedef struct Wave {
 
 
 List_Monster* new_monster_list();
-Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, List_Monster *l_monster);
+Monster* create_monster(Monster_Type type, float x, float y, int pv, int money, Node *node_next, List_Monster *l_monster);
 Monster* add_monster(Monster* m, Monster* new_monster);
 void add_monster_list(Monster* m, List_Monster* list_monster);
 void kill_monster(List_Monster* list_monster, Monster* current);
