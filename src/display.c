@@ -743,7 +743,6 @@ int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
 int shot_monster(Monster* m, Tower* t) {
 	if(is_intersect(t->x, t->y, m->x, m->y, 34+t->range, 34)) {
 		m->pv = m->pv - t->power;
-		printf("PV MONSTRE %d",m->pv);
 		return 1;
 	}
 	return 0;

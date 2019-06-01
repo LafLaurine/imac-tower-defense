@@ -50,20 +50,10 @@ typedef struct Wave {
 	int nb_lists;
 }Wave;
 
-// Structure liste stockant les monstres à la portée d'une tour 
-/*
-typedef struct MonsterToReach {
-	int distance;
-	Monster* monster;
-	int listNum;
-	struct MonsterToReach* next;
-}MonsterToReach;*/
 
 List_Monster* new_monster_list();
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, List_Monster *l_monster);
 Monster* add_monster(Monster* m, Monster* new_monster);
 void add_monster_list(Monster* m, List_Monster* list_monster);
-//Monster* kill_monsters(Monster* monsterList, Monster* monster);
-//void kill_one_monster(Monster* m);
 void kill_monster(List_Monster *l_monster, Monster* m);
 #endif
