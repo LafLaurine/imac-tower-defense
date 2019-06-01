@@ -80,28 +80,56 @@ void add_monster_list(Monster* m, List_Monster* list_monster){
 	}
 }
 
-void kill_monster(List_Monster *l_monster, Monster* m) {
-    if (l_monster != NULL) {
-        // If monster to kill is the first of the list
-		if (l_monster->m_last == m) {
-                l_monster->m_last = m->m_prev;
-                free(m);
+void kill_monster(List_Monster* list_monster, Monster* current) {
+	if (list_monster != NULL) {
+
+		if(current != NULL) {
+
+			//Si c'est la dernière tour de la liste
+			if (current->m_next == NULL) {
+				
+				//Pointe la fin de la liste sur la tour précédente
+				list_monster->m_last = current->m_prev;
+
+				if(list_monster->m_last != NULL) {
+					//Lien de la dernière tour vers la tour suivante est NULL
+					list_monster->m_last->m_next = NULL;
+				}
+				else
+					list_monster->m_first = NULL;
+					
 			}
-			// Cas où des éléments sont déjà présents dans la  liste
-			else {
-                Monster *mCheck = l_monster->m_last;
-                while(mCheck->m_prev != m && mCheck->m_prev != NULL){
-                    mCheck = mCheck->m_prev;
-                }
-                if(mCheck->m_prev == m){
-                    mCheck->m_prev = m->m_prev;
-                }
+		
+			//Si c'est la première de la liste
+			else if (current->m_prev == NULL) {
+				list_monster->m_first = current->m_next;
+
+				if(list_monster->m_first != NULL) {
+			 		list_monster->m_first->m_prev = NULL;
+				}
+				else
+					list_monster->m_last = NULL;
 			}
 
-			// On diminue de 1 la taille de la liste
-			l_monster->nb_monsters--; 
+			else {
+				//Relie la tour suivante à la tour précédente de la tour que l'on veut supprmer 
+				current->m_next->m_prev = current->m_prev;
+				//Relie la tour précédente à la tour suivante de la tour que l'on veut supprmer 
+				current->m_prev->m_next = current->m_next;
+
+			}
+			//supprime la tour
+			free(current);
+			list_monster->nb_monsters--;
+            printf("NB MONSTRES :%d\n", list_monster->nb_monsters); 
 		}
-	else {
-		printf("%s\n", "Cannot kill monster");
+		else {
+			fprintf(stderr, "Tower doesn't exist");
+			exit(EXIT_FAILURE);
+		}
 	}
+	else {
+		fprintf(stderr, "Tower list doesn't exist");
+		exit(EXIT_FAILURE);
+	} 
 }

@@ -154,15 +154,12 @@ int main (int argc, char* argv[])
     //création monstre
     List_Monster* l_monster = new_monster_list();
     Monster_Type m_type = BACTERY;
-    /*Monster* new_m = create_monster(m_type, monster_x, monster_y, root, l_monster);
-    l_monster->m_first = new_m;
-    l_monster->nb_monsters = 1;
-    l_monster->nb_monsters_send = 1;*/
     
     // Création de la vague des monstres
     Wave wave;
     wave.nb_lists = 1;
     wave.lists[wave.nb_lists - 1] = l_monster;
+    int nb_monsters_to_send = 10;
     
     // Init game
     Game *game = new_game();
@@ -243,7 +240,7 @@ int main (int argc, char* argv[])
             int nb_wave = wave.nb_lists;
             char string_wave[100];
             sprintf(string_wave, "%d", nb_wave);
-            vBitmapOutput(620,100,"Nombre de vague : ",GLUT_BITMAP_HELVETICA_18);
+            vBitmapOutput(620,100,"Vague numero : ",GLUT_BITMAP_HELVETICA_18);
             vBitmapOutput(800,100,string_wave,GLUT_BITMAP_HELVETICA_18);
         glPopMatrix();
 
@@ -263,61 +260,36 @@ int main (int argc, char* argv[])
                 }
 
                 // Nouvelle liste de monstre
-                if((l_monster->nb_monsters < 10) && (waveBool == 0)) {
+                if((l_monster->nb_monsters < 10) && (waveBool == 0) && (nb_monsters_to_send != 0)) {
                     create_monster(m_type, monster_x, monster_y, root, l_monster);
+                    nb_monsters_to_send--;
                 }
 
                 if(l_monster->nb_monsters == 10){
                     waveBool = 1;
                 } else if (l_monster->nb_monsters == 0) {
                     waveBool = 0;
+                    nb_monsters_to_send = 10;
+                    wave.nb_lists++;
                 }
-
-                /*
-                if( game->nb_lists_send < WAVENUMBER) {
-                    List_Monster* newList = new_monster_list();
-                    printf("Current root y %f\n", monster_y);
-                    new_m = newMonster;
-                    newList->m_first = new_m;
-                    newList->nb_monsters = 1;
-                    newList->nb_monsters_send = 1;
-                    l_monster = newList;
-                    wave.nb_lists += 1;
-                    game->nb_lists_send += 1;
-                    wave.lists[wave.nb_lists - 1] = l_monster;
-                } else if(l_monster->nb_monsters_send < 10) {
-                    // Ajout du monstre à la liste actuelle
-                    new_m = add_monster(new_m, newMonster);
-                    wave.lists[wave.nb_lists - 1]->m_first = new_m;
-                    l_monster->nb_monsters += 1;
-                    l_monster->nb_monsters_send += 1;
-                }*/
             }
-        cpt++;
-      
-        monster_on_tower(l_monster, l_tower);
-
-        //Affichage wave de monstres
-        if (display_wave(l_monster) == 0) {
-            game->over = 1; 
-        }
+            cpt++;
         
-        //Affichage tours
-        display_list_tower(l_tower);
+            monster_on_tower(l_monster, l_tower);
 
-    /*    if(l_tower != NULL) {
-            t_selected = constructTowerSelected(t, xOver, yOver);
-            if(t_selected != NULL) {
-                printf("YAY");
-                displayTowerFeatures(t_selected);
+            //Affichage wave de monstres
+            if (display_wave(l_monster) == 0) {
+                game->over = 1; 
             }
-        }*/
-     
-        //Affichage installations
-        display_list_installation(l_inst);
+            
+            //Affichage tours
+            display_list_tower(l_tower);
+        
+            //Affichage installations
+            display_list_installation(l_inst);
+        }
 
         /* Echange du front et du back buffer : mise a jour de la fenetre */
-        }
         SDL_GL_SwapBuffers();
         
             
