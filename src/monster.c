@@ -5,7 +5,7 @@
 List_Monster* new_monster_list() {
 	List_Monster *list_monster = malloc(sizeof(List_Monster));
 	if (list_monster != NULL) {
-		list_monster->m_first = NULL;
+		list_monster->m_last = NULL;
 		list_monster->nb_monsters = 0;
         list_monster->nb_monsters_send = 0;
 	}
@@ -46,6 +46,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, Li
         m->y = y;
         m->node_next = node_next;
         m->m_next = NULL;
+        m->m_prev = NULL;
         add_monster_list(m, l_monster);
     }
     else {
