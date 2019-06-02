@@ -85,7 +85,7 @@ int main (int argc, char* argv[])
 		exit(EXIT_FAILURE);
 	}
 
-    int cpt = 0;
+    int cpt = 1;
     int xOver = 0;
     int yOver = 0;
     int speed = 0;
@@ -110,13 +110,6 @@ int main (int argc, char* argv[])
     //Croix pour quitter
     GLuint texture_cross;
     SDL_Surface* s_cross = load_sprite("./images/cross.png",&texture_cross);
-    
-    //Tower
-    GLuint t_laser;
-    SDL_Surface* s_laser = load_sprite("./images/towers/laser.png",&t_laser);
-    
-    GLuint t_rocket;
-    SDL_Surface* s_rocket = load_sprite("./images/towers/rocket.png",&t_rocket);
 
     // Help
     GLuint help_txt;
@@ -156,6 +149,8 @@ int main (int argc, char* argv[])
     Monster_Type m_type = BACTERY;
     int pvMonster = 50;
     int moneyMonster = 5;
+    int resistMonster = 5;
+
     
     // Création de la vague des monstres
     Wave wave;
@@ -189,21 +184,24 @@ int main (int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-                
-        // Display map
-        display_map(&texture_map);
         
-        /*if(game->start == 0) {
+        
+        if(game->start == 0) {
 			display_full(&game_start);
-		}*/
-        if(game->over == 1) {
+		}
+
+        else if(game->over == 1) {
             display_full(&game_over);
 		}
+        
         else if(game->win == 1) {
             display_full(&game_win);
         }
-
       
+
+        else {
+        // Display map
+        display_map(&texture_map);
         //display right column
         glPushMatrix();
             glTranslatef(600,0,0);
@@ -252,7 +250,7 @@ int main (int argc, char* argv[])
 
         //Vague monstre
         if(game->pause == 0) {
-            if(cpt%80 == 0) {
+            if(cpt%50 == 0) {
                 
                 monsterTypeInt = rand()%2;
                 if(monsterTypeInt == 0) {
@@ -263,25 +261,25 @@ int main (int argc, char* argv[])
 
                 // Nouvelle liste de monstre
                 if((l_monster->nb_monsters < 10) && (waveBool == 0) && (nb_monsters_to_send != 0)) {
-                    create_monster(m_type, monster_x, monster_y, pvMonster, moneyMonster, root, l_monster);
+                    create_monster(m_type, monster_x, monster_y, pvMonster, moneyMonster, resistMonster, root, l_monster);
                     nb_monsters_to_send--;
                 }
 
-                if(l_monster->nb_monsters == 10){
+                if(cpt%550 == 0 && l_monster->nb_monsters == 10){
                     waveBool = 1;
                 } else if (l_monster->nb_monsters == 0) {
                     waveBool = 0;
                     nb_monsters_to_send = 10;
                     wave.nb_lists++;
-                    pvMonster = pvMonster*wave.nb_lists;
-                    moneyMonster = moneyMonster*wave.nb_lists;
+                    pvMonster = pvMonster*(wave.nb_lists/2);
+                    moneyMonster = moneyMonster*(wave.nb_lists/2);
                 }
             }
             cpt++;
 
             // Au bout de 50 vagues : Game Over
-            if(wave.nb_lists == 50){
-                game->over = 1;
+            if(wave.nb_lists == 51){
+                game->win = 1;
             }
         
             monster_on_tower(l_monster, l_tower);
@@ -297,11 +295,11 @@ int main (int argc, char* argv[])
             //Affichage installations
             display_list_installation(l_inst);
         }
-
+         }
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
         
-            
+       
         /* Boucle traitant les evenements */
         SDL_Event e;
         while(SDL_PollEvent(&e)) 
@@ -385,12 +383,6 @@ int main (int argc, char* argv[])
 
                    
                     break;
-
-                    case SDL_MOUSEMOTION:
-                       /* if(draw_type_tower == LASER){
-
-                        } */                  
-                    break;
                     
                     /* Touche clavier */
                     case SDL_KEYDOWN:
@@ -427,9 +419,9 @@ int main (int argc, char* argv[])
                                 draw_type_tower = -1;
                                 break;
                             
-                           /* case 's' :
+                            case 's' :
                                game->start = 1;
-                            break;*/
+                            break;
 
                             case 'a' :
                                 if(speed == 0)
@@ -486,17 +478,24 @@ int main (int argc, char* argv[])
                 SDL_Delay(FRAMERATE_MILLISECONDS_FAST - elapsedTime);
             }
         }
-        cpt++;
     }
 
     game_end(game);
-     /*   SDL_FreeSurface(s_laser);
-        SDL_FreeSurface(s_rocket);
-        SDL_FreeSurface(help_surface);
-        glDeleteTextures(1,&texture_map);
-        glDeleteTextures(2,&s_laser);
-        glDeleteTextures(3,&s_rocket);
-        glDeleteTextures(4,&help_txt);*/
+  
+    glDeleteTextures(1,&texture_map);
+    glDeleteTextures(2,&texture_cross);
+    glDeleteTextures(3,&texture_money);
+    glDeleteTextures(4,&help_txt);
+    glDeleteTextures(5,&game_over);
+    glDeleteTextures(5,&game_win);
+    glDeleteTextures(5,&game_start);
+    SDL_FreeSurface(s_map);
+    SDL_FreeSurface(s_money);
+    SDL_FreeSurface(s_win);
+    SDL_FreeSurface(s_over);
+    SDL_FreeSurface(s_cross);
+    SDL_FreeSurface(help_surface);
+    SDL_FreeSurface(s_start);
     /* Liberation des ressources associees a la SDL */ 
     Mix_FreeMusic(musique); //Libération de la musique
     Mix_CloseAudio();

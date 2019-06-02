@@ -18,7 +18,7 @@ List_Monster* new_monster_list() {
 	return list_monster;
 }
 
-Monster* create_monster(Monster_Type type, float x, float y, int pv, int money, Node *node_next, List_Monster *l_monster){
+Monster* create_monster(Monster_Type type, float x, float y, int pv, int money, int resist, Node *node_next, List_Monster* l_monster){
     if(node_next == NULL) {
         fprintf(stderr, "pointer is NULL in createMonster function \n");
         exit(1);
@@ -28,7 +28,7 @@ Monster* create_monster(Monster_Type type, float x, float y, int pv, int money, 
         if(type == BACTERY) {
             m->pv_max = pv*2;
             m->pv = pv*2;
-            m->resist = 5;
+            m->resist = resist;
             m->move = 1;
             m->speed = 1;
             m->money = money;
@@ -36,7 +36,7 @@ Monster* create_monster(Monster_Type type, float x, float y, int pv, int money, 
         else if(type == VIRUS) {
             m->pv_max = pv;
             m->pv = pv;
-            m->resist = 10;
+            m->resist = resist*2;
             m->move = 0;
             m->speed = 0;
             m->money = money*2;

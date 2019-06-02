@@ -103,15 +103,15 @@ int display_path(Map* map) {
 	return 1;
 }
 
-int display_full(GLuint* texture) {
+
+int display_full(GLuint *texture) {
 	if(texture != NULL) {
 		//Active le texturage 2D
 		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		//appel de la texture
 		glBindTexture(GL_TEXTURE_2D, *texture);
 			glBegin(GL_QUADS);
+			glColor4ub(255,255,255,255);
 			//coordonée de la texture
 			glTexCoord2f(1, 1);
 			//Cordonnée du quadrilatère 
@@ -123,8 +123,6 @@ int display_full(GLuint* texture) {
 			glTexCoord2f(0, 1);
 			glVertex2f(0, 600);
 			glEnd();
-		//Déblinder la texture
-		glBindTexture(GL_TEXTURE_2D, 0);
 		//Désactive le texturage 2D
 		glDisable(GL_TEXTURE_2D);		
 	}
