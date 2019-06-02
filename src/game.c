@@ -25,7 +25,7 @@ Game* new_game() {
 	return n_game;
 }
 
-int player_money_up_update(Game* game, int cost) {
+int player_money_down_update(Game* game, int cost) {
 
 	//Si le jeu a commencé
 	if(game != NULL) {
@@ -41,7 +41,7 @@ int player_money_up_update(Game* game, int cost) {
 	return 1;
 }
 
-int player_money_down_update(Game* game, int cost) {
+int player_money_up_update(Game* game, int cost) {
 	//Si le jeu a commencé
 	if(game != NULL) {
 	

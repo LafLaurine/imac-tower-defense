@@ -54,6 +54,7 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 			t->cost = 100;
 		}
 		add_tower_list(t, l_tower);
+		printf("%s\n", "New tower");
 		if(money >= t->cost) {
 			return t;
 		}

@@ -645,7 +645,7 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x,
 	if(l_tower != NULL) {
 		if(current != NULL) {
 			if(tower_on_select(current,l_tower,x,y)) {
-				//player_money_down_update(game,current->cost);
+				player_money_up_update(game,current->cost);
 				l_tower = delete_from_position(l_tower, current);
 			}
 		}
@@ -661,7 +661,7 @@ int click_installation_delete(List_Installation* l_inst, Installation* current, 
 	if(l_inst != NULL) {
 		if(current != NULL) {
 			if(installation_on_select(current,l_inst,x,y)) {
-				//player_money_down_update(game,current->cost);
+				//player_money_up_update(game,current->cost);
 				l_inst = delete_install_from_position(l_inst, current);
 			}
 		}
