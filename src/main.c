@@ -80,6 +80,10 @@ int main (int argc, char* argv[])
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
+    GLuint menuMap;
+	SDL_Surface* imgMenuMap = NULL;
+	loadTexture("./images/choix_map.png", &menuMap, imgMenuMap);
+
     if(argc <= 1) {
 		fprintf(stderr, "Veuillez indiquer la carte .itd à charger\n");
 		exit(EXIT_FAILURE);

@@ -287,13 +287,13 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 		glColor3ub(255, 0, 0);
 		glVertex2d(m->x, m->y + 30);
 		glVertex2d(m->x, m->y + 40);
-		if(m->pv_max > 0 && m->pv_max < 1) {
+		if(m->pv > 0 && m->pv < 1) {
 			glVertex2d(m->x + 1, m->y + 30);
 			glVertex2d(m->x + 1, m->y + 40);
 		}
 		else {
-			glVertex2d(m->x + m->pv_max / 2, m->y + 30);
-			glVertex2d(m->x + m->pv_max / 2, m->y + 40);
+			glVertex2d(m->x + m->pv / 2, m->y + 30);
+			glVertex2d(m->x + m->pv / 2, m->y + 40);
 		}	
 		glEnd();
 
@@ -319,25 +319,6 @@ int display_wave(List_Monster *l_monster) {
 	load_sprite("./images/bactery.png",&texture_bactery);
 	GLuint texture_virus;
 	load_sprite("./images/virus.png",&texture_virus);
-
-	/*Monster* m;
-	int success = 1;
-	for(int i = 0; i < wave.nb_lists; i++) {
-		m = wave.lists[i]->m_first;
-		while(m != NULL) {
-			if(m->type == BACTERY) {
-				if(display_monster(m, bactery, texture_bactery) == 0) {
-					success = 0;
-				}
-			}
-			else {
-				if(display_monster(m, virus, texture_virus) == 0) {
-					success = 0;
-				}
-			}
-			m = m->m_next;
-		}
-	}*/
 
 	Monster* m;
 	int success = 1;
