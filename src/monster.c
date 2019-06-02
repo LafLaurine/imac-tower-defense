@@ -80,10 +80,11 @@ void add_monster_list(Monster* m, List_Monster* list_monster){
 	}
 }
 
-void kill_monster(List_Monster* list_monster, Monster* current) {
+Monster_Type kill_monster(List_Monster* list_monster, Monster* current) {
 	if (list_monster != NULL) {
 
 		if(current != NULL) {
+			Monster_Type type = current->type;
 
 			//Si c'est la dernière tour de la liste
 			if (current->m_next == NULL) {
@@ -122,14 +123,15 @@ void kill_monster(List_Monster* list_monster, Monster* current) {
 			free(current);
 			list_monster->nb_monsters--;
             printf("NB MONSTRES :%d\n", list_monster->nb_monsters); 
+			return type;
 		}
 		else {
 			fprintf(stderr, "Tower doesn't exist");
-			exit(EXIT_FAILURE);
+			return -1;
 		}
 	}
 	else {
 		fprintf(stderr, "Tower list doesn't exist");
-		exit(EXIT_FAILURE);
-	} 
+		return -1;
+	}
 }

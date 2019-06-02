@@ -398,7 +398,7 @@ int display_list_tower(List_Tower* list_tower) {
 		load_sprite("./images/towers/laser.png",&texture_laser);
 
 		Tower* t;
-		t = list_tower->t_first;
+		t = list_tower->t_last;
 
 		while(t != NULL) {
 			if(t->type == ROCKET) {
@@ -413,7 +413,7 @@ int display_list_tower(List_Tower* list_tower) {
 			} else {
 				printf("NO");
 			}
-			t = t->t_next;
+			t = t->t_prev;
 		}
 
 		SDL_FreeSurface(rocket);
@@ -625,10 +625,12 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y) {
 	if(l_tower != NULL) {
 		if(current != NULL) {
+			/*
 			if(tower_on_select(current,l_tower,x,y)) {
 				player_money_up_update(game,current->cost);
 				l_tower = delete_from_position(l_tower, current);
 			}
+			*/
 		}
 	}
 	else {
@@ -686,11 +688,12 @@ void update_tower(Tower* t, InstallationType type_inst){
 
 // MONSTER AND TOWERS
 
-int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
+Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
 	if(list_tower != NULL) {
 		Tower* t = list_tower->t_first;
 		int compteurTour = 0;
 		int compteurMonstre = 0;
+		Monster_Type monsterKilled = -1;
 
 		while(t != NULL){
 
@@ -700,7 +703,7 @@ int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
 				while(m != NULL) {
 					if(shot_monster(m,t)){
 						if(m->pv <= 0){
-							kill_monster(list_monster, m);
+							monsterKilled = kill_monster(list_monster, m);
 						}
 					}
 					m = m->m_next;
@@ -710,11 +713,11 @@ int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
 			compteurTour++;
 			t = t->t_next;
 		}
-		return 1;
+		return monsterKilled;
 	}
 	else {
 		fprintf(stderr, "No monsters here\n");
-		return 0;
+		return -1;
 	}
 }
 
@@ -728,16 +731,16 @@ int shot_monster(Monster* m, Tower* t) {
 
 
 // Sélection d'une tour construite
-Tower* constructTowerSelected(Tower* t_first, int x, int y) {
-	if(t_first != NULL) {
-		Tower* currTower = t_first;
+Tower* constructTowerSelected(List_Tower* l_tower, int x, int y) {
+	if(l_tower != NULL) {
+		Tower* currTower = l_tower->t_last;
 		while(currTower != NULL) {
 			// Est-ce que la souris survole une tour ?
 			if(x >= ((*currTower).x - 50) && x <= ((*currTower).x + 50) && y >= ((*currTower).y - 50) && y <= ((*currTower).y + 50)) {
 				return currTower;
 			}
 			else {
-				currTower = (*currTower).t_next;
+				currTower = currTower->t_prev;
 			}
 		}
 	}

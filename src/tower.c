@@ -28,6 +28,7 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 		t->node_next = head->next; //Pointeur vers le second noeud
 		t->node_next = NULL; 
 		t->t_next = NULL;
+		t->t_prev = NULL;
 
 		if(type == LASER) {
 			t->rate = 10; //La vitesse de tir
@@ -100,7 +101,7 @@ Tower* click_tower(List_Tower* p_ltower, float x, float y) {
 	if(p_ltower != NULL) {
 
 		//Tour temporaire pour parcourir la liste de tour
-		Tower* p_tmp = p_ltower->t_first;
+		Tower* p_tmp = p_ltower->t_last;
 		
 		while(p_tmp != NULL) {
 
@@ -109,7 +110,7 @@ Tower* click_tower(List_Tower* p_ltower, float x, float y) {
 				return p_tmp;	
 			}
 
-			p_tmp = p_tmp->t_next;
+			p_tmp = p_tmp->t_prev;
 
 		}
 	}
@@ -191,7 +192,7 @@ Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y){
 		if(square_intersect_circle(t->x, x, t->y, y, l_tower->length, 0)){
 		    return t;
 		}
-		t = l_tower->t_first->t_next;
+		t = l_tower->t_last->t_prev;
 	}
     return 0;
 }

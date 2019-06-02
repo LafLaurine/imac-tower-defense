@@ -282,8 +282,17 @@ int main (int argc, char* argv[])
             if(wave.nb_lists == 51){
                 game->win = 1;
             }
+
+            // Argent gagne par type de monstre tue
+            Monster_Type monsterKilled = monster_on_tower(l_monster, l_tower);
         
-            monster_on_tower(l_monster, l_tower);
+            if(monsterKilled != -1){
+                if(monsterKilled == BACTERY){
+                    game->money += moneyMonster;
+                } else {
+                    game->money += moneyMonster*2;
+                }
+            }
 
             //Affichage wave de monstres
             if (display_wave(l_monster) == 0) {
@@ -294,7 +303,7 @@ int main (int argc, char* argv[])
             display_list_tower(l_tower);
             if(l_tower != NULL) {
                 if(t != NULL) {
-                t_selected = constructTowerSelected(t, xOver, yOver);
+                    t_selected = constructTowerSelected(l_tower, xOver, yOver);
 				if(t_selected != NULL) {
 					displayTowerFeatures(t_selected);
 				}
@@ -373,7 +382,7 @@ int main (int argc, char* argv[])
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
                         if(t != NULL && construct_tower == 1){
-                            to_remove = constructTowerSelected(t, e.button.x, e.button.y);
+                            to_remove = constructTowerSelected(l_tower, e.button.x, e.button.y);
                             if(to_remove != NULL) {
 								click_delete_tower(l_tower,to_remove,game, e.button.x, e.button.y);
 							

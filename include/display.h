@@ -34,8 +34,8 @@ int click_installation_delete(List_Installation* l_inst, Installation* current, 
 
 int shot_monster(Monster* m, Tower* t);
 int display_cross(GLuint* texture);
-int monster_on_tower(List_Monster* list_monster, List_Tower* list_tower);
+Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower);
 void displayTowerFeatures(Tower* t);
-Tower* constructTowerSelected(Tower* t_first, int x, int y);
+Tower* constructTowerSelected(List_Tower* l_tower, int x, int y);
 
 #endif
