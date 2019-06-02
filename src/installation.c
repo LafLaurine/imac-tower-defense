@@ -16,7 +16,7 @@ List_Installation* new_installation_list() {
 	return list_installation;
 }
 
-Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst){
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst, int money){
 	Installation* i = (Installation*)malloc(sizeof(Installation));
 	if(i != NULL){
 		i->type = type; //type
@@ -47,8 +47,13 @@ Installation* create_installation(InstallationType type, float x, float y, List_
 		printf("%s\n", "Not enough memory for installation");
 		exit(EXIT_FAILURE);
 	}
-
-	return i;
+	if(money >= i->cost) {
+		return i;
+	}
+	else {
+		printf("Pas assez d'argent");
+		return NULL;
+	}
 }
 
 Installation* click_installation(List_Installation* l_install, float x, float y) {

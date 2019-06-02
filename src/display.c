@@ -645,24 +645,23 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x,
 	if(l_tower != NULL) {
 		if(current != NULL) {
 			if(tower_on_select(current,l_tower,x,y)) {
-				game->money += current->cost;
+				//player_money_down_update(game,current->cost);
 				l_tower = delete_from_position(l_tower, current);
-				}
+			}
 		}
-		}
-		else {
-			fprintf(stderr, "Erreur la tour courante\n");
-			return 0;
-		}
+	}
+	else {
+		fprintf(stderr, "Erreur la tour courante\n");
+		return 0;
+	}
 	return 1;
-
 }
 
 int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y) {
 	if(l_inst != NULL) {
 		if(current != NULL) {
 			if(installation_on_select(current,l_inst,x,y)) {
-				game->money += current->cost;
+				//player_money_down_update(game,current->cost);
 				l_inst = delete_install_from_position(l_inst, current);
 			}
 		}
@@ -773,36 +772,36 @@ void displayTowerFeatures(Tower* t) {
 	if(t != NULL) {
 		// Chargement des caractéristiqes de la tour en fonction de son type
 		if((*t).type == ROCKET) {
-			featuresImg = IMG_Load("./images/tower/rocket.png");
+			featuresImg = IMG_Load("./images/info/info_rocket.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image tower/rocket.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_rocket.png \n");
 		        exit(1);
 		    }
-		    load_sprite("./images/tower/rocket.png",&featuresTexture);
+		    load_sprite("./images/info/info_rocket.png",&featuresTexture);
 		}
 		else if((*t).type == LASER) {
-			featuresImg = IMG_Load("./images/tower/laser.png");
+			featuresImg = IMG_Load("./images/info/info_laser.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image tower/laser.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_laser.png \n");
 		        exit(1);
 			}
-		    load_sprite("./images/tower/laser.png",&featuresTexture);		
+		    load_sprite("./images/info/info_laser.png",&featuresTexture);		
 		}
 		else if((*t).type == YELLOW) {
-			featuresImg = IMG_Load("./images/tower/yellow.png");
+			featuresImg = IMG_Load("./images/info/info_medoc.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image tower/yellow.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_medoc.png \n");
 		        exit(1);
 		    }
-		    load_sprite("./images/tower/yellow.png",&featuresTexture);
+		    load_sprite("./images/info/info_medoc.png",&featuresTexture);
 		}
 		else if((*t).type == BLUE) {
-			featuresImg = IMG_Load("./images/tower/blue.png");
+			featuresImg = IMG_Load("./images/info/info_bandage.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image tower/blue.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_bandage.png \n");
 		        exit(1);
 		    }
-		    load_sprite("./images/towers/blue.png",&featuresTexture);
+		    load_sprite("./images/info/info_bandage.png",&featuresTexture);
 		}
 		
 		// Affichage de la texture sur la carte

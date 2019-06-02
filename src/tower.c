@@ -18,7 +18,7 @@ List_Tower* new_tower_list() {
 	return list_tower;
 }
 
-Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower){
+Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower, int money){
 	Tower* t = malloc(sizeof(Tower)); 
 	if(t != NULL) {
 		t->type = type; //type
@@ -54,8 +54,13 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 			t->cost = 100;
 		}
 		add_tower_list(t, l_tower);
-		printf("%s\n", "New tower");
-		return t;
+		if(money >= t->cost) {
+			return t;
+		}
+		else {
+			printf("Tu n'as pas assez d'argent");
+			return NULL;
+		}
 	}
 	else {
 		printf("%s\n", "Not enough memory for tower");

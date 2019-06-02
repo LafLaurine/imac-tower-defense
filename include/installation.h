@@ -36,7 +36,7 @@ typedef struct List_Installation {
 } List_Installation;
 
 List_Installation* new_installation_list();
-Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst);
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst, int money);
 Installation* installation_on_select(Installation* i, List_Installation* l_inst, float x, float y);
 Installation* click_installation(List_Installation* l_install, float x, float y);
 List_Installation* delete_install_from_position(List_Installation* l_inst, Installation* current);
