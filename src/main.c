@@ -170,8 +170,8 @@ int main (int argc, char* argv[])
     List_Installation* l_inst =  new_installation_list();
     InstallationType draw_type_inst = -1;
 
-	Tower* t;
-    Installation* i;
+	Tower* t = NULL;
+    Installation* i = NULL;
     int loop = 1;
     
     while(loop) 
@@ -291,6 +291,15 @@ int main (int argc, char* argv[])
             
             //Affichage tours
             display_list_tower(l_tower);
+            if(l_tower != NULL) {
+                if(t != NULL) {
+                t_selected = constructTowerSelected(t, xOver, yOver);
+				if(t_selected != NULL) {
+					displayTowerFeatures(t_selected);
+				}
+            }
+            }
+            
         
             //Affichage installations
             display_list_installation(l_inst);
@@ -313,7 +322,7 @@ int main (int argc, char* argv[])
 
 			if(e.type == SDL_MOUSEMOTION) {
 				xOver = e.motion.x;
-	        	yOver = 600-e.motion.y;
+	        	yOver = e.motion.y;
 			}
 		
         

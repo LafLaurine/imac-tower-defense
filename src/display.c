@@ -814,13 +814,13 @@ void displayTowerFeatures(Tower* t) {
 		glBegin(GL_QUADS);
 			glColor4ub(255, 255, 255, 255); // Opacité 100%
 			glTexCoord2d(0, 0); 
-			glVertex2f((*t).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
-			glTexCoord2d(0, 1);
 			glVertex2f((*t).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(0, 1);
+			glVertex2f((*t).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
 			glTexCoord2d(1, 1); 
-			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
-			glTexCoord2d(1, 0);
 			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(1, 0);
+			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
 		glEnd();
 	    
 	    glBindTexture(GL_TEXTURE_2D, 0);
