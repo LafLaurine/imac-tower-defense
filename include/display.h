@@ -29,6 +29,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 int check_around_tower(Tower* t, List_Installation* list_inst);
 void update_tower(Tower* t, InstallationType);
 int check_around_inst(Installation* i, List_Tower* list_tower);
+int delete_around_inst(Installation* i, List_Tower* list_tower);
 int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y);
 int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y);
 
@@ -38,4 +39,6 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 void displayTowerFeatures(Tower* t);
 Tower* constructTowerSelected(List_Tower* l_tower, int x, int y);
 
+
+void downgrade_tower(Tower* t, InstallationType type_inst);
 #endif

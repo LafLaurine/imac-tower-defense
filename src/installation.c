@@ -175,7 +175,6 @@ void destroy_installation(List_Installation* list_installation) {
 	if (list_installation->length != 0) {
 		free(list_installation);
 	}
-	// FONCTION POUR ENLEVER POUVOIR AUX TOURS
 }
 
 int installation_on_construct(Map* map, int x, int y) {

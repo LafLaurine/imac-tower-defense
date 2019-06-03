@@ -95,7 +95,6 @@ int main (int argc, char* argv[])
     int monsterTypeInt = 0;
     int waveBool = 0;
     Tower* t_selected = NULL;
-    Tower* to_remove = NULL;
 
     //Init map
     Map* map = init_map(argv[1]);
@@ -374,7 +373,7 @@ int main (int argc, char* argv[])
                                     }
                             }   
                         }
-
+                        //si on appuie sur la croix
                         if(e.button.x <= 1000 && e.button.x >= 980 && e.button.y <= 20 && e.button.y >= 0) {
                             loop = 0;
                         }
@@ -382,16 +381,15 @@ int main (int argc, char* argv[])
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
                         if(t != NULL && construct_tower == 1){
-                            to_remove = constructTowerSelected(l_tower, e.button.x, e.button.y);
-                            if(to_remove != NULL) {
-								click_delete_tower(l_tower,to_remove,game, e.button.x, e.button.y);
-							
-                            }
+                            if(click_tower(l_tower,e.button.x,e.button.y)) {
+								click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+                          }
                         }
                         if(i != NULL && construct_install == 1) {
                             if(click_installation(l_inst,e.button.x,e.button.y)) {
                                 //Test click pour supprimer une installation
                                 click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                                delete_around_inst(i, l_tower);
                             }
 						}
                     }

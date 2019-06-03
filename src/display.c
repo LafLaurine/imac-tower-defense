@@ -686,6 +686,38 @@ void update_tower(Tower* t, InstallationType type_inst){
 	}
 }
 
+
+int delete_around_inst(Installation* i, List_Tower* list_tower){
+
+	if(list_tower != NULL) {
+		Tower* t = list_tower->t_first;
+		
+		while(t != NULL) {
+			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range, 34)){
+							printf("COUCOU");
+				downgrade_tower(t, i->type);
+			}
+			t = t->t_next;
+    	}
+		return 0;
+	}
+	else {
+		fprintf(stderr, "Installation not on constructible material\n");
+		return 0;
+	}
+}
+
+void downgrade_tower(Tower* t, InstallationType type_inst){
+	if(type_inst == 0){
+		t->range -= (t->range)*0.25;
+	} else if(type_inst == 1) {
+		t->power -= (t->power)*0.25;
+	} else {
+		t->rate -= (t->rate)*0.25;		
+	}
+}
+
+
 // MONSTER AND TOWERS
 
 Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower) {
