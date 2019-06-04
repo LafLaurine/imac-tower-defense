@@ -1,13 +1,10 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 #include "../include/game.h"
 
 Game* new_game() {
 	Game* n_game = malloc(sizeof(Game));
+
 	if(n_game != NULL) {
-		//player start with 500
-		n_game->money = 500;
+		n_game->money = 500; // Player starts with 500
 		n_game->monster_alive = 0;
 		n_game->nb_lists_send = 0;
 		n_game->nb_lists_killed = 0; 
@@ -16,55 +13,49 @@ Game* new_game() {
 		n_game->start = 0;
 		n_game->win = 0;
 		n_game->over = 0;
-	}
-	else {
-		fprintf(stderr, "Game cannot start\n");
-		return NULL;
+
+	} else {
+		printf("Game cannot start\n");
+		exit(EXIT_FAILURE);
 	}
 	
 	return n_game;
 }
 
 int player_money_down_update(Game* game, int cost) {
-
-	//Si le jeu a commencé
+	// If game has began
 	if(game != NULL) {
-	
 		game->money -= cost;
-		
-	}
-	else {
-		fprintf(stderr, "Money won't update\n");
+
+	} else {
+		printf("Money won't update\n");
 		return 0;
 	}
-	
+
 	return 1;
 }
 
 int player_money_up_update(Game* game, int cost) {
-	//Si le jeu a commencé
+	// If game has began
 	if(game != NULL) {
-	
 		game->money += cost;
 		
-	}
-	else {
-		fprintf(stderr, "Money won't update\n");
+	} else {
+		printf("Money won't update\n");
 		return 0;
 	}
 	
 	return 1;
 }
 
-// Affichage du budget
 void display_budget(Game *player) {		
 		int money = player->money;
 
-		//Alloue de la mémoire pour une chaine de caractère
-		char* machaine = malloc(20*sizeof(char));
+		// Allocate memory for string
+		char* s_money = malloc(20*sizeof(char));
 
-		//Si la chaine de caracteres à bien été alloué
-		if(machaine != NULL) {
+		// If memory was allocate
+		if(s_money != NULL) {
 					glColor4f(0,0,0, 0.5);
 					glBegin(GL_QUADS);
 						glVertex2f(195,422);
@@ -73,15 +64,14 @@ void display_budget(Game *player) {
 						glVertex2f(195,445);
 					glEnd();
 					glColor4f(255,255,255, 1);
-					//Convertie un int en un string
-					sprintf(machaine,"%d",money);
+					// Convert int to string
+					sprintf(s_money, "%d", money);
 					vBitmapOutput(205, 440,  "Money :",GLUT_BITMAP_HELVETICA_18);				
-					vBitmapOutput(280, 440,  machaine,GLUT_BITMAP_HELVETICA_18);			
+					vBitmapOutput(280, 440,  s_money,GLUT_BITMAP_HELVETICA_18);			
 		} else {
-		fprintf(stderr, "Erreur cette tour n'existe pas\n");
+			printf("String money memory not allocated\n");
 	}	
 }
-
 
 void game_end(Game* game) {
 	if (game != NULL) {

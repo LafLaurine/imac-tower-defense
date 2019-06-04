@@ -1,94 +1,80 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
 #include "../include/image.h"
 
-//Handle error messages
-void errorMsg(char *message)
-{
-	fprintf(stderr, "PPM : %s\n", message);
-	exit(1);
-}
-
-//Read the header of a PPM file
-Image* readPPMHeader(FILE* fp, int *w, int *h)
-{
+Image* readPPMHeader(FILE* fp, int *w, int *h) {
 	char ch;
 	int maxval;
 
-	//check the PPM type
-	if(fscanf(fp, "P%c\n",&ch)!=1 || ch!='3')
-	{
-		errorMsg("Not PPM raw format");
+	// Check the PPM type
+	if(fscanf(fp, "P%c\n",&ch)!=1 || ch!='3') {
+		printf("Not PPM raw format\n");
+		exit(EXIT_FAILURE);
 	}
 
-	//check if there is comments
+	// Check if there is comments
 	ch = getc(fp);
-	while(ch=='#')
-	{
-		do
-		{
+	while(ch=='#') {
+		do {
 			ch=getc(fp);
 		}
 		while(ch!='\n');
 		ch = getc(fp);
 	}
 
-	//check if the following elements are digital or not
-	if (!isdigit(ch))
-	{
-		errorMsg("Can't read header");
+	// Check if the following elements are digital or not
+	if (!isdigit(ch)) {
+		printf("Can't read header\n");
+		exit(EXIT_FAILURE);
 	}
 
 	ungetc(ch,fp);
-	if(fscanf(fp, "%d %d %d",w,h,&maxval) != 3){
-		errorMsg("No width / height / maxval");
+	if(fscanf(fp, "%d %d %d",w,h,&maxval) != 3) {
+		printf("No width / height / maxval\n");
+		exit(EXIT_FAILURE);
 	}
 
-	if(maxval!=255)
-	{
-		errorMsg("Not colored image");
+	if(maxval!=255)	{
+		printf("Not colored image\n");
+		exit(EXIT_FAILURE);
 	}
 
 	Image *image = malloc(sizeof(Image));
 	image->pixelData = malloc(3**h**w*sizeof(unsigned char)); //penser a convertir si bug sur ordi de la fac
-
 	unsigned char* data = (unsigned char*) image->pixelData;
-	for (int i=0; i<*w**h*3; i++)
-	{
+	
+	for (int i=0; i<*w**h*3; i++) {
 		if (fscanf(fp, "%hhu", data+i) != 1) {
-			errorMsg("Cannot read PPM : Invalid rgb component");
+			printf("Cannot read PPM : Invalid rgb component\n");
+			exit(EXIT_FAILURE);
 		}
 	}
 
 	return image;
 }
 
-//Read an image
-Image* read_image(char *filename)
-{
+Image* read_image(char *filename) {
 	int width;
 	int height;
 	FILE *fp = fopen(filename, "rb");
 
-	if (!fp)
-		errorMsg("Cannot open file for reading");
-	Image* image = readPPMHeader(fp, &width, &height);
-
-	if (width<=0 || height <=0)
-	{
-		errorMsg("Negative size");
-	}
-
-	//allocate memory
-	
-	if(!image)
-	{
-		errorMsg("Not enough memory");
+	if (!fp) {
+		printf("Cannot open file for reading\n");
 		exit(EXIT_FAILURE);
 	}
 
-	//Affect values to the structure
+	Image* image = readPPMHeader(fp, &width, &height);
+
+	if (width<=0 || height <=0) {
+		printf("Negative size\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// Memory allocation
+	if(!image) {
+		printf("Not enough memory\n");
+		exit(EXIT_FAILURE);
+	}
+
+	// Affect values to the structure
 	image->width = width;
 	image->height = height;
 
@@ -96,16 +82,12 @@ Image* read_image(char *filename)
  	return image;
 }
 
-//free memory
-void free_image(Image *img)
-{
-	//if the structure is not empty
-	if (img!=NULL)
-	{
+void free_image(Image *img) {
+	// If structure is not empty
+	if (img!=NULL) {
 		img->width = 0;
 		img->height = 0;
 		free(img->path);
 		free(img);
 	}
-	
 }
