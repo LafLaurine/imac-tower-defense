@@ -381,9 +381,8 @@ int main (int argc, char* argv[])
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
                         if(t != NULL && construct_tower == 1){
-                            if(click_tower(l_tower,e.button.x,e.button.y)) {
-								click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
-                          }
+                            t = click_tower(l_tower,e.button.x,e.button.y);
+							click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
                         }
                         if(i != NULL && construct_install == 1) {
                             if(click_installation(l_inst,e.button.x,e.button.y)) {

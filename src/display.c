@@ -625,15 +625,9 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y) {
 	if(l_tower != NULL) {
 		if(current != NULL) {
-			/*
-			if(tower_on_select(current,l_tower,x,y)) {
-				player_money_up_update(game,current->cost);
-				l_tower = delete_from_position(l_tower, current);
-			}
-			*/
+			delete_from_position(l_tower, current);			
 		}
-	}
-	else {
+	} else {
 		fprintf(stderr, "Erreur la tour courante\n");
 		return 0;
 	}

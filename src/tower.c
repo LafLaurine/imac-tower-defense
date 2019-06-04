@@ -188,11 +188,12 @@ void destroy_tower(List_Tower* list_tower) {
 
 
 Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y){
-	while(t != NULL){
+	Tower* tu = l_tower->t_first;
+	while(tu != NULL){
 		if(square_intersect_circle(t->x, x, t->y, y, l_tower->length, 0)){
-		    return t;
+		    return tu;
 		}
-		t = l_tower->t_last->t_prev;
+		tu = tu->t_next;
 	}
     return 0;
 }
