@@ -1,40 +1,34 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
 #include "../include/tower.h"
 
 List_Tower* new_tower_list() {
-	List_Tower *list_tower = malloc(sizeof(List_Tower));
-	if (list_tower != NULL) {
-		list_tower->length = 0;
-		list_tower->t_first = NULL;
-		list_tower->t_last = NULL;
+	List_Tower *l_tower = malloc(sizeof(List_Tower));
+	if (l_tower != NULL) {
+		l_tower->length = 0;
+		l_tower->t_first = NULL;
+		l_tower->t_last = NULL;
 	}
 	else {
-		printf("%s\n", "Not enough memory");
-		return NULL;
+		printf("Not enough memory\n");
+		exit(EXIT_FAILURE);
 	}
-	return list_tower;
+	return l_tower;
 }
 
-Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_tower, int money){
+Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int money){
 	Tower* t = malloc(sizeof(Tower)); 
+	
 	if(t != NULL) {
-		t->type = type; //type
-		t->x = x; //coordonnee x
-		t->y = y; //coordonnee y
-		t->node_prev = head; //Pointeur vers le premier noeud
-		t->node_next = head->next; //Pointeur vers le second noeud
-		t->node_next = NULL; 
-		t->t_next = NULL;
-		t->t_prev = NULL;
+		t->type = type; // Type
+		t->x = x; // x Position
+		t->y = y; // y Position
+		t->t_next = NULL; // Next tower
+		t->t_prev = NULL; // Previous tower
 
 		if(type == LASER) {
-			t->rate = 10; //La vitesse de tir
-			t->power = 5; //puissance de l'attaque
-			t->range = 50; //portee
-			t->cost = 10; //prix
+			t->rate = 10; // Shooting rate
+			t->power = 5; // Shooting power
+			t->range = 50; // Shooting range
+			t->cost = 10; // Tower cost
 		}
 		else if(type == ROCKET) {
 			t->rate = 15;
@@ -54,164 +48,138 @@ Tower* create_tower(TowerType type, float x, float y, Node* head, List_Tower* l_
 			t->range = 250;
 			t->cost = 100;
 		}
+
 		add_tower_list(t, l_tower);
-		printf("%s\n", "New tower");
+		printf("New tower\n");
+		
+		// Check if enough money to buy tower
 		if(money >= t->cost) {
 			return t;
-		}
-		else {
-			printf("Tu n'as pas assez d'argent");
+		} else {
+			printf("Not enough money to buy tower");
 			return NULL;
 		}
-	}
-	else {
-		printf("%s\n", "Not enough memory for tower");
+
+	} else {
+		printf("Not enough memory for tower\n");
 		exit(EXIT_FAILURE);
 	}
 }
 
-void add_tower_list(Tower* t, List_Tower* list_tower){
-	if (list_tower != NULL) {
-		if (list_tower->t_last == NULL) {
-				// Pointe la tête de la liste sur le nouveau monstre
-				list_tower->t_first = t; 
+void add_tower_list(Tower* t, List_Tower* l_tower){
+	if (l_tower != NULL) {
+		if (l_tower->t_last == NULL) {
+				// List head on new tower
+				l_tower->t_first = t; 
 				t->t_prev = NULL;
 			}
-			// Cas où des éléments sont déjà présents dans la  liste
+			// If elements are already into list
 			else {
-				t->t_prev = list_tower->t_last; 
-				list_tower->t_last->t_next = t;  
+				t->t_prev = l_tower->t_last; 
+				l_tower->t_last->t_next = t;  
 			}
 			
-			// Pointe la fin de la liste sur le nouveau monstre
-			list_tower->t_last = t; 
+			// List last on new tower
+			l_tower->t_last = t; 
+			// List length +1
+			l_tower->length++; 
 
-			// On augmente de 1 la taille de la liste
-			list_tower->length++; 
-		}
-	else {
-		printf("%s\n", "Fail to add to list tower");
+		} else {
+			printf("Fail to add to list tower\n");
 	}
 }
 
 
-Tower* click_tower(List_Tower* p_ltower, float x, float y) {
-	
-	//Vérifie que la liste de tours existe
-	if(p_ltower != NULL) {
+Tower* click_tower(List_Tower* l_tower, float x, float y) {
+	// Check if list tower exists
+	if(l_tower != NULL) {
 
-		//Tour temporaire pour parcourir la liste de tour
-		Tower* p_tmp = p_ltower->t_last;
+		// Temp tower to browse list
+		Tower* p_tmp = l_tower->t_last;
 		
 		while(p_tmp != NULL) {
-
-			//Si on a cliqué sur une tour
+			/// If click was on tower
 			if(x <= (p_tmp->x + 50) && x >= (p_tmp->x - 50) && y <= (p_tmp->y + 50) && y >= (p_tmp->y - 50)) {
 				return p_tmp;	
 			}
-
 			p_tmp = p_tmp->t_prev;
-
 		}
-	}
-	else {
-		fprintf(stderr, "Erreur :wrong liste tour\n");
+
+	} else {
+		printf("Erreur :wrong liste tour\n");
 		return NULL;
 	}
-
 	return NULL;
-
 }
 
-//delete tower from list and return list of tower
-List_Tower* delete_from_position(List_Tower* list_tower, Tower* current) {
-	if (list_tower != NULL) {
-
+void delete_from_position(List_Tower* l_tower, Tower* current) {
+	if (l_tower != NULL) {
 		if(current != NULL) {
-
-			//Si c'est la dernière tour de la liste
+			// If last installation of list
 			if (current->t_next == NULL) {
 				
-				//Pointe la fin de la liste sur la tour précédente
-				list_tower->t_last = current->t_prev;
+				// End of list on previous installation
+				l_tower->t_last = current->t_prev;
 
-				if(list_tower->t_last != NULL) {
-					//Lien de la dernière tour vers la tour suivante est NULL
-					list_tower->t_last->t_next = NULL;
+				if(l_tower->t_last != NULL) {
+					// Last installation next is NULL
+					l_tower->t_last->t_next = NULL;
 				}
 				else
-					list_tower->t_first = NULL;
-					
+					l_tower->t_first = NULL;
 			}
-		
-			//Si c'est la première de la liste
+
+			// If first of list
 			else if (current->t_prev == NULL) {
-				list_tower->t_first = current->t_next;
+				l_tower->t_first = current->t_next;
 
-				if(list_tower->t_first != NULL) {
-			 		list_tower->t_first->t_prev = NULL;
+				if(l_tower->t_first != NULL) {
+			 		l_tower->t_first->t_prev = NULL;
 				}
 				else
-					list_tower->t_last = NULL;
-			}
+					l_tower->t_last = NULL;
 
-			else {
-				//Relie la tour suivante à la tour précédente de la tour que l'on veut supprmer 
+			} else {
+				// Link next tower to previous tower (soon deleted) 
 				current->t_next->t_prev = current->t_prev;
-				//Relie la tour précédente à la tour suivante de la tour que l'on veut supprmer 
+				// Link previous tower to next tower (soon deleted)
 				current->t_prev->t_next = current->t_next;
-
 			}
-			//supprime la tour
-			free(current);
-			list_tower->length--;
 
-		}
-		else {
-			fprintf(stderr, "Tower doesn't exist");
+			// Delete tower
+			free(current);
+			l_tower->length--;
+
+		} else {
+			printf("Tower doesn't exist\n");
 			exit(EXIT_FAILURE);
 		}
-	}
-	else {
-		fprintf(stderr, "Tower list doesn't exist");
+	} else {
+		printf("Tower list doesn't exist\n");
 		exit(EXIT_FAILURE);
 	}
-	return list_tower; 
 }
 
-void destroy_tower(List_Tower* list_tower) {
-	//Si la liste n'est pas vide
-	if (list_tower->length != 0) {
-		free(list_tower);
+void destroy_tower(List_Tower* l_tower) {
+	// Check if list not empty
+	if (l_tower->length != 0) {
+		free(l_tower);
 	}
-}
-
-
-Tower* tower_on_select(Tower* t, List_Tower* l_tower, float x, float y){
-	Tower* tu = l_tower->t_first;
-	while(tu != NULL){
-		if(square_intersect_circle(t->x, x, t->y, y, l_tower->length, 0)){
-		    return tu;
-		}
-		tu = tu->t_next;
-	}
-    return 0;
 }
 
 int tower_on_construct(Map* map, int x, int y) {
+	// Check pixel if (x,y) pixel color corresponds to construct color
 	if(map->img->pixelData[(y*(map->img->width)+x)*3] == map->construct.r){
 		if(map->img->pixelData[(y*(map->img->width)+x)*3+1] == map->construct.g){
 			if(map->img->pixelData[(y*(map->img->width)+x)*3+2] == map->construct.b){
 				return 1;
 			}
-		}
-		else {
-			fprintf(stderr, "zone non constructible\n");
+		} else {
+			printf("Non buildable area\n");
 			return 0;
 		}
-	}
-	else{
-		fprintf(stderr, "zone non constructible\n");
+	} else{
+		printf("Non buildable area\n");
 		return 0;
 	}
 	return 1;

@@ -350,7 +350,7 @@ int main (int argc, char* argv[])
                         if(draw_type_tower != -1){
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
-                                    t = create_tower(draw_type_tower, e.button.x, e.button.y, root, l_tower,game->money);
+                                    t = create_tower(draw_type_tower, e.button.x, e.button.y, l_tower, game->money);
                                     construct_tower = 1;
                                     check_around_tower(t, l_inst);
                                     player_money_down_update(game,t->cost);

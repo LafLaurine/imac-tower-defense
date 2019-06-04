@@ -1,9 +1,8 @@
 #ifndef INSTALLATION
 #define INSTALLATION
 
-#include "node.h"
+#include <stdio.h>
 #include "map.h"
-#include "common.h"
 
 
 typedef enum{
@@ -12,37 +11,36 @@ typedef enum{
 
 
 typedef struct Installation {
-	//position
-	float x;
-	float y;
-	//Type de l'installation'
-	InstallationType type;
-    //liste tours
-    //List_Tower* list_tower;
-	//tour precedente
-	struct Installation* i_prev;
-	//tour suivante
-	struct Installation* i_next;
-	int cost;
+	float x; // x Position
+	float y; // y Position
+	InstallationType type; // Installation type
+	struct Installation* i_prev; // Previous installation
+	struct Installation* i_next; // Next installation
+	int cost; // Installation cost
 } Installation;
 
-//liste tour
-typedef struct List_Installation {
-	//Taille de la liste
-	size_t length;
-	Installation *i_first; //pointeur vers le premier element
-	Installation *i_last; //pointeur vers le dernier element
 
+// Installation list
+typedef struct List_Installation {
+	size_t length; // List length
+	Installation *i_first; // Pointer to first element
+	Installation *i_last; // Pointer to last element
 } List_Installation;
 
+
+// Create new list installation
 List_Installation* new_installation_list();
-Installation* create_installation(InstallationType type, float x, float y, List_Installation* list_inst, int money);
-Installation* installation_on_select(Installation* i, List_Installation* l_inst, float x, float y);
-Installation* click_installation(List_Installation* l_install, float x, float y);
-List_Installation* delete_install_from_position(List_Installation* l_inst, Installation* current);
-void add_installation_list(Installation* t, List_Installation* list_installation);
-void destroy_installation(List_Installation* list_installation);
+// Create new installation
+Installation* create_installation(InstallationType type, float x, float y, List_Installation* l_inst, int money);
+// Check on which installation we clicked
+Installation* click_installation(List_Installation* l_inst, float x, float y);
+// Delete installation from list
+void delete_install_from_position(List_Installation* l_inst, Installation* current);
+// Add installation to list
+void add_installation_list(Installation* i, List_Installation* l_inst);
+// Destroy installation
+void destroy_installation(List_Installation* l_inst);
+// Check if click to create installation is on construct area
 int installation_on_construct(Map* map, int x, int y);
-// fonction pour donner bonus aux tours les plus proches
 
 #endif
