@@ -385,13 +385,12 @@ int main (int argc, char* argv[])
 							click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
                         }
                         if(i != NULL && construct_install == 1) {
-                            if(click_installation(l_inst,e.button.x,e.button.y)) {
-                                //Test click pour supprimer une installation
-                                click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
-                                delete_around_inst(i, l_tower);
-                            }
-						}
-                    }
+                            i = click_installation(l_inst,e.button.x,e.button.y);
+                            click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                            delete_around_inst(i, l_tower);
+                        }
+					}
+            
                     
 
                    
