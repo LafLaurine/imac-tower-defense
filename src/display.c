@@ -622,7 +622,7 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 	}
 }
 
-int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y) {
+int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game) {
 	if(l_tower != NULL) {
 		if(current != NULL) {
 			player_money_up_update(game,current->cost);
@@ -635,12 +635,11 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x,
 	return 1;
 }
 
-int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y) {
+int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game) {
 	if(l_inst != NULL) {
 		if(current != NULL) {
-		player_money_up_update(game,current->cost);
-		delete_install_from_position(l_inst, current);
-			
+			player_money_up_update(game,current->cost);
+			delete_install_from_position(l_inst, current);	
 		}
 	} else {
 		fprintf(stderr, "Erreur installation courante\n");

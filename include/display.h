@@ -30,8 +30,8 @@ int check_around_tower(Tower* t, List_Installation* list_inst);
 void update_tower(Tower* t, InstallationType);
 int check_around_inst(Installation* i, List_Tower* list_tower);
 int delete_around_inst(Installation* i, List_Tower* list_tower);
-int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game, float x, float y);
-int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, float x, float y);
+int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game);
+int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game);
 
 int shot_monster(Monster* m, Tower* t);
 int display_cross(GLuint* texture);

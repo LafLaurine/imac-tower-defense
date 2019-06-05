@@ -379,13 +379,14 @@ int main (int argc, char* argv[])
                     }
                    
                     if(e.button.button == SDL_BUTTON_RIGHT) {
+                        t = click_tower(l_tower, e.button.x, e.button.y);
                         if(t != NULL && construct_tower == 1){
-                            t = click_tower(l_tower,e.button.x,e.button.y);
-							click_delete_tower(l_tower,t,game, e.button.x, e.button.y);
+							click_delete_tower(l_tower, t, game);
                         }
+                        
+                        i = click_installation(l_inst, e.button.x, e.button.y);
                         if(i != NULL && construct_install == 1) {
-                            i = click_installation(l_inst,e.button.x,e.button.y);
-                            click_installation_delete(l_inst,i,game, e.button.x, e.button.y);
+                            click_installation_delete(l_inst, i, game);
                             delete_around_inst(i, l_tower);
                         }
 					}
