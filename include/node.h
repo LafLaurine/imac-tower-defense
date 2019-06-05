@@ -13,16 +13,21 @@ typedef enum {
 } Node_Type;
 
 
+typedef struct adjacentNode 
+{
+    int index;
+    struct adjacentNode *next;
+} AdjacentNode, *AdjacenceList;
+
 typedef struct Node {
 	float x; // x Position
 	float y; // y Position
 	Node_Type type; // Node type
-	int *successors; // Node successors
+	AdjacenceList successors;
 	int indice;
 	struct Node *next; // Next node
 	struct Node *prev; // Previous node
 } Node;
-
 
 // Node list struct
 typedef struct List_Node {

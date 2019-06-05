@@ -96,9 +96,7 @@ int map_verification(Map* map, char* map_itd){
 				fprintf(stderr, "Blue value from path out of range\n");
 				exit(EXIT_FAILURE);
 			}
-			(map->path).r = chemin_r;
-			(map->path).g = chemin_g;
-			(map->path).b = chemin_b;
+			map->path = change_color(chemin_r,chemin_g,chemin_b);
 		} else {
 			printf("%s", "Unreadable file (at : path color)");
 			exit(EXIT_FAILURE);
@@ -122,9 +120,7 @@ int map_verification(Map* map, char* map_itd){
 				fprintf(stderr, "Blue value from node out of range\n");
 				exit(EXIT_FAILURE);
 			}
-			(map->node).r = noeud_r;
-			(map->node).g = noeud_g;
-			(map->node).b = noeud_b;
+			map->node = change_color(noeud_r,noeud_g,noeud_b);
 		} else {
 			printf("%s", "Unreadable file (at : node color)");
 			exit(EXIT_FAILURE);
@@ -148,9 +144,7 @@ int map_verification(Map* map, char* map_itd){
 				fprintf(stderr, "Blue value from construct out of range\n");
 				exit(EXIT_FAILURE);
 			}
-			(map->construct).r = construct_r;
-			(map->construct).g = construct_g;
-			(map->construct).b = construct_b;
+			map->construct = change_color(construct_r,construct_g,construct_b);
 		} else {
 			printf("%s", "Unreadable file (at : construct color)");
 			exit(EXIT_FAILURE);
@@ -174,9 +168,7 @@ int map_verification(Map* map, char* map_itd){
 				fprintf(stderr, "Blue value from in out of range\n");
 				exit(EXIT_FAILURE);
 			}
-			(map->in).r = in_r;
-			(map->in).g = in_g;
-			(map->in).b = in_b;
+			map->in = change_color(in_r,in_g,in_b);
 		} else {
 			printf("%s", "Unreadable file (at : in colo)");
 			exit(EXIT_FAILURE);
@@ -199,10 +191,10 @@ int map_verification(Map* map, char* map_itd){
 			if(out_b < 0 || out_b > 255) {
 				fprintf(stderr, "Blue value from out, out of range\n");
 				exit(EXIT_FAILURE);
-			}	
-			(map->out).r = out_r;
-			(map->out).g = out_g;
-			(map->out).b = out_b;
+			}
+			else {
+				map->out = change_color(out_r,out_g,out_b);
+			}
 		} else {
 			printf("%s", "Unreadable file (at : out color)");
 			exit(EXIT_FAILURE);
@@ -228,8 +220,7 @@ int map_verification(Map* map, char* map_itd){
 		int *successors = malloc(sizeof(int*));
 		int inBool = 0; //boolean
 		int outBool = 0;
-		int tabSuccess[node_indice][*successors];
-
+		
 		map->list_node = new_List_Node();
 		while(fgets(ligne, 99, itd) != NULL){
 				
@@ -303,136 +294,16 @@ int map_verification(Map* map, char* map_itd){
 	return 1;
 }
 
-//si la couleur ne correspond pas à l'image, on doit la changer pour bien la mettre à niveau : pour noeud, construct, chemin, in et out. 
-//Il faut trouver comment généraliser le truc car map->path ne change que pour le chemin. Pour ça il faut aussi modif valeur des px puisque pas tous même couleur
-int change_path_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-	int i, j;
+Color3f change_color(float r, float g, float b){
 
-	// On parcourt les lignes du tableau
-	for(i=0; i<(img->height); i++) {
+	Color3f colors;
+	colors.r = r;
+	colors.g = g;
+	colors.b = b;
 
-		// puis on parcourt les colonnes du tableau
-		for(j=0; j<(img->width); j++) {
-			
-			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
+	return colors;
 
-				//Change de couleur
-				pixels[i*(img->width)*3+j*3] = ((map->path).r)*255;
-				pixels[i*(img->width)*3+j*3+1] = ((map->path).g)*255;
-				pixels[i*(img->width)*3+j*3+2] = ((map->path).b)*255;
-			}
-		}
-	}
-
-	return 1;
 }
-
-int change_node_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-	int i, j;
-
-	// On parcourt les lignes du tableau
-	for(i=0; i<(img->height); i++) {
-
-		// puis on parcourt les colonnes du tableau
-		for(j=0; j<(img->width); j++) {
-			
-			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
-
-				//Change de couleur
-				pixels[i*(img->width)*3+j*3] = ((map->node).r)*255;
-				pixels[i*(img->width)*3+j*3+1] = ((map->node).g)*255;
-				pixels[i*(img->width)*3+j*3+2] = ((map->node).b)*255;
-			}
-		}
-	}
-
-	return 1;
-}
-
-int change_construct_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-
-	int i, j;
-
-	// On parcourt les lignes du tableau
-	for(i=0; i<(img->height); i++) {
-
-		// puis on parcourt les colonnes du tableau
-		for(j=0; j<(img->width); j++) {
-			
-			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
-
-				//Change de couleur
-				pixels[i*(img->width)*3+j*3] = ((map->construct).r)*255;
-				pixels[i*(img->width)*3+j*3+1] = ((map->construct).g)*255;
-				pixels[i*(img->width)*3+j*3+2] = ((map->construct).b)*255;
-			}
-		}
-	}
-
-	return 1;
-}
-
-int change_in_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-
-	int i, j;
-
-	// On parcourt les lignes du tableau
-	for(i=0; i<(img->height); i++) {
-
-		// puis on parcourt les colonnes du tableau
-		for(j=0; j<(img->width); j++) {
-			
-			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
-
-				//Change de couleur
-				pixels[i*(img->width)*3+j*3] = ((map->in).r)*255;
-				pixels[i*(img->width)*3+j*3+1] = ((map->in).g)*255;
-				pixels[i*(img->width)*3+j*3+2] = ((map->in).b)*255;
-			}
-		}
-	}
-
-	return 1;
-}
-
-int change_out_color(Image* img, unsigned char* pixels, Map* map, float r, float g, float b) {
-
-	int i, j;
-
-	// On parcourt les lignes du tableau
-	for(i=0; i<(img->height); i++) {
-
-		// puis on parcourt les colonnes du tableau
-		for(j=0; j<(img->width); j++) {
-			
-			//On vérifie la couleur
-			if(pixels[i*(img->height)*3+j*3] == r && pixels[i*(img->width)*3+j*3+1] == g && pixels[i*(img->width)*3+j*3+2] == b){
-
-				//Change de couleur
-				pixels[i*(img->width)*3+j*3] = ((map->out).r)*255;
-				pixels[i*(img->width)*3+j*3+1] = ((map->out).g)*255;
-				pixels[i*(img->width)*3+j*3+2] = ((map->out).b)*255;
-			}
-		}
-	}
-
-	return 1;
-}
-/*
-int change_map_color(Image* img, unsigned char* pixels, Map* map) {
-
-	change_path_color(img, pixels, map,255,255,255);
-	change_node_color(img, pixels, map,0,0,0);
-	change_construct_color(img, pixels, map,255,200,80);
-	change_in_color(img, pixels, map,0,200,0);
-	change_out_color(img, pixels, map,200,0,0);
-	return 1;
-
-}*/
 
 //bressenham
 int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
@@ -534,6 +405,48 @@ int check_pixel(int x, int y, Map* map, Color3f color){
 	}
 	return 0;
 }
+
+
+void init_djisksra(Map *map, int* tab_chemin) {
+    //tableau des sommets + successeurs
+    //tableau des valeurs (initalement ça doit être infini mais ici pour test on mets 10000)
+    //tableau des sommets visités : initialement tous à -1 et passe à 0 quand visité + prédécesseurs
+    int sommet[map->number_node];
+    //value taille des number_node
+    int value[map->number_node];
+    //taille nombre noeud
+    int visited[map->number_node];
+
+    //initialisation value à 300
+    //init visited tous à -1
+    for(int i =0; i<map->number_node;i++) {
+        value[i] = 300;
+        visited[i] = -1;
+        sommet[i] = -1;
+    }
+
+    sommet[0] = 0;
+    visited[0] = 0;
+    value[0] = 0;
+
+    Node* tmp = map->list_node->head;
+    sommet[tmp->indice]=tmp->indice;
+    value[tmp->indice] = 0;
+
+	printf("val sommet : %d", tmp->next->indice);
+    //tant que pas noeud sorti
+    // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
+   	while(tmp->type != Out && tmp->next != NULL) {
+        while(tmp->successors != NULL) {
+			//chemin visite
+			visited[tmp->indice] = 0;
+		}
+
+
+        tmp = tmp->next;
+    }
+}
+
 
 void free_map(Map* map) {
 	//Si la map existe

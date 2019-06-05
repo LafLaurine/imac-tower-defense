@@ -95,6 +95,8 @@ int main (int argc, char* argv[])
 
     //Init map
     Map* map = init_map(argv[1]);
+  /*  int *tabVal;
+    init_djisksra(map,tabVal);*/
 
     //Menu pour map
     GLuint menuMap;
