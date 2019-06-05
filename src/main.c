@@ -287,7 +287,7 @@ int main (int argc, char* argv[])
             if(monsterKilled != -1){
                 if(monsterKilled == BACTERY){
                     game->money += m->money;
-                } else {
+                } else if(monsterKilled == VIRUS) {
                     game->money += m->money*2;
                 }
             }

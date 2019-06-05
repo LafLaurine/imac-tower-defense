@@ -4,7 +4,7 @@ Game* new_game() {
 	Game* n_game = malloc(sizeof(Game));
 
 	if(n_game != NULL) {
-		n_game->money = 500; // Player starts with 500
+		n_game->money = 50; // Player starts with 100
 		n_game->monster_alive = 0;
 		n_game->nb_lists_send = 0;
 		n_game->nb_lists_killed = 0; 

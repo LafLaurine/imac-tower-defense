@@ -23,8 +23,6 @@ typedef struct Map {
 	unsigned int number_node;
 	//Liste des noeuds
 	List_Node* list_node;
-	Node *list;
-
 }Map;
 
 //Initialisation de la carte
