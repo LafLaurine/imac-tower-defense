@@ -36,13 +36,13 @@ Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int m
 			t->range = 50;
 			t->cost = 20;
 		}
-		else if(type == YELLOW) {
+		else if(type == MEDOC) {
 			t->rate = 20;
 			t->power = 5;
 			t->range = 200;
 			t->cost = 50;
 		}
-		else if(type == BLUE) {
+		else if(type == BANDAGE) {
 			t->rate = 50;
 			t->power = 10;
 			t->range = 250;

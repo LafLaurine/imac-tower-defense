@@ -300,6 +300,7 @@ int map_verification(Map* map, char* map_itd){
 			exit(EXIT_FAILURE);
 		}
 
+
 		fflush(itd);
 		fclose(itd);
 	}
@@ -364,7 +365,6 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	return 1;
 }
 
-// Pas sur que ça fonctionne
 int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 	int x, y;
 	float erreur = -0.5;
@@ -413,8 +413,6 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 
 
 int check_pixel(int x, int y, Map* map, Color3f color){
-	//printf("Rouge du pixel : %u, coordonnee x: %d et y: %d\n",map->img->pixelData[(y*(map->img->width)+x)*3], x, y);
-	
 	if(map->img->pixelData[(y*(map->img->width)+x)*3] == map->path.r){
 		if(map->img->pixelData[(y*(map->img->width)+x)*3+1] == map->path.g){
 			if(map->img->pixelData[(y*(map->img->width)+x)*3+2] == map->path.b){
@@ -448,14 +446,14 @@ void init_djisksra(Map *map, int* tab_chemin) {
     visited[0] = 0;
     value[0] = 0;
 
-    Node* tmp = map->list_node->head;
-    sommet[tmp->indice]=tmp->indice;
-    value[tmp->indice] = 0;
+    Node* route = map->list_node->head;
+    sommet[route->indice]=route->indice;
+    value[route->indice] = 0;
 
-	printf("val sommet : %d", tmp->next->indice);
     //tant que pas noeud sorti
     // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
-   	while(tmp->type != Out && tmp->next != NULL) {
+   	while(route->type != Out && route->next != NULL) {
+		Node *tmp = route;
         while(tmp->successors != NULL) {
 			//chemin visite
 			visited[tmp->indice] = 0;
@@ -471,8 +469,7 @@ void free_map(Map* map) {
 	//Si la map existe
 	if (map != NULL) {
 		free(map->img);
-/*		free_all_node(map->list_pixels);
-		free_all_node(map->list_node);*/
+		free_all_node(map->list_node);
 		free(map);
 	}
 }

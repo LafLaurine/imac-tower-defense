@@ -12,7 +12,6 @@ typedef enum {
 	In, Out, Twist, Intersect
 } Node_Type;
 
-
 typedef struct adjacentNode 
 {
     int index;
@@ -23,8 +22,9 @@ typedef struct Node {
 	float x; // x Position
 	float y; // y Position
 	Node_Type type; // Node type
-	AdjacenceList successors;
+	int* successors; // Node successors
 	int indice;
+	AdjacenceList success; 
 	struct Node *next; // Next node
 	struct Node *prev; // Previous node
 } Node;

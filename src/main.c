@@ -277,7 +277,7 @@ int main (int argc, char* argv[])
             if(monsterKilled != -1){
                 if(monsterKilled == BACTERY){
                     game->money += m->money;
-                } else {
+                } else if(monsterKilled == VIRUS) {
                     game->money += m->money*2;
                 }
             }
@@ -392,7 +392,7 @@ int main (int argc, char* argv[])
                             case 'l' :
                                 draw_type_tower = LASER;
                                 draw_type_inst = -1;
-                                break;
+                            break;
                             
                             case 'p' :
                                  if(game->pause == 0)
@@ -404,7 +404,17 @@ int main (int argc, char* argv[])
                             case 'z' :
                                 draw_type_tower = ROCKET;
                                 draw_type_inst = -1;
-                                break;
+                            break;
+
+                            case 'm' :
+                                draw_type_tower = MEDOC;
+                                draw_type_inst = -1;
+                            break;
+
+                            case 'b' :
+                                draw_type_tower = BANDAGE;
+                                draw_type_inst = -1;
+                            break;
                                 
                             case 'n' :
                                 draw_type_tower = -1;
@@ -414,12 +424,17 @@ int main (int argc, char* argv[])
                             case 'r' :
                                 draw_type_inst = RADAR;
                                 draw_type_tower = -1;
-                                break;
+                            break;
 
                             case 'u' :
                                 draw_type_inst = USINE;
                                 draw_type_tower = -1;
-                                break;
+                            break;
+                            
+                            case 't' :
+                                draw_type_inst = STOCK;
+                                draw_type_tower = -1;
+                            break;
                             
                             case 's' :
                                game->start = 1;
