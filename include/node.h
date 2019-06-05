@@ -18,6 +18,7 @@ typedef struct Node {
 	float y; // y Position
 	Node_Type type; // Node type
 	int *successors; // Node successors
+	int indice;
 	struct Node *next; // Next node
 	struct Node *prev; // Previous node
 } Node;
@@ -34,7 +35,7 @@ typedef struct List_Node {
 // Create new list node
 List_Node* new_List_Node();
 // Create new node
-int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node);
+int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice);
 // Add node to list
 void add_node_list(Node* n, List_Node* list_node);
 // Delete one node

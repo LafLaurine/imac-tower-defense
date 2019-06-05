@@ -80,11 +80,6 @@ int main (int argc, char* argv[])
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
-    if(argc <= 1) {
-		fprintf(stderr, "Veuillez indiquer la carte .itd à charger\n");
-		exit(EXIT_FAILURE);
-	}
-
     int cpt = 1;
     int xOver = 0;
     int yOver = 0;
@@ -94,12 +89,18 @@ int main (int argc, char* argv[])
     int help = 0;
     int monsterTypeInt = 0;
     int waveBool = 0;
+    int nb_map = 0;
+    int nb_menu = 0;
     Tower* t_selected = NULL;
 
     //Init map
     Map* map = init_map(argv[1]);
+
+    //Menu pour map
+    GLuint menuMap;
+	SDL_Surface* imgMenuMap = load_sprite("./images/choix_map.png", &menuMap);
     
-    // Map
+    // Map 1
     GLuint texture_map;
     SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
 
@@ -146,11 +147,8 @@ int main (int argc, char* argv[])
       
     //création monstre
     List_Monster* l_monster = new_monster_list();
+    Monster *m = NULL;
     Monster_Type m_type = BACTERY;
-    int pvMonster = 50;
-    int moneyMonster = 5;
-    int resistMonster = 5;
-
     
     // Création de la vague des monstres
     Wave wave;
@@ -184,7 +182,6 @@ int main (int argc, char* argv[])
         glClear(GL_COLOR_BUFFER_BIT);
         glEnable(GL_TEXTURE_2D);
         glMatrixMode(GL_MODELVIEW);
-        
         
         if(game->start == 0) {
 			display_full(&game_start);
@@ -261,7 +258,7 @@ int main (int argc, char* argv[])
 
                 // Nouvelle liste de monstre
                 if((l_monster->nb_monsters < 10) && (waveBool == 0) && (nb_monsters_to_send != 0)) {
-                    create_monster(m_type, monster_x, monster_y, pvMonster, moneyMonster, resistMonster, root, l_monster);
+                    m = create_monster(m_type, monster_x, monster_y, root, l_monster);
                     nb_monsters_to_send--;
                 }
 
@@ -271,8 +268,8 @@ int main (int argc, char* argv[])
                     waveBool = 0;
                     nb_monsters_to_send = 10;
                     wave.nb_lists++;
-                    pvMonster = pvMonster*(wave.nb_lists/2);
-                    moneyMonster = moneyMonster*(wave.nb_lists/2);
+                    m->pv = m->pv*(wave.nb_lists/2);
+                    m->money = m->money*(wave.nb_lists/2);
                 }
             }
             cpt++;
@@ -287,9 +284,9 @@ int main (int argc, char* argv[])
         
             if(monsterKilled != -1){
                 if(monsterKilled == BACTERY){
-                    game->money += moneyMonster;
+                    game->money += m->money;
                 } else {
-                    game->money += moneyMonster*2;
+                    game->money += m->money*2;
                 }
             }
 

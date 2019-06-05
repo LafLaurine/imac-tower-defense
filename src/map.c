@@ -220,7 +220,7 @@ int map_verification(Map* map, char* map_itd){
 		}
 
 		// DERNIERES LIGNES : infos noeuds
-		//int node_indice;
+		int node_indice;
 		int node_type;
 		float node_x;
 		float node_y;
@@ -228,6 +228,7 @@ int map_verification(Map* map, char* map_itd){
 		int *successors = malloc(sizeof(int*));
 		int inBool = 0; //boolean
 		int outBool = 0;
+		int tabSuccess[node_indice][*successors];
 
 		map->list_node = new_List_Node();
 		while(fgets(ligne, 99, itd) != NULL){
@@ -246,8 +247,7 @@ int map_verification(Map* map, char* map_itd){
 						ftoken = atof(token);
 						itoken = atoi(token);
 						if(i == 0){
-							//node_indice = itoken;
-
+							node_indice = itoken;
 							if(inBool == 0 && strcmp(token, "0")){
 								inBool = 1;
 							}
@@ -274,7 +274,7 @@ int map_verification(Map* map, char* map_itd){
 					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
 							
 						//Vérifie que le noeud à bien été ajouté à la liste de noeud
-						if(create_node(node_type, node_x, node_y, successors, map->list_node) != 1) {
+						if(create_node(node_type, node_x, node_y, successors, map->list_node, node_indice) != 1) {
 							fprintf(stderr, "Nodes not added");
 							exit(EXIT_FAILURE);
 						}
