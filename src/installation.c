@@ -43,7 +43,7 @@ Installation* create_installation(InstallationType type, float x, float y, List_
 		if(money >= i->cost) {
 			return i;
 		} else {
-			printf("Not enough money to buy installation");
+			printf("Not enough money to buy an installation");
 			return NULL;
 		}
 

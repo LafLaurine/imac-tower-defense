@@ -24,27 +24,27 @@ Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int m
 		t->t_next = NULL; // Next tower
 		t->t_prev = NULL; // Previous tower
 
-		if(type == LASER) {
-			t->rate = 10; // Shooting rate
-			t->power = 5; // Shooting power
-			t->range = 50; // Shooting range
-			t->cost = 10; // Tower cost
+		if(type == GLOBULE_BLANC) {
+			t->rate = 8; // Shooting rate
+			t->power = 100; // Shooting power
+			t->range = 100; // Shooting range
+			t->cost = 300; // Tower cost
 		}
-		else if(type == ROCKET) {
-			t->rate = 15;
-			t->power = 15;
-			t->range = 50;
-			t->cost = 20;
+		else if(type == GLOBULE_ROUGE) {
+			t->rate = 20;
+			t->power = 200;
+			t->range = 100;
+			t->cost = 200;
 		}
 		else if(type == MEDOC) {
-			t->rate = 20;
-			t->power = 5;
-			t->range = 200;
+			t->rate = 5;
+			t->power = 100;
+			t->range = 80;
 			t->cost = 50;
 		}
 		else if(type == BANDAGE) {
-			t->rate = 50;
-			t->power = 10;
+			t->rate = 10;
+			t->power = 50;
 			t->range = 250;
 			t->cost = 100;
 		}

@@ -89,8 +89,6 @@ int main (int argc, char* argv[])
     int help = 0;
     int monsterTypeInt = 0;
     int waveBool = 0;
-    int nb_map = 0;
-    int nb_menu = 0;
     Tower* t_selected = NULL;
 
     //Init map
@@ -98,10 +96,6 @@ int main (int argc, char* argv[])
   /*  int *tabVal;
     init_djisksra(map,tabVal);*/
 
-    //Menu pour map
-    GLuint menuMap;
-	SDL_Surface* imgMenuMap = load_sprite("./images/choix_map.png", &menuMap);
-    
     // Map 1
     GLuint texture_map;
     SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
@@ -353,10 +347,11 @@ int main (int argc, char* argv[])
                             if(installation_on_construct(map, e.button.x, e.button.y)) {
                                 if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
                                     i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst,game->money);
-                                    construct_install = 1;
-                                    check_around_inst(i, l_tower);
-                                    printf("clic installation en (%d, %d)\n", e.button.x, e.button.y);
-                                    player_money_down_update(game,i->cost);
+                                    if(i != NULL) {
+                                        construct_install = 1;
+                                        check_around_inst(i, l_tower);
+                                        player_money_down_update(game,i->cost);
+                                    }
                                 } else {
                                     printf("Installation sur une autre\n");
                                 }
@@ -390,7 +385,7 @@ int main (int argc, char* argv[])
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
                             case 'l' :
-                                draw_type_tower = LASER;
+                                draw_type_tower = GLOBULE_BLANC;
                                 draw_type_inst = -1;
                             break;
                             
@@ -402,7 +397,7 @@ int main (int argc, char* argv[])
                                 break;     
                             
                             case 'z' :
-                                draw_type_tower = ROCKET;
+                                draw_type_tower = GLOBULE_ROUGE;
                                 draw_type_inst = -1;
                             break;
 

@@ -33,14 +33,3 @@ void vBitmapOutput(int x, int y, char *string, void *font)
 	// Réinitialise la position du premier caractère de la chaîne
 	glRasterPos2f(0, 0);
 }
-
-void vStrokeOutput(GLfloat x, GLfloat y, char *string, void *font)
-{
-	char *p;
-
-	glPushMatrix();	
-	glTranslatef(x, y, 0); // Positionne le premier caractère de la chaîne
-	for (p = string; *p; p++) 
-		glutStrokeCharacter(font, *p); // Affiche chaque caractère de la chaîne
-	glPopMatrix();
-}

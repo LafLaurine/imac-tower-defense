@@ -7,7 +7,7 @@
 
 
 typedef enum{
-	LASER, ROCKET, MEDOC, BANDAGE
+	GLOBULE_BLANC, GLOBULE_ROUGE, MEDOC, BANDAGE
 }TowerType;
 
 

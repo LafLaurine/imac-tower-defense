@@ -380,16 +380,16 @@ int display_list_tower(List_Tower* list_tower) {
 	if(list_tower->t_first == NULL){
 		return success;
 	} else {
-		SDL_Surface* rocket = IMG_Load("./images/towers/rocket.png");
+		SDL_Surface* rocket = IMG_Load("./images/towers/globule_rouge.png");
 
 		if(rocket == NULL) {
-			fprintf(stderr, "impossible de charger l'image rocket.png \n");
+			fprintf(stderr, "impossible de charger l'image globule_rouge.png \n");
 			exit(1);
 		}
 		
-		SDL_Surface* laser = IMG_Load("./images/towers/laser.png");
+		SDL_Surface* laser = IMG_Load("./images/towers/globule_blanc.png");
 		if(laser == NULL) {
-			fprintf(stderr, "impossible de charger l'image laser.png \n");
+			fprintf(stderr, "impossible de charger l'image globule_blanc.png \n");
 			exit(1);
 		}
 
@@ -406,9 +406,9 @@ int display_list_tower(List_Tower* list_tower) {
 		}
 
 		GLuint texture_rocket;
-		load_sprite("./images/towers/rocket.png",&texture_rocket);
+		load_sprite("./images/towers/globule_rouge.png",&texture_rocket);
 		GLuint texture_laser;
-		load_sprite("./images/towers/laser.png",&texture_laser);
+		load_sprite("./images/towers/globule_blanc.png",&texture_laser);
 		GLuint texture_bandage;
 		load_sprite("./images/towers/bandage.png",&texture_bandage);
 		GLuint texture_medoc;
@@ -418,12 +418,12 @@ int display_list_tower(List_Tower* list_tower) {
 		t = list_tower->t_last;
 
 		while(t != NULL) {
-			if(t->type == ROCKET) {
+			if(t->type == GLOBULE_ROUGE) {
 				if(display_tower(t, rocket, &texture_rocket) == 0) {
 					success = 0;
 				}
 			}
-			else if(t->type == LASER) {
+			else if(t->type == GLOBULE_BLANC) {
 				if(display_tower(t, laser, &texture_laser) == 0) {
 					success = 0;
 				}
@@ -682,10 +682,8 @@ int click_installation_delete(List_Installation* l_inst, Installation* current, 
 }
 
 int check_around_inst(Installation* i, List_Tower* list_tower){
-
 	if(list_tower != NULL) {
 		Tower* t = list_tower->t_first;
-		
 		while(t != NULL) {
 			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range, 34)){
 				update_tower(t, i->type);
@@ -819,16 +817,16 @@ void displayTowerFeatures(Tower* t) {
 
 	if(t != NULL) {
 		// Chargement des caractéristiqes de la tour en fonction de son type
-		if((*t).type == ROCKET) {
-			featuresImg = IMG_Load("./images/info/info_rocket.png");
+		if((*t).type == GLOBULE_ROUGE) {
+			featuresImg = IMG_Load("./images/info/info_gr.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image info/info_rocket.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_gb.png \n");
 		        exit(1);
 		    }
-		    load_sprite("./images/info/info_rocket.png",&featuresTexture);
+		    load_sprite("./images/info/info_gb.png",&featuresTexture);
 		}
-		else if((*t).type == LASER) {
-			featuresImg = IMG_Load("./images/info/info_laser.png");
+		else if((*t).type == GLOBULE_BLANC) {
+			featuresImg = IMG_Load("./images/info/info_gb.png");
 		    if(featuresImg == NULL) {
 		        fprintf(stderr, "impossible de charger l'image info/info_laser.png \n");
 		        exit(1);
