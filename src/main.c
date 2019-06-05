@@ -243,7 +243,7 @@ int main (int argc, char* argv[])
             vBitmapOutput(800,100,string_wave,GLUT_BITMAP_HELVETICA_18);
         glPopMatrix();
 
-         if(help == 1){
+        if(help == 1){
             display_full(&help_txt);
         }
 
@@ -302,17 +302,17 @@ int main (int argc, char* argv[])
             if(l_tower != NULL) {
                 if(t != NULL) {
                     t_selected = constructTowerSelected(l_tower, xOver, yOver);
-				if(t_selected != NULL) {
-					displayTowerFeatures(t_selected);
-				}
-            }
+                    if(t_selected != NULL) {
+                        displayTowerFeatures(t_selected);
+                    }
+                }
             }
             
         
             //Affichage installations
             display_list_installation(l_inst);
         }
-         }
+        }
         /* Echange du front et du back buffer : mise a jour de la fenetre */
         SDL_GL_SwapBuffers();
         
@@ -369,7 +369,7 @@ int main (int argc, char* argv[])
                                     player_money_down_update(game,i->cost);
                                 } else {
                                     printf("Installation sur une autre\n");
-                                    }
+                                }
                             }   
                         }
                         //si on appuie sur la croix
@@ -383,7 +383,7 @@ int main (int argc, char* argv[])
                         if(t != NULL && construct_tower == 1){
 							click_delete_tower(l_tower, t, game);
                         }
-                        
+
                         i = click_installation(l_inst, e.button.x, e.button.y);
                         if(i != NULL && construct_install == 1) {
                             click_installation_delete(l_inst, i, game);

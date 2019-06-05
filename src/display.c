@@ -726,7 +726,15 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 
 				while(m != NULL) {
 					if(shot_monster(m,t)){
-						if(m->pv <= 0){
+						
+						// Display shots
+						glBegin(GL_LINES);
+							glColor3ub(255,255,255);
+							glVertex2f(t->x, t->y);
+							glVertex2f(m->x, m->y);
+						glEnd();
+
+						if(m->pv <= 0){ // Monster has 0pv
 							monsterKilled = kill_monster(list_monster, m);
 						}
 					}

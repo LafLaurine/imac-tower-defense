@@ -106,7 +106,7 @@ Tower* click_tower(List_Tower* l_tower, float x, float y) {
 		}
 
 	} else {
-		printf("Erreur :wrong liste tour\n");
+		printf("Erreur :wrong liste tower\n");
 		return NULL;
 	}
 	return NULL;
