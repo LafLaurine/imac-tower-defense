@@ -392,10 +392,27 @@ int display_list_tower(List_Tower* list_tower) {
 			fprintf(stderr, "impossible de charger l'image laser.png \n");
 			exit(1);
 		}
+
+		SDL_Surface* bandage = IMG_Load("./images/towers/bandage.png");
+		if(bandage == NULL) {
+			fprintf(stderr, "impossible de charger l'image bandage.png \n");
+			exit(1);
+		}
+
+		SDL_Surface* medoc = IMG_Load("./images/towers/medoc.png");
+		if(medoc == NULL) {
+			fprintf(stderr, "impossible de charger l'image medoc.png \n");
+			exit(1);
+		}
+
 		GLuint texture_rocket;
 		load_sprite("./images/towers/rocket.png",&texture_rocket);
 		GLuint texture_laser;
 		load_sprite("./images/towers/laser.png",&texture_laser);
+		GLuint texture_bandage;
+		load_sprite("./images/towers/bandage.png",&texture_bandage);
+		GLuint texture_medoc;
+		load_sprite("./images/towers/medoc.png",&texture_medoc);
 
 		Tower* t;
 		t = list_tower->t_last;
@@ -410,15 +427,24 @@ int display_list_tower(List_Tower* list_tower) {
 				if(display_tower(t, laser, &texture_laser) == 0) {
 					success = 0;
 				}
+			} else if(t->type == MEDOC) {
+				if(display_tower(t, medoc, &texture_medoc) == 0) {
+					success = 0;
+				}
+			} else if(t->type == BANDAGE) {
+				if(display_tower(t, bandage, &texture_bandage) == 0) {
+					success = 0;
+				}
 			} else {
-				printf("NO");
+				printf("Couldn't display tower");
 			}
 			t = t->t_prev;
 		}
 
 		SDL_FreeSurface(rocket);
 		SDL_FreeSurface(laser);
-
+		SDL_FreeSurface(bandage);
+		SDL_FreeSurface(medoc);
 		return success;
 	}
 }
@@ -482,13 +508,19 @@ int display_list_installation(List_Installation* list_inst) {
 			fprintf(stderr, "impossible de charger l'image usine.png \n");
 			exit(1);
 		}
+
+		SDL_Surface* stock = IMG_Load("./images/installations/stock.png");
+		if(stock == NULL) {
+			fprintf(stderr, "impossible de charger l'image stock.png \n");
+			exit(1);
+		}
 		
 		GLuint texture_radar;
 		load_sprite("./images/installations/radar.png",&texture_radar);
 		GLuint texture_usine;
 		load_sprite("./images/installations/usine.png",&texture_usine);
 		GLuint texture_stock;
-		load_sprite("./images/installations/usine.png",&texture_stock);
+		load_sprite("./images/installations/stock.png",&texture_stock);
 
 		Installation* i;
 		i = list_inst->i_first;
@@ -505,12 +537,12 @@ int display_list_installation(List_Installation* list_inst) {
 				}
 			}
 			else if(i->type == STOCK) {
-				if(display_installation(i, usine, &texture_stock) == 0) {
+				if(display_installation(i, stock, &texture_stock) == 0) {
 					success = 0;
 				}
 			}  
 			else {
-				printf("NO");
+				printf("Couldn't display installation");
 			}
 			i = i->i_next;
 		}
@@ -803,7 +835,7 @@ void displayTowerFeatures(Tower* t) {
 			}
 		    load_sprite("./images/info/info_laser.png",&featuresTexture);		
 		}
-		else if((*t).type == YELLOW) {
+		else if((*t).type == MEDOC) {
 			featuresImg = IMG_Load("./images/info/info_medoc.png");
 		    if(featuresImg == NULL) {
 		        fprintf(stderr, "impossible de charger l'image info/info_medoc.png \n");
@@ -811,7 +843,7 @@ void displayTowerFeatures(Tower* t) {
 		    }
 		    load_sprite("./images/info/info_medoc.png",&featuresTexture);
 		}
-		else if((*t).type == BLUE) {
+		else if((*t).type == BANDAGE) {
 			featuresImg = IMG_Load("./images/info/info_bandage.png");
 		    if(featuresImg == NULL) {
 		        fprintf(stderr, "impossible de charger l'image info/info_bandage.png \n");
