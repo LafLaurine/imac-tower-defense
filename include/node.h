@@ -40,7 +40,7 @@ typedef struct List_Node {
 // Create new list node
 List_Node* new_List_Node();
 // Create new node
-int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice);
+Node* create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice);
 // Add node to list
 void add_node_list(Node* n, List_Node* list_node);
 // Delete one node

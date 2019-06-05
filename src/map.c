@@ -222,6 +222,8 @@ int map_verification(Map* map, char* map_itd){
 		int outBool = 0;
 		
 		map->list_node = new_List_Node();
+		Node* previous = malloc(sizeof(Node));
+		
 		while(fgets(ligne, 99, itd) != NULL){
 				
 				if(map->list_node != NULL){
@@ -263,9 +265,19 @@ int map_verification(Map* map, char* map_itd){
 
 					//Vérifie que le noeud se trouve dans l'image
 					if(node_x <= map->img->width && node_x >= 0 && node_y <= map->img->height && node_y >= 0){
-							
+						
+						/* BRESSENHAM */
+						if(map->list_node->head != NULL){
+							if ((node_x - previous->x) != 0) {
+								check_segment_X(previous->x, previous->y, node_x, node_y, map);
+							} else {
+								check_segment_Y(previous->x, previous->y, node_x, node_y, map);
+							}
+						}					
+						
 						//Vérifie que le noeud à bien été ajouté à la liste de noeud
-						if(create_node(node_type, node_x, node_y, successors, map->list_node, node_indice) != 1) {
+						previous = create_node(node_type, node_x, node_y, successors, map->list_node, node_indice);
+						if(previous == NULL) {
 							fprintf(stderr, "Nodes not added");
 							exit(EXIT_FAILURE);
 						}
@@ -294,6 +306,7 @@ int map_verification(Map* map, char* map_itd){
 	return 1;
 }
 
+
 Color3f change_color(float r, float g, float b){
 
 	Color3f colors;
@@ -317,11 +330,15 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	x_err = (y2 - y1) / (x2 - x1);
 	y_err = -1;
 
-	while(x<x2){
-		x++;
+	while(x != x2){
+		if(x<x2){
+			x++;
+		} else {
+			x--;
+		}
 
 		if(check_pixel(x, y, map, color) == 0){
-			if (color.r == map->node.r)
+			if (color.r != map->node.r)
 			{
 				color = map->path;
 				step = 2;
@@ -331,7 +348,6 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 			}
 		}
 		erreur += x_err;
-		//printf("erreur : %f, erreur de X: %f\n", erreur, x_err);
 
 		if(erreur > 0){
 			y++;
@@ -340,7 +356,7 @@ int check_segment_X(int x1, int y1, int x2, int y2, Map* map){
 	}
 
 	if(step != 3){
-		printf("%s", "Not a good path\n");
+		printf("%s\n", "Not a good path");
 		exit(EXIT_FAILURE);
 	}
 
@@ -361,11 +377,15 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 	x_err = -1;
 	y_err = (x2 - x1) / (y2 - y1);
 
-	while(y<y2){
-		y++;
+	while(y != y2){
+		if(y<y2){
+			y++;
+		} else {
+			y--;
+		}
 
 		if(check_pixel(x, y, map, color) == 0){
-			if (color.r == map->node.r)
+			if (color.r != map->node.r)
 			{
 				color = map->path;
 				step = 2;
@@ -375,7 +395,6 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map){
 			}
 		}
 		erreur += y_err;
-		//printf("erreur : %f, erreur de X: %f\n", erreur, x_err);
 
 		if(erreur > 0){
 			x++;

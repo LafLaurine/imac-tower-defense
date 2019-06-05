@@ -136,16 +136,6 @@ int main (int argc, char* argv[])
     float monster_x = root->x;
     float monster_y = root->y;
     printf("Monster root head y %f", map->list_node->head->y);
-    
-    
-    // Test check segment
-    int x1, x2, y1, y2;
-    x1 = 173; y1 = 375; x2 = 173; y2 = 467;
-    if ((x2-x1) !=0) {
-        check_segment_X(x1, y1, x2, y2, map);
-    } else {
-        check_segment_Y(x1, y1, x2, y2, map);
-    }
       
     //création monstre
     List_Monster* l_monster = new_monster_list();

@@ -10,7 +10,7 @@ List_Node* new_List_Node() {
 	return new_lnode;
 }
 
-int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice){
+Node* create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice){
 	Node* n = malloc(sizeof(Node));
 
 	if(n != NULL) {
@@ -22,11 +22,11 @@ int create_node(Node_Type type, float x, float y, int *successors, List_Node* l_
 		n->next = NULL;
 		printf("New node y position %f\n", n->y);
 		add_node_list(n, l_node);
-		return 1;
+		return n;
 
 	} else {
 		printf("%s\n", "Not enough memory for node");
-		return 0;
+		return NULL;
 	}
 }
 
