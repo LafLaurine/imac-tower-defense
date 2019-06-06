@@ -37,7 +37,7 @@ void reshape() {
 
 void init_window() {
     if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, 
-            SDL_OPENGL  | SDL_RESIZABLE | SDL_DOUBLEBUF)) {
+            SDL_OPENGL | SDL_DOUBLEBUF)) {
         fprintf(stderr, "Can't open window. End of programm.\n");
         exit(EXIT_FAILURE);
     }
