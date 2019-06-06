@@ -283,7 +283,7 @@ int check_map(Map* map, char* map_itd){
 						}					
 						
 						// Check node is in node list
-						previous = create_node(node_type, node_x, node_y, successors, nb_successors, map->list_node, node_indice);
+						previous = create_node(node_type, node_x, node_y, successors, nb_successors, map->list_node, node_index);
 						if(previous == NULL) {
 							printf("Nodes not added\n");
 							exit(EXIT_FAILURE);
@@ -429,7 +429,7 @@ Node* findNode(int index, Map map){
 	Node* temp = map.list_node->head;
 
 	while(temp != NULL) {
-		if(index == temp->index) {
+		if(index == temp->indice) {
 			return temp;
 		}
 		temp = temp->next;
