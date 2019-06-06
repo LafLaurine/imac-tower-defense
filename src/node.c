@@ -84,21 +84,3 @@ void free_all_node(List_Node* list_node) {
 	}
 	free(list_node);
 }
-
-List_Node* free_node_by_position(List_Node* list_node, Node* current) {
-	if (list_node != NULL) {
-		if(current != NULL) {
-			// List head on new node
-			list_node->head = current->next;
-			// Free memory : delete node
-			free(current);
-			list_node->length--;
-		}
-		else
-			printf("Inexistant node\n");
-	}
-	else 
-		printf("Inexistant node list\n");
-	
-	return list_node; 
-}

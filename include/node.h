@@ -39,7 +39,6 @@ void add_node_list(Node* n, List_Node* list_node);
 List_Node* remove_node(List_Node* current_node, Node* current);
 // Delete list of node
 void free_all_node (List_Node* list_node);
-// Remove node by position
-List_Node* free_node_by_position(List_Node* list_node, Node* current);
+
 
 #endif
