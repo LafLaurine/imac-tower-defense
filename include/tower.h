@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "node.h"
 #include "map.h"
+#define TOWERRAY 34
 
 
 typedef enum{

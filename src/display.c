@@ -561,7 +561,7 @@ int tower_on_building(List_Tower* list_tower, float x, float y, List_Installatio
 		Tower* t = list_tower->t_first;
 
 		while(t != NULL) {
-			if(is_intersect(x, y, t->x, t->y, 34, 34) == 1){
+			if(is_intersect(x, y, t->x, t->y, TOWERRAY, TOWERRAY) == 1){
         		return 0;
 			}
 			t = t->t_next;
@@ -571,7 +571,7 @@ int tower_on_building(List_Tower* list_tower, float x, float y, List_Installatio
 			Installation* i = list_inst->i_first;
 
 			while(i != NULL) {
-				if(is_intersect(x, y, i->x, i->y, 34, 34) == 1){
+				if(is_intersect(x, y, i->x, i->y, TOWERRAY, TOWERRAY) == 1){
 					return 0;
 				}
 				i = i->i_next;
@@ -591,7 +591,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(x, y, i->x, i->y, 34, 34) == 1){
+			if(is_intersect(x, y, i->x, i->y, TOWERRAY, TOWERRAY) == 1){
         		return 0;
 			}
 			i = i->i_next;
@@ -601,7 +601,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 			Tower* t = list_tower->t_first;
 
 			while(t != NULL) {
-				if(is_intersect(x, y, t->x, t->y, 34, 34) == 1){
+				if(is_intersect(x, y, t->x, t->y, TOWERRAY, TOWERRAY) == 1){
 					return 0;
 				}
 				t = t->t_next;
@@ -641,7 +641,7 @@ int check_around_tower(Tower* t, List_Installation* list_inst){
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range, 34) == 1){
+			if(is_intersect(t->x, t->y, i->x, i->y, TOWERRAY+t->range, TOWERRAY) == 1){
 				update_tower(t, i->type);
 			}
 			i = i->i_next;
@@ -685,7 +685,7 @@ int check_around_inst(Installation* i, List_Tower* list_tower){
 	if(list_tower != NULL) {
 		Tower* t = list_tower->t_first;
 		while(t != NULL) {
-			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range, 34)){
+			if(is_intersect(i->x, i->y, t->x, t->y, TOWERRAY+t->range, TOWERRAY)){
 				update_tower(t, i->type);
 			}
 			t = t->t_next;
@@ -715,7 +715,7 @@ int delete_around_inst(Installation* i, List_Tower* list_tower){
 		Tower* t = list_tower->t_first;
 		
 		while(t != NULL) {
-			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range, 34)){
+			if(is_intersect(t->x, t->y, i->x, i->y, TOWERRAY+t->range, TOWERRAY)){
 				printf("COUCOU");
 				downgrade_tower(t, i->type);
 			}
@@ -784,7 +784,7 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 }
 
 int shot_monster(Monster* m, Tower* t) {
-	if(is_intersect(t->x, t->y, m->x, m->y, 34+t->range, 34)) {
+	if(is_intersect(t->x, t->y, m->x, m->y, TOWERRAY+t->range, TOWERRAY)) {
 		m->pv = m->pv - t->power;
 		return 1;
 	}
