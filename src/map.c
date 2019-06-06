@@ -423,6 +423,18 @@ int check_pixel(int x, int y, Map* map, Color3f color){
 	return 0;
 }
 
+Node* findNode(int index, Map* map){
+	Node* temp = map->list_node->head;
+
+	while(temp != NULL) {
+		if(index == temp->indice) {
+			return temp;
+		}
+		temp = temp->next;
+	}
+	return NULL;
+}
+
 
 void init_djisksra(Map *map, int* tab_chemin) {
     //tableau des sommets + successeurs
@@ -446,27 +458,30 @@ void init_djisksra(Map *map, int* tab_chemin) {
     visited[0] = 0;
     value[0] = 0;
 
-    Node* route = map->list_node->head;
+    Node* route = map->list_node->tail;
     sommet[route->indice]=route->indice;
-    value[route->indice] = 0;
+    value[route->indice] = 0;		
 
     //tant que pas node sorti
     // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
-   	while(route->type != Out && route->next != NULL) {
+   	while(route->type != Out && route->prev != NULL) {
 		Node *tmp = route;
 
         while(tmp->successors != NULL) {
 			//chemin visite
 			visited[tmp->indice] = 0;
 
-			int length = sizeof(tmp->successors)/sizeof(tmp->successors[0]);
-
+			int length = sizeof(tmp->successors)/sizeof(int);
+			//printf("longueur %d\n", length);
+			
 			for(int c=0; c<length; c++){
-				if(sommet[tmp->successors[c] == -1]){
+				if(sommet[tmp->successors[c]] == -1){
 					sommet[tmp->successors[c]] = route->indice;
 					value[tmp->successors[c]] = value[route->indice]+1;
 				}
 			}
+
+        	tmp = tmp->prev;
 		}
 
 		int min = 255;
@@ -481,10 +496,9 @@ void init_djisksra(Map *map, int* tab_chemin) {
 			}
 		}
 
-		printf("YOYOYO INDEX %d et valeur %d", indexMin, min);
-		//route->next = ;
-
-        tmp = tmp->next;
+		//printf("index %d et valeur %d", indexMin, min);
+		route->prev = findNode(indexMin, map);
+		route = route->prev;
     }
 }
 
