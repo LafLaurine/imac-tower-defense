@@ -667,10 +667,11 @@ int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game) {
 	return 1;
 }
 
-int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game) {
+int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, List_Tower* l_tower) {
 	if(l_inst != NULL) {
 		if(current != NULL) {
 			player_money_up_update(game,current->cost);
+			delete_around_inst(current, l_tower);
 			delete_install_from_position(l_inst, current);	
 		}
 	} else {
@@ -716,7 +717,6 @@ int delete_around_inst(Installation* i, List_Tower* list_tower){
 		
 		while(t != NULL) {
 			if(is_intersect(t->x, t->y, i->x, i->y, TOWERRAY+t->range, TOWERRAY)){
-				printf("COUCOU");
 				downgrade_tower(t, i->type);
 			}
 			t = t->t_next;

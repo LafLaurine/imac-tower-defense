@@ -381,8 +381,7 @@ int main (int argc, char* argv[])
 
                         i = click_installation(l_inst, e.button.x, e.button.y);
                         if(i != NULL && construct_install == 1) {
-                            click_installation_delete(l_inst, i, game);
-                            delete_around_inst(i, l_tower);
+                            click_installation_delete(l_inst, i, game, l_tower);
                         }
 					}
             
