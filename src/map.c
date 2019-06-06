@@ -429,7 +429,7 @@ Node* findNode(int index, Map map){
 	Node* temp = map.list_node->head;
 
 	while(temp != NULL) {
-		if(index == temp->indice) {
+		if(index == temp->index) {
 			return temp;
 		}
 		temp = temp->next;

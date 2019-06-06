@@ -1,47 +1,56 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
+
 #include "sprite.h"
-#include "colors.h"
 #include "monster.h"
-#include <SDL/SDL_mixer.h>
 #include "tower.h"
 #include "game.h"
 #include "common.h"
 #include "installation.h"
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <math.h>
 #define PI 3.14
 
 int display_map(GLuint* texture);
+// Display right column
 void display_right_column();
-void draw_perim(float rayon);
 int display_path(Map* map);
+// Display money
 int display_money(GLuint* texture);
+// Display full
 int display_full(GLuint* texture);
+// Display monster
 int display_monster(Monster* m, SDL_Surface* img, GLuint texture);
+// Display all monster of wave
 int display_wave(List_Monster *l_monster);
+// Display tower
 int display_tower(Tower* current, SDL_Surface* tourImg, GLuint *tourTexture);
+// Display all tower of list tower
 int display_list_tower(List_Tower* list_tower);
+// Display range tower
 int display_range_tower(Tower* t);
+// Display installation
 int display_installation(Installation* i, SDL_Surface* instImg, GLuint *instTexture);
+// Display all installation of list installation
 int display_list_installation(List_Installation* list_inst);
-void drawCircle (int fill, int nbSeg);
-int tower_on_building(List_Tower* list_tower, float x, float y, List_Installation* list_inst);
-int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower* list_tower);
-
-int check_around_tower(Tower* t, List_Installation* list_inst);
-void update_tower(Tower* t, InstallationType);
-int check_around_inst(Installation* i, List_Tower* list_tower);
-int delete_around_inst(Installation* i, List_Tower* list_tower);
-int click_delete_tower(List_Tower* l_tower, Tower* current, Game* game);
-int click_installation_delete(List_Installation* l_inst, Installation* current, Game* game, List_Tower* l_tower);
-
-int shot_monster(Monster* m, Tower* t);
+// Display cross
 int display_cross(GLuint* texture);
-Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower);
+// Display tower features
 void displayTowerFeatures(Tower* t);
-Tower* constructTowerSelected(List_Tower* l_tower, int x, int y);
-Installation* select_installation_construted(List_Installation* l_inst, int x, int y);
+// Display installation features
 void displayInstallationFeatures(Installation* i);
+// Display right column down
 int display_right_column_down(GLuint *texture);
+// Draw circle
+void drawCircle (int fill, int nbSeg);
+// Draw action perimeter as a circle
+void draw_perim(float rayon);
 
-void downgrade_tower(Tower* t, InstallationType type_inst);
+
 #endif
