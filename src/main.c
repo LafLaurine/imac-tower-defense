@@ -343,10 +343,11 @@ int main (int argc, char* argv[])
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
                                     t = create_tower(draw_type_tower, e.button.x, e.button.y, l_tower, game->money);
-                                    construct_tower = 1;
-                                    check_around_tower(t, l_inst);
-                                    player_money_down_update(game,t->cost);
-                                    
+                                    if(t!= NULL){
+                                        construct_tower = 1;
+                                        check_around_tower(t, l_inst);
+                                        player_money_down_update(game,t->cost);
+                                    }                                    
                                 } else {
                                     printf("Tour sur une autre\n");
                                 }
@@ -385,16 +386,14 @@ int main (int argc, char* argv[])
                         }
 					}
             
-                    
-
-                   
+                         
                     break;
                     
                     /* Touche clavier */
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
                             case 'l' :
-                                draw_type_tower = GLOBULE_BLANC;
+                                draw_type_tower = GBLANC;
                                 draw_type_inst = -1;
                             break;
                             
@@ -406,7 +405,7 @@ int main (int argc, char* argv[])
                                 break;     
                             
                             case 'z' :
-                                draw_type_tower = GLOBULE_ROUGE;
+                                draw_type_tower = GROUGE;
                                 draw_type_inst = -1;
                             break;
 
@@ -501,6 +500,11 @@ int main (int argc, char* argv[])
         }
     }
 
+    free_all_monster(l_monster);
+    free_all_tower(l_tower);
+    free_all_inst(l_inst);
+    free_all_node(map->list_node);
+    free_map(map);
     game_end(game);
   
     glDeleteTextures(1,&texture_map);

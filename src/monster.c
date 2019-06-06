@@ -134,3 +134,39 @@ Monster_Type kill_monster(List_Monster* list_monster, Monster* current) {
 		return -1;
 	}
 }
+
+List_Monster* remove_monster(List_Monster* current_m, Monster* current) {
+	// Check if list allocated
+	if (current_m != NULL) {
+		if(current != NULL) {
+			// List head on next node
+			current_m->m_first = current->m_next;
+			free(current);
+			current_m->nb_monsters--;
+
+		} else
+			printf("Inexistant monster\n");
+	} else 
+		printf("Couldn't find list\n");
+
+	// Return new list
+	return current_m; 
+}
+
+void free_all_monster(List_Monster* l_monster) {
+	// If list not empty
+	if (l_monster->nb_monsters != 0) {
+		//	While list not NULL
+		Monster* temp = l_monster->m_last;
+		while(temp != NULL) {
+			if(temp->m_prev != NULL){
+				l_monster = remove_monster(l_monster, temp->m_next);
+				temp = temp->m_prev;
+			} else {
+				l_monster = remove_monster(l_monster, temp);
+				temp = NULL;
+			}
+		}
+	}
+	free(l_monster);
+}

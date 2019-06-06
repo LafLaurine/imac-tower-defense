@@ -168,3 +168,39 @@ int installation_on_construct(Map* map, int x, int y) {
 	}
 	return 1;
 }
+
+List_Installation* remove_installation(List_Installation* current_i, Installation* current) {
+	// Check if list allocated
+	if (current_i != NULL) {
+		if(current != NULL) {
+			// List head on next node
+			current_i->i_first = current->i_next;
+			free(current);
+			current_i->length--;
+
+		} else
+			printf("Inexistant installation\n");
+	} else 
+		printf("Couldn't find list\n");
+
+	// Return new list
+	return current_i; 
+}
+
+void free_all_inst(List_Installation* l_inst) {
+	// If list not empty
+	if (l_inst->length != 0) {
+		//	While list not NULL
+		Installation* temp = l_inst->i_last;
+		while(temp != NULL) {
+			if(temp->i_prev != NULL){
+				l_inst = remove_installation(l_inst, temp->i_next);
+				temp = temp->i_prev;
+			} else {
+				l_inst = remove_installation(l_inst, temp);
+				temp = NULL;
+			}
+		}
+	}
+	free(l_inst);
+}

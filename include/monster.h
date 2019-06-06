@@ -56,4 +56,7 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, Li
 Monster* add_monster(Monster* m, Monster* new_monster);
 void add_monster_list(Monster* m, List_Monster* list_monster);
 Monster_Type kill_monster(List_Monster* list_monster, Monster* current);
+List_Monster* remove_monster(List_Monster* current_m, Monster* current);
+void free_all_monster(List_Monster* l_monster);
+
 #endif

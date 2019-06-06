@@ -42,5 +42,9 @@ void add_installation_list(Installation* i, List_Installation* l_inst);
 void destroy_installation(List_Installation* l_inst);
 // Check if click to create installation is on construct area
 int installation_on_construct(Map* map, int x, int y);
+// Remove installation
+List_Installation* remove_installation(List_Installation* current_i, Installation* current);
+// Free all installation from list
+void free_all_inst(List_Installation* l_inst);
 
 #endif

@@ -8,7 +8,7 @@
 
 
 typedef enum{
-	GLOBULE_BLANC, GLOBULE_ROUGE, MEDOC, BANDAGE
+	MEDOC, BANDAGE, GBLANC, GROUGE
 }TowerType;
 
 
@@ -51,5 +51,9 @@ Tower* click_tower(List_Tower* l_tower, float x, float y);
 void destroy_tower(List_Tower* l_tower);
 // Check if click to create tower is on construct area
 int tower_on_construct(Map* map, int x, int y);
+// Remove tower
+List_Tower* remove_tower(List_Tower* current_m, Tower* current);
+// Free all tower from list
+void free_all_tower(List_Tower* l_tower);
 
 #endif

@@ -288,7 +288,7 @@ int map_verification(Map* map, char* map_itd){
 
 				}
 			compteur++;
-		}
+		}		
 		
 		if(inBool == 0 || outBool == 0){
 			fprintf(stderr, "Node in or node out inexistant");

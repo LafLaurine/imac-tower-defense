@@ -73,11 +73,17 @@ void free_all_node(List_Node* list_node) {
 	// If list not empty
 	if (list_node->length != 0) {
 		//	While list not NULL
-		while (list_node->head != NULL) {
-			list_node = remove_node(list_node, list_node->head);
+		Node* temp = list_node->tail;
+		while(temp != NULL) {
+			if(temp->prev != NULL){
+				list_node = remove_node(list_node, temp->next);
+				temp = temp->prev;
+			} else {
+				list_node = remove_node(list_node, temp);
+				temp = NULL;
+			}
 		}
 	}
-
 	free(list_node);
 }
 
