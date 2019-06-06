@@ -10,8 +10,6 @@
 
 // Check if image loaded
 int is_loaded(SDL_Surface *image);
-// Draw quadrilatere
-void drawQuad(GLuint texture);
 // Load map texture
 SDL_Surface* load_map_texture(Map* map, GLuint *texture);
 // Load sprite

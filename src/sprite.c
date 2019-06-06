@@ -9,23 +9,6 @@ int is_loaded(SDL_Surface *image) {
     return 1;
 }
 
-void drawQuad(GLuint texture) {
-    glEnable(GL_TEXTURE_2D);
-        glBindTexture(GL_TEXTURE_2D, texture);        
-        glBegin(GL_QUADS);
-            glTexCoord2f(0, 1);
-            glVertex2f(-0.5,-0.5);
-            glTexCoord2f(0, 0);
-            glVertex2f(-0.5,0.5);
-            glTexCoord2f(1, 0);
-            glVertex2f(0.5,0.5);
-            glTexCoord2f(1, 1);
-            glVertex2f(0.5,-0.5);
-        glEnd();
-        glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_TEXTURE_2D);
-}
-
 SDL_Surface* load_map_texture(Map* map, GLuint *texture) {
     SDL_Surface *image = IMG_Load(map->img->path);
 
