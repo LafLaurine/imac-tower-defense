@@ -28,25 +28,25 @@ Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int m
 			if(type == GLOBULE_BLANC) {
 				t->rate = 8; // Shooting rate
 				t->power = 100; // Shooting power
-				t->range = 100; // Shooting range
+				t->range = 50; // Shooting range
 				t->cost = 300; // Tower cost
 			}
 			else if(type == GLOBULE_ROUGE) {
 				t->rate = 20;
 				t->power = 200;
-				t->range = 100;
+				t->range = 50;
 				t->cost = 200;
 			}
 			else if(type == MEDOC) {
 				t->rate = 5;
-				t->power = 100;
-				t->range = 80;
+				t->power = 80;
+				t->range = 70;
 				t->cost = 50;
 			}
 			else if(type == BANDAGE) {
 				t->rate = 10;
 				t->power = 50;
-				t->range = 250;
+				t->range = 100;
 				t->cost = 100;
 			}
 		

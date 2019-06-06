@@ -338,20 +338,20 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 }
 
 int display_wave(List_Monster *l_monster) {
-	SDL_Surface* bactery = IMG_Load("./images/bactery.png");
+	SDL_Surface* bactery = IMG_Load("./images/monsters/bactery.png");
 	if(bactery == NULL) {
-		fprintf(stderr, "impossible de charger l'image bactery.png \n");
+		fprintf(stderr, "impossible de charger l'image monsters/bactery.png \n");
 		exit(1);
 	}
-	SDL_Surface* virus = IMG_Load("./images/virus.png");
+	SDL_Surface* virus = IMG_Load("./images/monsters/virus.png");
 	if(virus == NULL) {
-		fprintf(stderr, "impossible de charger l'image virus.png \n");
+		fprintf(stderr, "impossible de charger l'image monsters/virus.png \n");
 		exit(1);
 	}
 	GLuint texture_bactery;
-	load_sprite("./images/bactery.png",&texture_bactery);
+	load_sprite("./images/monsters/bactery.png",&texture_bactery);
 	GLuint texture_virus;
-	load_sprite("./images/virus.png",&texture_virus);
+	load_sprite("./images/monsters/virus.png",&texture_virus);
 
 	Monster* m;
 	int success = 1;

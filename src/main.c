@@ -19,9 +19,7 @@
 /* Dimensions initiales et titre de la fenetre */
 static unsigned int WINDOW_WIDTH = 1000;
 static unsigned int WINDOW_HEIGHT = 600;
-
 static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
-
 
 /* Nombre de bits par pixel de la fenetre */
 static const unsigned int BIT_PER_PIXEL = 32;
@@ -29,7 +27,6 @@ static const unsigned int BIT_PER_PIXEL = 32;
 /* Nombre minimal de millisecondes separant le rendu de deux images. 100 ms = 1/10eme seconde */
 static const Uint32 FRAMERATE_MILLISECONDS = 100;
 static const Uint32 FRAMERATE_MILLISECONDS_FAST = 1000 / 60;
-
 
 void reshape() {
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -46,7 +43,6 @@ void init_window() {
     }
 }
 
-
 int main (int argc, char* argv[])
 {
     int taille = 1;
@@ -60,7 +56,7 @@ int main (int argc, char* argv[])
             "Impossible d'initialiser la SDL. Fin du programme.\n");
         exit(EXIT_FAILURE);
     }
-    /* Ouverture d'une fenetre et creation d'un contexte OpenGL */
+    //Open window and create SDL context
     init_window();
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
     {
@@ -94,8 +90,6 @@ int main (int argc, char* argv[])
 
     //Init map
     Map* map = init_map(argv[1]);
-  /*  int *tabVal;
-    init_djisksra(map,tabVal);*/
 
     // Map 1
     GLuint texture_map;
@@ -103,34 +97,34 @@ int main (int argc, char* argv[])
 
     //Argent
     GLuint texture_money;
-    SDL_Surface* s_money = load_sprite("./images/money.png",&texture_money);
+    SDL_Surface* s_money = load_sprite("./images/ui/money.png",&texture_money);
 
     //Croix pour quitter
     GLuint texture_cross;
-    SDL_Surface* s_cross = load_sprite("./images/cross.png",&texture_cross);
+    SDL_Surface* s_cross = load_sprite("./images/ui/cross.png",&texture_cross);
 
     // Help
     GLuint help_txt;
-    SDL_Surface* help_surface = load_sprite("./images/aide.png", &help_txt);
+    SDL_Surface* help_surface = load_sprite("./images/ui/aide.png", &help_txt);
 
     //Game over
     GLuint game_over;
-    SDL_Surface* s_over = load_sprite("./images/game_over.png",&game_over);
+    SDL_Surface* s_over = load_sprite("./images/ui/game_over.png",&game_over);
     //Game win
     GLuint game_win;
-    SDL_Surface* s_win = load_sprite("./images/game_win.png",&game_win);
+    SDL_Surface* s_win = load_sprite("./images/ui/game_win.png",&game_win);
 
     //Game start
     GLuint game_start;
-    SDL_Surface* s_start = load_sprite("./images/game_start.png",&game_start);
+    SDL_Surface* s_start = load_sprite("./images/ui/game_start.png",&game_start);
 
     //Game pause
     GLuint game_pause;
-    SDL_Surface* s_pause = load_sprite("./images/pause.png",&game_pause);
+    SDL_Surface* s_pause = load_sprite("./images/ui/pause.png",&game_pause);
 
     //Right texture
     GLuint texture_right;
-    SDL_Surface* s_right = load_sprite("./images/colonne_droite.png",&texture_right);
+    SDL_Surface* s_right = load_sprite("./images/ui/colonne_droite.png",&texture_right);
 
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
@@ -274,7 +268,8 @@ int main (int argc, char* argv[])
                     nb_monsters_to_send = 10;
                     wave.nb_lists++;
                     m->pv = m->pv*(wave.nb_lists/2);
-                    m->money = m->money*(wave.nb_lists/2);
+                    m->money = m->money*(wave.nb_lists);
+                    i->cost = i->cost*(wave.nb_lists);
                 }
             }
             cpt++;
