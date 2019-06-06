@@ -4,8 +4,9 @@
 #include <stdio.h>
 #include "node.h"
 #include "map.h"
-#define TOWERRAY 34
-
+#define TOWERRAY 30
+#define MONSTERRAY 20
+#define INSTALLRAY 30
 
 typedef enum{
 	MEDOC, BANDAGE, GLOBULE_ROUGE, GLOBULE_BLANC

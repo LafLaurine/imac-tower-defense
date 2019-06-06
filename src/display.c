@@ -389,10 +389,10 @@ int display_tower(Tower* t, SDL_Surface* tourImg, GLuint *tourTexture) {
 
 		glBegin(GL_QUADS);
 			glColor3ub(255, 255, 255); // couleur neutre
-			glTexCoord2d(0, 1); glVertex2d(t->x + tourImg->w * 0.5, t->y + tourImg->h * 0.5);
-			glTexCoord2d(0, 0); glVertex2d(t->x + tourImg->w * 0.5, t->y - tourImg->h * 0.5);
-			glTexCoord2d(1, 0); glVertex2d(t->x - tourImg->w * 0.5, t->y - tourImg->h * 0.5);
-			glTexCoord2d(1, 1); glVertex2d(t->x - tourImg->w * 0.5, t->y + tourImg->h * 0.5);
+			glTexCoord2d(0, 1); glVertex2d(t->x + tourImg->w*0.5, t->y + tourImg->h*0.5);
+			glTexCoord2d(0, 0); glVertex2d(t->x + tourImg->w*0.5, t->y - tourImg->h*0.5);
+			glTexCoord2d(1, 0); glVertex2d(t->x - tourImg->w*0.5, t->y - tourImg->h*0.5);
+			glTexCoord2d(1, 1); glVertex2d(t->x - tourImg->w*0.5, t->y + tourImg->h*0.5);
 		glEnd();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
@@ -621,7 +621,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 		Installation* i = list_inst->i_first;
 		
 		while(i != NULL) {
-			if(is_intersect(x, y, i->x, i->y, TOWERRAY, TOWERRAY) == 1){
+			if(is_intersect(x, y, i->x, i->y, TOWERRAY, INSTALLRAY) == 1){
         		return 0;
 			}
 			i = i->i_next;
@@ -631,7 +631,7 @@ int inst_on_building(List_Installation* list_inst, float x, float y, List_Tower*
 			Tower* t = list_tower->t_first;
 
 			while(t != NULL) {
-				if(is_intersect(x, y, t->x, t->y, TOWERRAY, TOWERRAY) == 1){
+				if(is_intersect(x, y, t->x, t->y, TOWERRAY, INSTALLRAY) == 1){
 					return 0;
 				}
 				t = t->t_next;
@@ -716,7 +716,7 @@ int check_around_inst(Installation* i, List_Tower* list_tower){
 	if(list_tower != NULL) {
 		Tower* t = list_tower->t_first;
 		while(t != NULL) {
-			if(is_intersect(i->x, i->y, t->x, t->y, TOWERRAY+t->range, TOWERRAY)){
+			if(is_intersect(i->x, i->y, t->x, t->y, 30+t->range, 30)){
 				update_tower(t, i->type);
 			}
 			t = t->t_next;
@@ -746,7 +746,7 @@ int delete_around_inst(Installation* i, List_Tower* list_tower){
 		Tower* t = list_tower->t_first;
 		
 		while(t != NULL) {
-			if(is_intersect(t->x, t->y, i->x, i->y, TOWERRAY+t->range, TOWERRAY)){
+			if(is_intersect(t->x, t->y, i->x, i->y, TOWERRAY+t->range, INSTALLRAY)){
 				downgrade_tower(t, i->type);
 			}
 			t = t->t_next;
@@ -790,7 +790,7 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 						
 						// Display shots
 						glBegin(GL_LINES);
-							glColor3ub(255,255,255);
+							glColor3ub(255,0,0);
 							glVertex2f(t->x, t->y);
 							glVertex2f(m->x, m->y);
 						glEnd();
@@ -821,7 +821,7 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 }
 
 int shot_monster(Monster* m, Tower* t) {
-	if(is_intersect(t->x, t->y, m->x, m->y, TOWERRAY+t->range, TOWERRAY)) {
+	if(is_intersect(t->x, t->y, m->x, m->y, TOWERRAY+t->range, MONSTERRAY)) {
 		m->pv = m->pv - t->power;
 		return 1;
 	}
