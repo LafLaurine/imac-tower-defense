@@ -82,5 +82,5 @@ pour le level 2
 * **Clara DAIGMORTE**
 * **Laurine LAFONTAINE** 
 
-#Graphisme
+# Graphisme
 **Laurine LAFONTAINE**
