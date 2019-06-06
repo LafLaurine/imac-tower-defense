@@ -1,5 +1,7 @@
 # IMAC TOWER DEFENSE
-IMAC 1 - Projet C / OpenGL
+IMAC 1 - Semestre 2 - Projet C / OpenGL
+
+Vous ne voulez pas être contaminée par les bactéries et les virus ? C'est votre chance de vous défendre ! Créez des défenses pour combattre ces infamies !
 
 # Installer les librairies et package 
 Pour que le projet fonctionne bien, vous aurez besoin d'installer le package GLUT, OpenGL, SDL, SDL_Image et SDL_Mixer. Et si jamais vous n'avez jamais compilé de C, vous aurez besoin de gcc.
@@ -81,4 +83,4 @@ pour le level 2
 * **Laurine LAFONTAINE** 
 
 #Graphisme
-* **Laurine LAFONTAINE**
+**Laurine LAFONTAINE**
