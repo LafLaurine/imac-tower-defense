@@ -70,7 +70,8 @@ int main (int argc, char* argv[])
 
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
-    //  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+    Mix_AllocateChannels(16);
+    Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
@@ -355,32 +356,36 @@ int main (int argc, char* argv[])
                 case SDL_MOUSEBUTTONDOWN:
                     if(e.button.button == SDL_BUTTON_LEFT) {
                         if(draw_type_tower != -1){
-                            if(tower_on_construct(map, e.button.x, e.button.y)) {
-                                if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
-                                    t = create_tower(draw_type_tower, e.button.x, e.button.y, l_tower, game->money);
-                                    if(t != NULL){
-                                        construct_tower = 1;
-                                        check_around_tower(t, l_inst);
-                                        player_money_down_update(game, t->cost);
-                                    }                                    
-                                } else {
-                                    printf("Tour sur une autre\n");
-                                }
-                            }   
+                            if(e.button.x >=0 && e.button.x <=600) {
+                                if(tower_on_construct(map, e.button.x, e.button.y)) {
+                                    if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
+                                        t = create_tower(draw_type_tower, e.button.x, e.button.y, l_tower, game->money);
+                                        if(t != NULL){
+                                            construct_tower = 1;
+                                            check_around_tower(t, l_inst);
+                                            player_money_down_update(game, t->cost);
+                                        }                                    
+                                    } else {
+                                        printf("Tour sur une autre\n");
+                                    }
+                                }   
+                            }
                         }
                         if(draw_type_inst != -1){
-                            if(installation_on_construct(map, e.button.x, e.button.y)) {
-                                if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
-                                    i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst,game->money);
-                                    if(i != NULL) {
-                                        construct_install = 1;
-                                        check_around_inst(i, l_tower);
-                                        player_money_down_update(game, i->cost);
+                                if(e.button.x >=0 && e.button.x <=600) {
+                                if(installation_on_construct(map, e.button.x, e.button.y)) {
+                                    if(inst_on_building(l_inst, e.button.x, e.button.y, l_tower)){
+                                        i = create_installation(draw_type_inst, e.button.x, e.button.y, l_inst,game->money);
+                                        if(i != NULL) {
+                                            construct_install = 1;
+                                            check_around_inst(i, l_tower);
+                                            player_money_down_update(game, i->cost);
+                                        }
+                                    } else {
+                                        printf("Installation sur une autre\n");
                                     }
-                                } else {
-                                    printf("Installation sur une autre\n");
-                                }
-                            }   
+                                }   
+                            }
                         }
                         //si on appuie sur la croix
                         if(e.button.x <= 1000 && e.button.x >= 980 && e.button.y <= 20 && e.button.y >= 0) {

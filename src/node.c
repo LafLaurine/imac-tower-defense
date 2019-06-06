@@ -12,7 +12,6 @@ List_Node* new_List_Node() {
 
 Node* create_node(Node_Type type, float x, float y, int *successors, int nb_successors, List_Node* l_node, int indice){
 	Node* n = malloc(sizeof(Node));
-
 	if(n != NULL) {
 		n->type = type; //type
 		n->x = x; //coordonnee x
@@ -21,7 +20,6 @@ Node* create_node(Node_Type type, float x, float y, int *successors, int nb_succ
 		n->nb_successors = nb_successors;
 		n->indice = indice;
 		n->next = NULL;
-		printf("New node y position %f\n", n->y);
 		add_node_list(n, l_node);
 		return n;
 
@@ -86,22 +84,4 @@ void free_all_node(List_Node* list_node) {
 		}
 	}
 	free(list_node);
-}
-
-List_Node* free_node_by_position(List_Node* list_node, Node* current) {
-	if (list_node != NULL) {
-		if(current != NULL) {
-			// List head on new node
-			list_node->head = current->next;
-			// Free memory : delete node
-			free(current);
-			list_node->length--;
-		}
-		else
-			printf("Inexistant node\n");
-	}
-	else 
-		printf("Inexistant node list\n");
-	
-	return list_node; 
 }

@@ -28,7 +28,7 @@ $(OBJ)node.o: $(SRC)node.c $(INCL)node.h
 $(OBJ)monster.o: $(SRC)monster.c $(INCL)monster.h $(INCL)tower.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
-$(OBJ)tower.o: $(SRC)tower.c $(INCL)tower.h $(INCL)geometry.h
+$(OBJ)tower.o: $(SRC)tower.c $(INCL)tower.h
 	$(CC) $(CFLAGS) -o $@ -c $< $(LDFLAGS)
 
 $(OBJ)installation.o: $(SRC)installation.c $(INCL)installation.h

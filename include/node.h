@@ -1,13 +1,12 @@
 #ifndef NODE_H
 #define NODE_H
-#define NB_MIN_NOEUDS 2
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "colors.h"
 
-
+//Node types
 typedef enum {
 	Test, In, Out, Twist, Intersect
 } Node_Type;
@@ -41,7 +40,6 @@ void add_node_list(Node* n, List_Node* list_node);
 List_Node* remove_node(List_Node* current_node, Node* current);
 // Delete list of node
 void free_all_node (List_Node* list_node);
-// Remove node by position
-List_Node* free_node_by_position(List_Node* list_node, Node* current);
+
 
 #endif

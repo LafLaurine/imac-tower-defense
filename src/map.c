@@ -216,7 +216,7 @@ int check_map(Map* map, char* map_itd){
 		}
 
 		// LAST LINES : node information
-		int node_indice;
+		int node_index;
 		int node_type;
 		float node_x;
 		float node_y;
@@ -245,7 +245,7 @@ int check_map(Map* map, char* map_itd){
 						itoken = atoi(token);
 
 						if(i == 0){
-							node_indice = itoken;
+							node_index = itoken;
 							if(inBool == 0 && strcmp(token, "0")){
 								inBool = 1;
 							}
@@ -429,7 +429,7 @@ Node* findNode(int index, Map map){
 	Node* temp = map.list_node->head;
 
 	while(temp != NULL) {
-		if(index == temp->indice) {
+		if(index == temp->index) {
 			return temp;
 		}
 		temp = temp->next;
