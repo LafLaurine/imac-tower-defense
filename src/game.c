@@ -5,7 +5,6 @@ Game* new_game() {
 
 	if(n_game != NULL) {
 		n_game->money = 500; // Player starts with 150 medics
-		n_game->nb_lists_send = 0;
 		n_game->pause = 0;
 		n_game->start = 0;
 		n_game->win = 0;

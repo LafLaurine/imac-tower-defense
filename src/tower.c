@@ -194,8 +194,7 @@ List_Tower* remove_tower(List_Tower* current_m, Tower* current) {
 			free(current);
 			current_m->length--;
 
-		} else
-			printf("Inexistant tower\n");
+		}
 	} else 
 		printf("Couldn't find list\n");
 

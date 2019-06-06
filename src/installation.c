@@ -178,8 +178,7 @@ List_Installation* remove_installation(List_Installation* current_i, Installatio
 			free(current);
 			current_i->length--;
 
-		} else
-			printf("Inexistant installation\n");
+		}
 	} else 
 		printf("Couldn't find list\n");
 

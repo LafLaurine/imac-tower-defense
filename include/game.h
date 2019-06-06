@@ -4,7 +4,6 @@
 
 typedef struct game{
 	int money;
-	int nb_lists_send;
 	int start;
 	int win;
 	int pause;
@@ -13,8 +12,6 @@ typedef struct game{
 
 // Create new game
 Game* new_game();
-// Game update
-int game_update(Game* game, Monster* m_alive);
 // Update money UP
 int player_money_up_update(Game* game, int cost);
 // Update money DOWN

@@ -59,8 +59,7 @@ List_Node* remove_node(List_Node* current_node, Node* current) {
 			free(current);
 			current_node->length--;
 
-		} else
-			printf("Inexistant node\n");
+		}
 	} else 
 		printf("Couldn't find list\n");
 
