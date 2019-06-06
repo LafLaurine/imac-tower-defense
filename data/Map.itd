@@ -1,6 +1,6 @@
 @ITD 1
 #Test de lecture d'un ITD
-../image/map_01.ppm
+../image/map_03.ppm
 chemin 255 255 255
 noeud 0 0 0
 construct 255 200 80
