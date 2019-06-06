@@ -111,7 +111,7 @@ int main (int argc, char* argv[])
 
     // Help
     GLuint help_txt;
-    SDL_Surface* help_surface = load_sprite("./images/aide.jpg", &help_txt);
+    SDL_Surface* help_surface = load_sprite("./images/aide.png", &help_txt);
 
     //Game over
     GLuint game_over;

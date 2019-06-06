@@ -715,7 +715,7 @@ int delete_around_inst(Installation* i, List_Tower* list_tower){
 		Tower* t = list_tower->t_first;
 		
 		while(t != NULL) {
-			if(is_intersect(i->x, i->y, t->x, t->y, 34+t->range, 34)){
+			if(is_intersect(t->x, t->y, i->x, i->y, 34+t->range, 34)){
 				printf("COUCOU");
 				downgrade_tower(t, i->type);
 			}
