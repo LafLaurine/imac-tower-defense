@@ -6,57 +6,52 @@
 
 #define WAVENUMBER 10
 
-// enum type monster
-typedef enum{BACTERY, VIRUS} Monster_Type;
+// Enum type monster
+typedef enum {
+	BACTERY, VIRUS
+} Monster_Type;
 
+// Monster
 typedef struct Monster {
+	float x; // x Position
+	float y; // y Position
+	Node* node_next; // Next node (map)
+	int pv; // Life points (current)
+	int pv_max; // Max life points
+	int move; // Movement
+	int speed; // Speed
+	int money; // Money it costs - gives
+	Monster_Type type; // Type
+	int resist; // Resistance
+	struct Monster* m_next; // Next monster
+	struct Monster* m_prev; // Previous monster
+} Monster;
 
-	//position du monstre
-	float x;
-	float y;
-
-	//Noeud suivant (carte)
-	Node* node_next;
-	//point de vie courant
-	int pv;
-	//pt vie max
-	int pv_max;
-	//vitesse deplacement
-	int move;
-	int speed;
-	//qd il meurt, player gagne ... argent
-	int money;
-
-	//type
-	Monster_Type type;
-	//resistance
-	int resist;
-	//monstre suivant
-	struct Monster* m_next;
-	//monstre precedant
-	struct Monster* m_prev;
-}Monster;
-
+// List monster
 typedef struct List_Monster {
 	Monster* m_first;
 	Monster* m_last;
-	int nb_monsters; // Nombre monstre dans la liste
-	int nb_monsters_send; // Nombre de monstre déjà envoyés
-}List_Monster;
+	int nb_monsters; // Nb monster into list
+	int nb_monsters_send; // Nb monster already sent
+} List_Monster;
 
-//wave
+// Wave
 typedef struct Wave {
 	List_Monster* lists[WAVENUMBER];
 	int nb_lists;
-}Wave;
+} Wave;
 
-
+// Create new monster list
 List_Monster* new_monster_list();
+// Create new monster
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, List_Monster* l_monster);
-Monster* add_monster(Monster* m, Monster* new_monster);
+// Add monster to list
 void add_monster_list(Monster* m, List_Monster* list_monster);
+// Kill monster
 Monster_Type kill_monster(List_Monster* list_monster, Monster* current);
+// Remove monster
 List_Monster* remove_monster(List_Monster* current_m, Monster* current);
+// Free all monster from list
 void free_all_monster(List_Monster* l_monster);
 
 #endif
