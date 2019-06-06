@@ -25,7 +25,7 @@ static const char WINDOW_TITLE[] = "IMAC1 TOWER DEFENSE";
 static const unsigned int BIT_PER_PIXEL = 32;
 
 /* Nombre minimal de millisecondes separant le rendu de deux images. 100 ms = 1/10eme seconde */
-static const Uint32 FRAMERATE_MILLISECONDS = 100;
+static const Uint32 FRAMERATE_MILLISECONDS = 1000;
 static const Uint32 FRAMERATE_MILLISECONDS_FAST = 1000 / 60;
 
 void reshape() {
@@ -91,7 +91,7 @@ int main (int argc, char* argv[])
     //Init map
     Map* map = init_map(argv[1]);
 
-    int *path_tab = malloc(sizeof(int*));
+    //int *path_tab = malloc(sizeof(int*));
     //init_djisksra(*map, path_tab);
 
     // Map 1

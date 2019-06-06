@@ -1,5 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
+#include <GL/glut.h>
+#include <string.h>
 
 #include <string.h>
 #include <GL/gl.h>
