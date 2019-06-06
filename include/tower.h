@@ -8,7 +8,7 @@
 
 
 typedef enum{
-	MEDOC, BANDAGE, GBLANC, GROUGE
+	MEDOC, BANDAGE, GLOBULE_ROUGE, GLOBULE_BLANC
 }TowerType;
 
 

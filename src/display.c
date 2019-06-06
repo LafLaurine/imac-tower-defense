@@ -418,12 +418,12 @@ int display_list_tower(List_Tower* list_tower) {
 		t = list_tower->t_last;
 
 		while(t != NULL) {
-			if(t->type == GROUGE) {
+			if(t->type == GLOBULE_ROUGE) {
 				if(display_tower(t, rocket, &texture_rocket) == 0) {
 					success = 0;
 				}
 			}
-			else if(t->type == GBLANC) {
+			else if(t->type == GLOBULE_BLANC) {
 				if(display_tower(t, laser, &texture_laser) == 0) {
 					success = 0;
 				}
@@ -836,7 +836,7 @@ void displayTowerFeatures(Tower* t) {
 
 	if(t != NULL) {
 		// Chargement des caractéristiqes de la tour en fonction de son type
-		if((*t).type == GROUGE) {
+		if((*t).type == GLOBULE_ROUGE) {
 			featuresImg = IMG_Load("./images/info/info_gr.png");
 		    if(featuresImg == NULL) {
 		        fprintf(stderr, "impossible de charger l'image info/info_gr.png \n");
@@ -844,7 +844,7 @@ void displayTowerFeatures(Tower* t) {
 		    }
 		    load_sprite("./images/info/info_gr.png",&featuresTexture);
 		}
-		else if((*t).type == GBLANC) {
+		else if((*t).type == GLOBULE_BLANC) {
 			featuresImg = IMG_Load("./images/info/info_gb.png");
 		    if(featuresImg == NULL) {
 		        fprintf(stderr, "impossible de charger l'image info/info_gb.png \n");

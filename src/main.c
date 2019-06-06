@@ -343,10 +343,10 @@ int main (int argc, char* argv[])
                             if(tower_on_construct(map, e.button.x, e.button.y)) {
                                 if(tower_on_building(l_tower, e.button.x, e.button.y, l_inst)){
                                     t = create_tower(draw_type_tower, e.button.x, e.button.y, l_tower, game->money);
-                                    if(t!= NULL){
+                                    if(t != NULL){
                                         construct_tower = 1;
                                         check_around_tower(t, l_inst);
-                                        player_money_down_update(game,t->cost);
+                                        player_money_down_update(game, t->cost);
                                     }                                    
                                 } else {
                                     printf("Tour sur une autre\n");
@@ -360,7 +360,7 @@ int main (int argc, char* argv[])
                                     if(i != NULL) {
                                         construct_install = 1;
                                         check_around_inst(i, l_tower);
-                                        player_money_down_update(game,i->cost);
+                                        player_money_down_update(game, i->cost);
                                     }
                                 } else {
                                     printf("Installation sur une autre\n");
@@ -393,7 +393,7 @@ int main (int argc, char* argv[])
                     case SDL_KEYDOWN:
                     switch(e.key.keysym.sym){
                             case 'l' :
-                                draw_type_tower = GBLANC;
+                                draw_type_tower = GLOBULE_BLANC;
                                 draw_type_inst = -1;
                             break;
                             
@@ -405,7 +405,7 @@ int main (int argc, char* argv[])
                                 break;     
                             
                             case 'z' :
-                                draw_type_tower = GROUGE;
+                                draw_type_tower = GLOBULE_ROUGE;
                                 draw_type_inst = -1;
                             break;
 

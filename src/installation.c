@@ -15,6 +15,7 @@ List_Installation* new_installation_list() {
 
 Installation* create_installation(InstallationType type, float x, float y, List_Installation* l_inst, int money){
 	Installation* i = (Installation*)malloc(sizeof(Installation));
+	
 	if(i != NULL){
 		i->type = type; //type
 		i->x = x; //coordonnee x
@@ -36,11 +37,10 @@ Installation* create_installation(InstallationType type, float x, float y, List_
 				break;
 		}
 
-		add_installation_list(i, l_inst);
-		printf("New installation\n");
-
 		// Check if enough money to buy installation
 		if(money >= i->cost) {
+			add_installation_list(i, l_inst);
+			printf("New installation\n");
 			return i;
 		} else {
 			printf("Not enough money to buy an installation");

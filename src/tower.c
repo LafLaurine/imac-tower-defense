@@ -25,13 +25,13 @@ Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int m
 			t->t_next = NULL; // Next tower
 			t->t_prev = NULL; // Previous tower
 
-			if(type == GBLANC) {
+			if(type == GLOBULE_BLANC) {
 				t->rate = 8; // Shooting rate
 				t->power = 100; // Shooting power
 				t->range = 100; // Shooting range
 				t->cost = 300; // Tower cost
 			}
-			else if(type == GROUGE) {
+			else if(type == GLOBULE_ROUGE) {
 				t->rate = 20;
 				t->power = 200;
 				t->range = 100;
@@ -55,7 +55,6 @@ Tower* create_tower(TowerType type, float x, float y, List_Tower* l_tower, int m
 			add_tower_list(t, l_tower);
 			printf("New tower\n");
 			return t;
-
 		} else {
 			printf("Not enough money to buy tower");
 			return NULL;
