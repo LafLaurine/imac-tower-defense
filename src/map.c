@@ -437,7 +437,7 @@ Node* findNode(int index, Map map){
 	return NULL;
 }
 
-
+/* 
 void init_djisksra(Map map, int* tab_path) {
     //tableau des sommets + successeurs
     //tableau des valeurs (initalement ça doit être infini mais ici pour test on mets 10000)
@@ -511,7 +511,7 @@ void init_djisksra(Map map, int* tab_path) {
 	}
 
 	tab_path[compt++] = sommet_index;
-}
+} */
 
 
 void free_map(Map* map) {

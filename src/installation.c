@@ -24,13 +24,13 @@ Installation* create_installation(InstallationType type, float x, float y, List_
 
 		switch(type){
 			case RADAR :
-				i->cost = 150;
+				i->cost = 500;
 			break;
 			case USINE : 
-				i->cost = 150;
+				i->cost = 200;
 			break;
 			case STOCK : 
-				i->cost = 150;
+				i->cost = 300;
 			break;
 			default : 
 				exit(EXIT_FAILURE);
