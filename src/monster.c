@@ -1,29 +1,29 @@
-#include <stdlib.h>
-#include <stdio.h>
 #include "../include/monster.h"
 
 List_Monster* new_monster_list() {
-	List_Monster *list_monster = malloc(sizeof(List_Monster));
-	if (list_monster != NULL) {
-		list_monster->m_last = NULL;
-		list_monster->m_first = NULL;
-		list_monster->nb_monsters = 0;
-        list_monster->nb_monsters_send = 0;
-	}
-	else {
-		printf("%s\n", "Not enough memory");
+	List_Monster *l_monster = malloc(sizeof(List_Monster));
+
+	if (l_monster != NULL) {
+		l_monster->m_last = NULL;
+		l_monster->m_first = NULL;
+		l_monster->nb_monsters = 0;
+        l_monster->nb_monsters_send = 0;
+	} else {
+		printf("Not enough memory\n");
 		exit(EXIT_FAILURE);
 	}
 
-	return list_monster;
+	return l_monster;
 }
 
 Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, List_Monster* l_monster){
     if(node_next == NULL) {
-        fprintf(stderr, "pointer is NULL in createMonster function \n");
+        printf("pointer is NULL in createMonster function \n");
         exit(1);
     }
+
     Monster* m = (Monster*)malloc(sizeof(Monster));
+
     if(m != NULL) {
         if(type == BACTERY) {
             m->pv_max = 100;
@@ -48,89 +48,83 @@ Monster* create_monster(Monster_Type type, float x, float y, Node *node_next, Li
         m->m_next = NULL;
         m->m_prev = NULL;
         add_monster_list(m, l_monster);
+
+    } else {
+        printf("Not enough memory for monster\n");
     }
-    else {
-        printf("%s\n", "Not enough memory for monster");
-    }
+
 	return m;
 }
 
-void add_monster_list(Monster* m, List_Monster* list_monster){
-	if (list_monster != NULL) {
-		if (list_monster->m_last == NULL) {
-				// Pointe la tête de la liste sur le nouveau monstre
-				list_monster->m_first = m;
+void add_monster_list(Monster* m, List_Monster* l_monster){
+	if (l_monster != NULL) {
+		if (l_monster->m_last == NULL) {
+				// List last on new monster
+				l_monster->m_first = m;
                 m->m_prev = NULL;
 			}
-			// Cas où des éléments sont déjà présents dans la  liste
+			// If elements are already into list
 			else {
-                m->m_prev = list_monster->m_last;
-				list_monster->m_last->m_next = m; 
+                m->m_prev = l_monster->m_last;
+				l_monster->m_last->m_next = m; 
 			}
 
-            list_monster->m_last = m;
-
-			// On augmente de 1 la taille de la liste
-			list_monster->nb_monsters++;
-            printf("NB MONSTRES :%d\n", list_monster->nb_monsters); 
-		}
-	else {
-		printf("%s\n", "Fail to add to list tower");
+			// List last on new monster
+            l_monster->m_last = m;
+			// Nb monster +1
+			l_monster->nb_monsters++;
+		} else {
+			printf("Fail to add to list monster\n");
 	}
 }
 
-Monster_Type kill_monster(List_Monster* list_monster, Monster* current) {
-	if (list_monster != NULL) {
-
+Monster_Type kill_monster(List_Monster* l_monster, Monster* current) {
+	if (l_monster != NULL) {
 		if(current != NULL) {
 			Monster_Type type = current->type;
 
-			//Si c'est la dernière tour de la liste
+			// If last monster of list
 			if (current->m_next == NULL) {
 				
-				//Pointe la fin de la liste sur la tour précédente
-				list_monster->m_last = current->m_prev;
+				// End of list on previous monster
+				l_monster->m_last = current->m_prev;
 
-				if(list_monster->m_last != NULL) {
-					//Lien de la dernière tour vers la tour suivante est NULL
-					list_monster->m_last->m_next = NULL;
+				if(l_monster->m_last != NULL) {
+					// Last monster next is NULL
+					l_monster->m_last->m_next = NULL;
 				}
 				else
-					list_monster->m_first = NULL;
+					l_monster->m_first = NULL;
 					
 			}
 		
-			//Si c'est la première de la liste
+			// Last monster next is NULL
 			else if (current->m_prev == NULL) {
-				list_monster->m_first = current->m_next;
+				l_monster->m_first = current->m_next;
 
-				if(list_monster->m_first != NULL) {
-			 		list_monster->m_first->m_prev = NULL;
+				if(l_monster->m_first != NULL) {
+			 		l_monster->m_first->m_prev = NULL;
 				}
 				else
-					list_monster->m_last = NULL;
-			}
-
-			else {
-				//Relie la tour suivante à la tour précédente de la tour que l'on veut supprmer 
+					l_monster->m_last = NULL;
+			} else {
+				// Link next monster to previous monster (soon deleted) 
 				current->m_next->m_prev = current->m_prev;
-				//Relie la tour précédente à la tour suivante de la tour que l'on veut supprmer 
+				// Link previous monster to next monster (soon deleted)
 				current->m_prev->m_next = current->m_next;
-
 			}
-			//supprime la tour
+
+			// Delete monster
 			free(current);
-			list_monster->nb_monsters--;
-            printf("NB MONSTRES :%d\n", list_monster->nb_monsters); 
+			l_monster->nb_monsters--;
 			return type;
 		}
 		else {
-			fprintf(stderr, "Tower doesn't exist");
+			fprintf(stderr, "Monster doesn't exist");
 			return -1;
 		}
-	}
-	else {
-		fprintf(stderr, "Tower list doesn't exist");
+	} else {
+		fprintf(stderr, "Monster list doesn't exist");
 		return -1;
 	}
 }

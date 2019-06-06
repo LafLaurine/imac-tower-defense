@@ -1,16 +1,8 @@
-#include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <stdlib.h>
-#include <stdio.h>
 #include "../include/sprite.h"
 
-//check si image bien chargée
-int is_loaded(SDL_Surface *image)
-{
+int is_loaded(SDL_Surface *image) {
     if(image == NULL) {
-        printf("%s\n", "Image not loaded");
+        printf("Image not loaded");
         SDL_Quit();
         return 0;
     }
@@ -33,8 +25,7 @@ void drawQuad(GLuint texture) {
         glBindTexture(GL_TEXTURE_2D, 0);
     glDisable(GL_TEXTURE_2D);
 }
-    
-//charge texture map
+
 SDL_Surface* load_map_texture(Map* map, GLuint *texture) {
     SDL_Surface *image = IMG_Load(map->img->path);
 
@@ -60,8 +51,6 @@ SDL_Surface* load_map_texture(Map* map, GLuint *texture) {
     return image;
 }
 
-//charger sprite
-
 SDL_Surface* load_sprite(char* file_name, GLuint *texture) {
     SDL_Surface *image = IMG_Load(file_name);
     is_loaded(image);
@@ -81,7 +70,7 @@ SDL_Surface* load_sprite(char* file_name, GLuint *texture) {
             format = GL_RGBA;
             break;
         default:
-            fprintf(stderr, "Format des pixels de l’image non pris en charge\n");
+            printf("Format des pixels de l’image non pris en charge\n");
             exit(EXIT_FAILURE);
     }
 

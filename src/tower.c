@@ -98,7 +98,7 @@ Tower* click_tower(List_Tower* l_tower, float x, float y) {
 		Tower* p_tmp = l_tower->t_last;
 		
 		while(p_tmp != NULL) {
-			/// If click was on tower
+			// If click was on tower
 			if(x <= (p_tmp->x + 50) && x >= (p_tmp->x - 50) && y <= (p_tmp->y + 50) && y >= (p_tmp->y - 50)) {
 				return p_tmp;	
 			}
@@ -115,14 +115,14 @@ Tower* click_tower(List_Tower* l_tower, float x, float y) {
 void delete_from_position(List_Tower* l_tower, Tower* current) {
 	if (l_tower != NULL) {
 		if(current != NULL) {
-			// If last installation of list
+			// If last tower of list
 			if (current->t_next == NULL) {
 				
-				// End of list on previous installation
+				// End of list on previous tower
 				l_tower->t_last = current->t_prev;
 
 				if(l_tower->t_last != NULL) {
-					// Last installation next is NULL
+					// Last tower next is NULL
 					l_tower->t_last->t_next = NULL;
 				}
 				else
