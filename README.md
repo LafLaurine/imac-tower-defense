@@ -1,6 +1,10 @@
 # IMAC TOWER DEFENSE
 IMAC 1 - Projet C / OpenGL
 
+## Sommaire
+
+* [**Installer libraires**](#installer les libraries)
+
 # Installer les librairies et package 
 Pour que le projet fonctionne bien, vous aurez besoin d'installer le package GLUT, OpenGL, SDL, SDL_Image et SDL_Mixer. Et si jamais vous n'avez jamais compilé de C, vous aurez besoin de gcc.
 
@@ -14,15 +18,20 @@ $sudo apt-get install freeglut3 freeglut3-dev
 
 ### Installer SDL
 Taper dans votre terminal : 
-$sudo apt-get install libsdl2-dev
+```bash
+sudo apt-get install libsdl2-dev
+```
 
 ### Installer SDL_Image
 Taper dans votre terminal : 
-$sudo apt-get install libsdl-image1.2 libsdl-image1.2-dev
-
+```bash
+sudo apt-get install libsdl-image1.2 libsdl-image1.2-dev
+```
 ### Installer SDL_Mixer
 Taper dans votre terminal :
-$sudo apt-get install libsdl-mixer1.2 libsdl-mixer1.2-dev
+```bash
+sudo apt-get install libsdl-mixer1.2 libsdl-mixer1.2-dev
+```
 
 # Installation du programme
 
