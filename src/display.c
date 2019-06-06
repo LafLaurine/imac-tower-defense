@@ -226,6 +226,39 @@ void display_right_column() {
 	glEnd();
 }
 
+//display right column down
+int display_right_column_down(GLuint *texture) {
+	if(texture != NULL) {
+		//Active le texturage 2D
+		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//appel de la texture
+		glBindTexture(GL_TEXTURE_2D, *texture);
+			glBegin(GL_QUADS);
+			//coordonée de la texture
+			glTexCoord2f(1, 1);
+			//Cordonnée du quadrilatère 
+			glVertex2f(400, 400);
+			glTexCoord2f(1, 0);
+			glVertex2f(400, 0);
+			glTexCoord2f(0, 0);
+			glVertex2f(0, 0);
+			glTexCoord2f(0, 1);
+			glVertex2f(0, 400);
+			glEnd();
+		//Déblinder la texture
+		glBindTexture(GL_TEXTURE_2D, 0);
+		//Désactive le texturage 2D
+		glDisable(GL_TEXTURE_2D);
+	}
+	else {
+		fprintf(stderr, "Couldn't find cross\n");
+		return 0;
+	}
+	return 1;
+}
+
 
 // MONSTER
 

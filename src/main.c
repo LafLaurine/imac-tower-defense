@@ -128,6 +128,10 @@ int main (int argc, char* argv[])
     GLuint game_pause;
     SDL_Surface* s_pause = load_sprite("./images/pause.png",&game_pause);
 
+    //Right texture
+    GLuint texture_right;
+    SDL_Surface* s_right = load_sprite("./images/colonne_droite.png",&texture_right);
+
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
     Node *first = root;
@@ -196,6 +200,12 @@ int main (int argc, char* argv[])
             display_right_column();
         glPopMatrix();
 
+         //display right column down
+        glPushMatrix();
+            glTranslatef(600,200,0);
+            display_right_column_down(&texture_right);
+        glPopMatrix();
+
         //Display argent
         glPushMatrix();
             glTranslatef(620,68,0);
@@ -231,15 +241,14 @@ int main (int argc, char* argv[])
             vBitmapOutput(620,100,"Vague numero : ",GLUT_BITMAP_HELVETICA_18);
             vBitmapOutput(800,100,string_wave,GLUT_BITMAP_HELVETICA_18);
         glPopMatrix();
-
-        if(help == 1){
-            display_full(&help_txt);
-        }
-
+       
         if(game->pause == 1){
             display_map(&game_pause);
         }
 
+        if(help == 1){
+            display_full(&help_txt);
+        }
 
         //Vague monstre
         if(game->pause == 0) {
@@ -527,6 +536,7 @@ int main (int argc, char* argv[])
     SDL_FreeSurface(s_money);
     SDL_FreeSurface(s_win);
     SDL_FreeSurface(s_over);
+    SDL_FreeSurface(s_right);
     SDL_FreeSurface(s_cross);
     SDL_FreeSurface(help_surface);
     SDL_FreeSurface(s_start);

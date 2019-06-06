@@ -42,6 +42,7 @@ void displayTowerFeatures(Tower* t);
 Tower* constructTowerSelected(List_Tower* l_tower, int x, int y);
 Installation* select_installation_construted(List_Installation* l_inst, int x, int y);
 void displayInstallationFeatures(Installation* i);
+int display_right_column_down(GLuint *texture);
 
 void downgrade_tower(Tower* t, InstallationType type_inst);
 #endif
