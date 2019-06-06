@@ -216,7 +216,7 @@ int check_map(Map* map, char* map_itd){
 		}
 
 		// LAST LINES : node information
-		int node_indice;
+		int node_index;
 		int node_type;
 		float node_x;
 		float node_y;
@@ -244,7 +244,7 @@ int check_map(Map* map, char* map_itd){
 						itoken = atoi(token);
 
 						if(i == 0){
-							node_indice = itoken;
+							node_index = itoken;
 							if(inBool == 0 && strcmp(token, "0")){
 								inBool = 1;
 							}
@@ -281,7 +281,7 @@ int check_map(Map* map, char* map_itd){
 						}					
 						
 						// Check node is in node list
-						previous = create_node(node_type, node_x, node_y, successors, map->list_node, node_indice);
+						previous = create_node(node_type, node_x, node_y, successors, map->list_node, node_index);
 						if(previous == NULL) {
 							printf("Nodes not added\n");
 							exit(EXIT_FAILURE);
@@ -427,7 +427,7 @@ Node* findNode(int index, Map* map){
 	Node* temp = map->list_node->head;
 
 	while(temp != NULL) {
-		if(index == temp->indice) {
+		if(index == temp->index) {
 			return temp;
 		}
 		temp = temp->next;
@@ -459,8 +459,8 @@ void init_djisksra(Map *map, int* tab_chemin) {
     value[0] = 0;
 
     Node* route = map->list_node->tail;
-    sommet[route->indice]=route->indice;
-    value[route->indice] = 0;		
+    sommet[route->index]=route->index;
+    value[route->index] = 0;		
 
     //tant que pas node sorti
     // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
@@ -469,15 +469,15 @@ void init_djisksra(Map *map, int* tab_chemin) {
 
         while(tmp->successors != NULL) {
 			//chemin visite
-			visited[tmp->indice] = 0;
+			visited[tmp->index] = 0;
 
 			int length = sizeof(tmp->successors)/sizeof(int);
 			//printf("longueur %d\n", length);
 			
 			for(int c=0; c<length; c++){
 				if(sommet[tmp->successors[c]] == -1){
-					sommet[tmp->successors[c]] = route->indice;
-					value[tmp->successors[c]] = value[route->indice]+1;
+					sommet[tmp->successors[c]] = route->index;
+					value[tmp->successors[c]] = value[route->index]+1;
 				}
 			}
 

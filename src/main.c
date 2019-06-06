@@ -70,6 +70,7 @@ int main (int argc, char* argv[])
 
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
+    Mix_AllocateChannels(16);
     Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */

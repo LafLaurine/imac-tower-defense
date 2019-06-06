@@ -6,6 +6,7 @@
 #include <string.h>
 #include "colors.h"
 
+//Node types
 typedef enum {
 	In, Out, Twist, Intersect
 } Node_Type;
@@ -15,7 +16,7 @@ typedef struct Node {
 	float y; // y Position
 	Node_Type type; // Node type
 	int* successors; // Node successors
-	int indice;
+	int index; //
 	struct Node *next; // Next node
 	struct Node *prev; // Previous node
 } Node;
@@ -31,7 +32,7 @@ typedef struct List_Node {
 // Create new list node
 List_Node* new_List_Node();
 // Create new node
-Node* create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int indice);
+Node* create_node(Node_Type type, float x, float y, int *successors, List_Node* l_node, int index);
 // Add node to list
 void add_node_list(Node* n, List_Node* list_node);
 // Delete one node

@@ -781,6 +781,8 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 
 		while(t != NULL){
 			Mix_Music *musique; //Création du pointeur de type Mix_Music
+									Mix_AllocateChannels(16);
+
 
 			if(list_monster != NULL) {
 				Monster* m = list_monster->m_first;
@@ -811,6 +813,7 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 			}
 			compteurTour++;
 			t = t->t_next;
+			
 		}
 		return monsterKilled;
 	}
