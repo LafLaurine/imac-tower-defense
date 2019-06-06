@@ -90,6 +90,7 @@ int main (int argc, char* argv[])
     int monsterTypeInt = 0;
     int waveBool = 0;
     Tower* t_selected = NULL;
+    Installation* i_selected = NULL;
 
     //Init map
     Map* map = init_map(argv[1]);
@@ -291,10 +292,18 @@ int main (int argc, char* argv[])
                     }
                 }
             }
-            
         
             //Affichage installations
             display_list_installation(l_inst);
+
+            if(l_inst != NULL) {
+                if(i != NULL) {
+                    i_selected = select_installation_construted(l_inst, xOver, yOver);
+                    if(i_selected != NULL) {
+                        displayInstallationFeatures(i_selected);
+                    }
+                }
+            }
         }
         }
         /* Echange du front et du back buffer : mise a jour de la fenetre */

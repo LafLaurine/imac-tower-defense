@@ -810,6 +810,25 @@ Tower* constructTowerSelected(List_Tower* l_tower, int x, int y) {
 	return NULL;
 }
 
+// Sélection d'une installation construite
+Installation* select_installation_construted(List_Installation* l_inst, int x, int y) {
+	if(l_inst != NULL) {
+		Installation* current = l_inst->i_last;
+		while(current != NULL) {
+			// Est-ce que la souris survole une tour ?
+			if(x >= ((*current).x - 50) && x <= ((*current).x + 50) && y >= ((*current).y - 50) && y <= ((*current).y + 50)) {
+				return current;
+			}
+			else {
+				current = current->i_prev;
+			}
+		}
+	}
+
+	return NULL;
+}
+
+
 // Affichage des caractéristiques de la tour survolée
 void displayTowerFeatures(Tower* t) {
 	SDL_Surface* featuresImg;
@@ -820,18 +839,18 @@ void displayTowerFeatures(Tower* t) {
 		if((*t).type == GLOBULE_ROUGE) {
 			featuresImg = IMG_Load("./images/info/info_gr.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image info/info_gb.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_gr.png \n");
 		        exit(1);
 		    }
-		    load_sprite("./images/info/info_gb.png",&featuresTexture);
+		    load_sprite("./images/info/info_gr.png",&featuresTexture);
 		}
 		else if((*t).type == GLOBULE_BLANC) {
 			featuresImg = IMG_Load("./images/info/info_gb.png");
 		    if(featuresImg == NULL) {
-		        fprintf(stderr, "impossible de charger l'image info/info_laser.png \n");
+		        fprintf(stderr, "impossible de charger l'image info/info_gb.png \n");
 		        exit(1);
 			}
-		    load_sprite("./images/info/info_laser.png",&featuresTexture);		
+		    load_sprite("./images/info/info_gb.png",&featuresTexture);		
 		}
 		else if((*t).type == MEDOC) {
 			featuresImg = IMG_Load("./images/info/info_medoc.png");
@@ -866,6 +885,65 @@ void displayTowerFeatures(Tower* t) {
 			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y + featuresImg->h * 0.5 + featuresImg->h / 2);
 			glTexCoord2d(1, 0);
 			glVertex2f((*t).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*t).y - featuresImg->h * 0.5 + featuresImg->h / 2);
+		glEnd();
+	    
+	    glBindTexture(GL_TEXTURE_2D, 0);
+	    glDisable(GL_BLEND);
+	    glDisable(GL_TEXTURE_2D);
+    }
+
+    glDeleteTextures(1, &featuresTexture);
+    SDL_FreeSurface(featuresImg);
+}
+
+// Affichage des caractéristiques de l'installation survolée
+void displayInstallationFeatures(Installation* i) {
+	SDL_Surface* featuresImg;
+	GLuint featuresTexture;
+
+	if(i != NULL) {
+		// Chargement des caractéristiqes de la tour en fonction de son type
+		if((*i).type == USINE) {
+			featuresImg = IMG_Load("./images/info/info_usine.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image info/info_usine.png \n");
+		        exit(1);
+		    }
+		    load_sprite("./images/info/info_usine.png",&featuresTexture);
+		}
+		else if((*i).type == STOCK) {
+			featuresImg = IMG_Load("./images/info/info_stock.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image info/info_stock.png \n");
+		        exit(1);
+			}
+		    load_sprite("./images/info/info_stock.png",&featuresTexture);		
+		}
+		else if((*i).type == RADAR) {
+			featuresImg = IMG_Load("./images/info/info_radar.png");
+		    if(featuresImg == NULL) {
+		        fprintf(stderr, "impossible de charger l'image info/info_radar.png \n");
+		        exit(1);
+		    }
+		    load_sprite("./images/info/info_radar.png",&featuresTexture);
+		}
+		
+		// Affichage de la texture sur la carte
+		glEnable(GL_TEXTURE_2D);
+	    glEnable(GL_BLEND);
+	    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	    glBindTexture(GL_TEXTURE_2D, featuresTexture);
+	    
+		glBegin(GL_QUADS);
+			glColor4ub(255, 255, 255, 255); // Opacité 100%
+			glTexCoord2d(0, 0); 
+			glVertex2f((*i).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*i).y - featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(0, 1);
+			glVertex2f((*i).x - featuresImg->w * 0.5 + featuresImg->w / 2.5, (*i).y + featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(1, 1); 
+			glVertex2f((*i).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*i).y + featuresImg->h * 0.5 + featuresImg->h / 2);
+			glTexCoord2d(1, 0);
+			glVertex2f((*i).x + featuresImg->w * 0.5 + featuresImg->w / 2.5, (*i).y - featuresImg->h * 0.5 + featuresImg->h / 2);
 		glEnd();
 	    
 	    glBindTexture(GL_TEXTURE_2D, 0);

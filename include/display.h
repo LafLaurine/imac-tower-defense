@@ -6,6 +6,7 @@
 #include "geometry.h"
 #include "tower.h"
 #include "game.h"
+#include "common.h"
 #include "installation.h"
 #define PI 3.14
 
@@ -38,7 +39,8 @@ int display_cross(GLuint* texture);
 Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower);
 void displayTowerFeatures(Tower* t);
 Tower* constructTowerSelected(List_Tower* l_tower, int x, int y);
-
+Installation* select_installation_construted(List_Installation* l_inst, int x, int y);
+void displayInstallationFeatures(Installation* i);
 
 void downgrade_tower(Tower* t, InstallationType type_inst);
 #endif
