@@ -321,11 +321,11 @@ int display_monster(Monster* m, SDL_Surface* img, GLuint texture) {
 		glVertex2d(m->x, m->y + 45);
 		glVertex2d(m->x, m->y + 40);
 		if(m->pv > 0 && m->pv < 1) {
-			glVertex2d(m->x + 1, m->y + 40);
+				glVertex2d(m->x + 1, m->y + 40);
 			glVertex2d(m->x + 1, m->y + 45);
 		}
 		else {
-			glVertex2d(m->x + m->pv / 2, m->y + 40);
+				glVertex2d(m->x + m->pv / 2, m->y + 40);
 			glVertex2d(m->x + m->pv / 2, m->y + 45);
 		}	
 		glEnd();

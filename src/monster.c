@@ -138,8 +138,7 @@ List_Monster* remove_monster(List_Monster* current_m, Monster* current) {
 			free(current);
 			current_m->nb_monsters--;
 
-		} else
-			printf("Inexistant monster\n");
+		} 
 	} else 
 		printf("Couldn't find list\n");
 
