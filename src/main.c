@@ -124,6 +124,10 @@ int main (int argc, char* argv[])
     GLuint game_start;
     SDL_Surface* s_start = load_sprite("./images/game_start.png",&game_start);
 
+    //Game pause
+    GLuint game_pause;
+    SDL_Surface* s_pause = load_sprite("./images/pause.png",&game_pause);
+
     //récup 1er noeud de la liste de noeud pour y positioner le monstre
     Node *root = map->list_node->head;
     Node *first = root;
@@ -231,6 +235,11 @@ int main (int argc, char* argv[])
         if(help == 1){
             display_full(&help_txt);
         }
+
+        if(game->pause == 1){
+            display_map(&game_pause);
+        }
+
 
         //Vague monstre
         if(game->pause == 0) {
@@ -397,8 +406,9 @@ int main (int argc, char* argv[])
                             break;
                             
                             case 'p' :
-                                 if(game->pause == 0)
+                                 if(game->pause == 0) {
                                     game->pause = 1;
+                                 }
                                 else
                                     game->pause = 0;
                                 break;     
@@ -520,6 +530,7 @@ int main (int argc, char* argv[])
     SDL_FreeSurface(s_cross);
     SDL_FreeSurface(help_surface);
     SDL_FreeSurface(s_start);
+    SDL_FreeSurface(s_pause);
     /* Liberation des ressources associees a la SDL */ 
     Mix_FreeMusic(musique); //Libération de la musique
     Mix_CloseAudio();
