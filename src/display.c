@@ -750,6 +750,7 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 		Monster_Type monsterKilled = -1;
 
 		while(t != NULL){
+			Mix_Music *musique; //Création du pointeur de type Mix_Music
 
 			if(list_monster != NULL) {
 				Monster* m = list_monster->m_first;
@@ -763,6 +764,10 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 							glVertex2f(t->x, t->y);
 							glVertex2f(m->x, m->y);
 						glEnd();
+
+						//Display music
+						musique = Mix_LoadMUS("./son/pew.wav"); //Chargement de la musique
+						Mix_PlayMusic(musique, 1); //Jouer infiniment la musique
 
 						if(m->pv <= 0){ // Monster has 0pv
 							monsterKilled = kill_monster(list_monster, m);
