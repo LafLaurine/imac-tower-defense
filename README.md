@@ -1,10 +1,6 @@
 # IMAC TOWER DEFENSE
 IMAC 1 - Projet C / OpenGL
 
-## Sommaire
-
-* [**Installer libraires**](#installer les libraries)
-
 # Installer les librairies et package 
 Pour que le projet fonctionne bien, vous aurez besoin d'installer le package GLUT, OpenGL, SDL, SDL_Image et SDL_Mixer. Et si jamais vous n'avez jamais compilé de C, vous aurez besoin de gcc.
 
@@ -40,22 +36,49 @@ Aller dans le répertoire où vous voulez mettre le dossier du jeu.
 
 #### 2ème étape : compiler le programme
 Taper dans votre terminal : 
-$ make 
+```bash
+make
+``` 
 
 #### 3ème étape : lancer le programme
 Si vous n'avez pas les librairies d'installées sur votre ordinateur et que vous n'avez pas envie, taper la commande suivante dans votre terminal : 
+``` bash
 export LD_LIBRARY_PATH=./lib/lib 
+``` 
 
 Lancer avec la commande suivante : 
+```bash
+./bin/itd ./data/map01.itd
+```
+pour le level 1
 
-./bin/itd ./data/map.itd
+```bash
+./bin/itd ./data/map02.itd
+```
+pour le level 2
 
 # Utilisation
-Appuyez sur [a] pour accélérer le jeu.
-Appuyez sur [h] pour afficher l'aide.
-Appuyez sur [p] pour mettre en pause le jeu.
 
-# Auteurs
+## Général
+* Appuyez sur [a] pour accélérer le jeu.
+* Appuyez sur [h] pour afficher l'aide.
+* Appuyez sur [p] pour mettre en pause le jeu.
+
+## Tours
+* Appuyez sur [z] pour faire un globule rouge.
+* Appuyez sur [l] pour faire un globule blanc.
+* Appuyez sur [b] pour faire un bandage.
+* Appuyez sur [m] pour faire un médicament.
+
+## Installations
+* Appuyez sur [u] pour faire une usine.
+* Appuyez sur [r] pour faire un radar.
+* Appuyez sur [t] pour faire un stock.
+
+# Autrices
 
 * **Clara DAIGMORTE**
 * **Laurine LAFONTAINE** 
+
+#Graphisme
+* **Laurine LAFONTAINE**
