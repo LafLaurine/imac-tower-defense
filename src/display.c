@@ -767,10 +767,12 @@ Monster_Type monster_on_tower(List_Monster* list_monster, List_Tower* list_tower
 
 						//Display music
 						musique = Mix_LoadMUS("./son/pew.wav"); //Chargement de la musique
-						Mix_PlayMusic(musique, 1); //Jouer infiniment la musique
+						Mix_PlayMusic(musique, 1); //Jouer la musique
 
 						if(m->pv <= 0){ // Monster has 0pv
 							monsterKilled = kill_monster(list_monster, m);
+							musique = Mix_LoadMUS("./son/dead_monster.mp3"); //Chargement de la musique
+							Mix_PlayMusic(musique, 1); //Jouer la musique
 						}
 					}
 					m = m->m_next;
