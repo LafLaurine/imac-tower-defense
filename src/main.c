@@ -38,24 +38,23 @@ void reshape() {
 void init_window() {
     if(NULL == SDL_SetVideoMode(WINDOW_WIDTH, WINDOW_HEIGHT, BIT_PER_PIXEL, 
             SDL_OPENGL  | SDL_RESIZABLE | SDL_DOUBLEBUF)) {
-        fprintf(stderr, "Impossible d'ouvrir la fenetre. Fin du programme.\n");
+        fprintf(stderr, "Can't open window. End of programm.\n");
         exit(EXIT_FAILURE);
     }
 }
 
 int main (int argc, char* argv[])
 {
-    int taille = 1;
-    char* vecteur[] = {"Tab texte"};
-    glutInit(&taille,vecteur); // initialisation de GLUT
+    int length = 1;
+    char* vector[] = {"Tab text"};
+    glutInit(&length, vector); // GLUT initialisation
 
     if(-1 == SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO)) 
     {
-        fprintf(
-            stderr, 
-            "Impossible d'initialiser la SDL. Fin du programme.\n");
+        printf("Impossible d'initialiser la SDL. Fin du programme.\n");
         exit(EXIT_FAILURE);
     }
+
     //Open window and create SDL context
     init_window();
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024) == -1) //Initialisation de l'API Mixer
@@ -71,7 +70,7 @@ int main (int argc, char* argv[])
 
     Mix_Music *musique; //Création du pointeur de type Mix_Music
     musique = Mix_LoadMUS("./son/la_vie.mp3"); //Chargement de la musique
-  //  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
+    //  Mix_PlayMusic(musique, -1); //Jouer infiniment la musique
 
     /* Initialisation du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);

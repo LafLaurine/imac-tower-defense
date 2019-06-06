@@ -436,7 +436,7 @@ void init_djisksra(Map *map, int* tab_chemin) {
 
     //initialisation value à 300
     //init visited tous à -1
-    for(int i =0; i<map->number_node;i++) {
+    for(int i =0; i<map->number_node; i++) {
         value[i] = 300;
         visited[i] = -1;
         sommet[i] = -1;
@@ -454,11 +454,35 @@ void init_djisksra(Map *map, int* tab_chemin) {
     // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
    	while(route->type != Out && route->next != NULL) {
 		Node *tmp = route;
+
         while(tmp->successors != NULL) {
 			//chemin visite
 			visited[tmp->indice] = 0;
+
+			int length = sizeof(tmp->successors)/sizeof(tmp->successors[0]);
+
+			for(int c=0; c<length; c++){
+				if(sommet[tmp->successors[c] == -1]){
+					sommet[tmp->successors[c]] = route->indice;
+					value[tmp->successors[c]] = value[route->indice]+1;
+				}
+			}
 		}
 
+		int min = 255;
+		int indexMin = 0;
+
+		for(int i=0; i<map->number_node; i++){
+			if(visited[i] != 0 && value[i] != 255){
+				if(value[i] < min){
+					min = value[i];
+					indexMin = i;
+				}
+			}
+		}
+
+		printf("YOYOYO INDEX %d et valeur %d", indexMin, min);
+		//route->next = ;
 
         tmp = tmp->next;
     }
