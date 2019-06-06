@@ -29,7 +29,7 @@ int check_segment_Y(int x1, int y1, int x2, int y2, Map* map);
 // Check pixels
 int check_pixel(int x, int y, Map* map, Color3f color);
 //  Djisksra initialisation
-void init_djisksra(Map *map, int* tab_chemin);
+void init_djisksra(Map map, int* tab_chemin);
 // Free map
 void free_map(Map* map);
 

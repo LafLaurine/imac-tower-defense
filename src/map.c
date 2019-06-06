@@ -221,7 +221,6 @@ int check_map(Map* map, char* map_itd){
 		float node_x;
 		float node_y;
 		int compt = 0;
-		int *successors = malloc(sizeof(int*));
 		int inBool = 0; //boolean
 		int outBool = 0;
 		
@@ -237,6 +236,8 @@ int check_map(Map* map, char* map_itd){
 					int itoken;
 					int i = 0;
 					int j = 0;
+					int *successors = malloc(sizeof(int*));
+					int nb_successors = 0;
 					token = strtok(line, " ");
 
 					while( token != NULL ) {
@@ -260,7 +261,8 @@ int check_map(Map* map, char* map_itd){
 						} else if(i == 3){
 							node_y = ftoken;
 						} else {
-							successors[j] = itoken;	
+							successors[j] = itoken;
+							nb_successors++;	
 							j++;
 						}
     
@@ -281,7 +283,7 @@ int check_map(Map* map, char* map_itd){
 						}					
 						
 						// Check node is in node list
-						previous = create_node(node_type, node_x, node_y, successors, map->list_node, node_indice);
+						previous = create_node(node_type, node_x, node_y, successors, nb_successors, map->list_node, node_indice);
 						if(previous == NULL) {
 							printf("Nodes not added\n");
 							exit(EXIT_FAILURE);
@@ -423,8 +425,8 @@ int check_pixel(int x, int y, Map* map, Color3f color){
 	return 0;
 }
 
-Node* findNode(int index, Map* map){
-	Node* temp = map->list_node->head;
+Node* findNode(int index, Map map){
+	Node* temp = map.list_node->head;
 
 	while(temp != NULL) {
 		if(index == temp->indice) {
@@ -436,19 +438,19 @@ Node* findNode(int index, Map* map){
 }
 
 
-void init_djisksra(Map *map, int* tab_chemin) {
+void init_djisksra(Map map, int* tab_path) {
     //tableau des sommets + successeurs
     //tableau des valeurs (initalement ça doit être infini mais ici pour test on mets 10000)
     //tableau des sommets visités : initialement tous à -1 et passe à 0 quand visité + prédécesseurs
-    int sommet[map->number_node];
+    int sommet[map.number_node];
     //value taille des number_node
-    int value[map->number_node];
+    int value[map.number_node];
     //taille nombre node
-    int visited[map->number_node];
+    int visited[map.number_node];
 
     //initialisation value à 300
     //init visited tous à -1
-    for(int i =0; i<map->number_node; i++) {
+    for(int i=0; i < map.number_node; i++) {
         value[i] = 300;
         visited[i] = -1;
         sommet[i] = -1;
@@ -458,37 +460,35 @@ void init_djisksra(Map *map, int* tab_chemin) {
     visited[0] = 0;
     value[0] = 0;
 
-    Node* route = map->list_node->tail;
-    sommet[route->indice]=route->indice;
-    value[route->indice] = 0;		
+    Node* route = map.list_node->head;
 
     //tant que pas node sorti
     // + boucle successeurs -> regarder si value = 300 et vistied = -1, on affecte value de là ou on se trouve en i et on ajoute +1
-   	while(route->type != Out && route->prev != NULL) {
+   	while(route->type != Out && route->next != NULL) {
 		Node *tmp = route;
 
-        while(tmp->successors != NULL) {
+		for(int c=0; c < tmp->nb_successors; c++){
 			//chemin visite
-			visited[tmp->indice] = 0;
+			visited[route->indice] = 0;
 
-			int length = sizeof(tmp->successors)/sizeof(int);
-			//printf("longueur %d\n", length);
-			
-			for(int c=0; c<length; c++){
-				if(sommet[tmp->successors[c]] == -1){
+			if(sommet[tmp->successors[c]] == -1 && value[tmp->successors[c]] != 255){
+				if((value[tmp->indice]+1) < value[tmp->successors[c]]){
 					sommet[tmp->successors[c]] = route->indice;
 					value[tmp->successors[c]] = value[route->indice]+1;
 				}
 			}
-
-        	tmp = tmp->prev;
+			if(sommet[tmp->successors[c]] == -1){
+				sommet[tmp->successors[c]] = route->indice;
+				value[tmp->successors[c]] = value[route->indice]+1;
+			}
+			printf("sucessor C %d et route indice %d , compteur %d \n", tmp->successors[c], route->indice, c);
 		}
 
-		int min = 255;
+		int min = 300;
 		int indexMin = 0;
 
-		for(int i=0; i<map->number_node; i++){
-			if(visited[i] != 0 && value[i] != 255){
+		for(int i=0; i<map.number_node; i++){
+			if(visited[i] != 0 && value[i] != 300){
 				if(value[i] < min){
 					min = value[i];
 					indexMin = i;
@@ -496,10 +496,21 @@ void init_djisksra(Map *map, int* tab_chemin) {
 			}
 		}
 
-		//printf("index %d et valeur %d", indexMin, min);
-		route->prev = findNode(indexMin, map);
-		route = route->prev;
+		printf("index %d et valeur %d\n", indexMin, min);
+		route->next = findNode(indexMin, map);
+		route = route->next;
     }
+
+	int sommet_index = 1;
+	int compt = 0;
+
+	while (sommet_index != 0) {
+		tab_path[compt] = sommet_index;
+		sommet_index = sommet[sommet_index];
+		compt++;
+	}
+
+	tab_path[compt++] = sommet_index;
 }
 
 

@@ -90,6 +90,9 @@ int main (int argc, char* argv[])
     //Init map
     Map* map = init_map(argv[1]);
 
+    int *path_tab = malloc(sizeof(int*));
+    //init_djisksra(*map, path_tab);
+
     // Map 1
     GLuint texture_map;
     SDL_Surface* s_map = load_sprite(map->img->path,&texture_map);
