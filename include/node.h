@@ -1,22 +1,14 @@
 #ifndef NODE_H
 #define NODE_H
-#define NB_MIN_NOEUDS 2
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "colors.h"
 
-
 typedef enum {
 	In, Out, Twist, Intersect
 } Node_Type;
-
-typedef struct adjacentNode 
-{
-    int index;
-    struct adjacentNode *next;
-} AdjacentNode, *AdjacenceList;
 
 typedef struct Node {
 	float x; // x Position
@@ -24,7 +16,6 @@ typedef struct Node {
 	Node_Type type; // Node type
 	int* successors; // Node successors
 	int indice;
-	AdjacenceList success; 
 	struct Node *next; // Next node
 	struct Node *prev; // Previous node
 } Node;
