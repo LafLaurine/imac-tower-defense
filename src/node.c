@@ -10,7 +10,7 @@ List_Node* new_List_Node() {
 	return new_lnode;
 }
 
-Node* create_node(Node_Type type, float x, float y, int *successors, int nb_successors, List_Node* l_node, int indice){
+Node* create_node(Node_Type type, float x, float y, int *successors, int nb_successors, List_Node* l_node, int index){
 	Node* n = malloc(sizeof(Node));
 	if(n != NULL) {
 		n->type = type; //type
@@ -18,7 +18,7 @@ Node* create_node(Node_Type type, float x, float y, int *successors, int nb_succ
 		n->y = y; //coordonnee y
 		n->successors = successors;
 		n->nb_successors = nb_successors;
-		n->indice = indice;
+		n->index = index;
 		n->next = NULL;
 		add_node_list(n, l_node);
 		return n;

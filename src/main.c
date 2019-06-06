@@ -272,7 +272,7 @@ int main (int argc, char* argv[])
                     wave.nb_lists++;
                     m->pv = m->pv*(wave.nb_lists/2);
                     m->money = m->money*(wave.nb_lists);
-                    i->cost = i->cost*(wave.nb_lists);
+                    //i->cost += i->cost;
                 }
             }
             cpt++;

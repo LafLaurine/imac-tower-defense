@@ -283,7 +283,7 @@ int check_map(Map* map, char* map_itd){
 						}					
 						
 						// Check node is in node list
-						previous = create_node(node_type, node_x, node_y, successors, nb_successors, map->list_node, node_indice);
+						previous = create_node(node_type, node_x, node_y, successors, nb_successors, map->list_node, node_index);
 						if(previous == NULL) {
 							printf("Nodes not added\n");
 							exit(EXIT_FAILURE);
@@ -469,19 +469,19 @@ void init_djisksra(Map map, int* tab_path) {
 
 		for(int c=0; c < tmp->nb_successors; c++){
 			//chemin visite
-			visited[route->indice] = 0;
+			visited[route->index] = 0;
 
 			if(sommet[tmp->successors[c]] == -1 && value[tmp->successors[c]] != 255){
-				if((value[tmp->indice]+1) < value[tmp->successors[c]]){
-					sommet[tmp->successors[c]] = route->indice;
-					value[tmp->successors[c]] = value[route->indice]+1;
+				if((value[tmp->index]+1) < value[tmp->successors[c]]){
+					sommet[tmp->successors[c]] = route->index;
+					value[tmp->successors[c]] = value[route->index]+1;
 				}
 			}
 			if(sommet[tmp->successors[c]] == -1){
-				sommet[tmp->successors[c]] = route->indice;
-				value[tmp->successors[c]] = value[route->indice]+1;
+				sommet[tmp->successors[c]] = route->index;
+				value[tmp->successors[c]] = value[route->index]+1;
 			}
-			printf("sucessor C %d et route indice %d , compteur %d \n", tmp->successors[c], route->indice, c);
+			printf("sucessor C %d et route index %d , compteur %d \n", tmp->successors[c], route->index, c);
 		}
 
 		int min = 300;
