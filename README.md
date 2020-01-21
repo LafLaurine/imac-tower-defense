@@ -1,6 +1,8 @@
 # IMAC TOWER DEFENSE
 IMAC 1 - Semestre 2 - Projet C / OpenGL
 
+![imac-tower-defense](./images/imac1_td.png)
+
 Vous ne voulez pas être contaminée par les bactéries et les virus ? C'est votre chance de vous défendre ! Créez des défenses pour combattre ces infamies !
 
 # Installer les librairies et package 
@@ -8,11 +10,15 @@ Pour que le projet fonctionne bien, vous aurez besoin d'installer le package GLU
 
 ### Installer gcc
 Taper dans votre terminal : 
-$ sudo apt install gcc
+```bash
+sudo apt install gcc
+```
 
 ### Installer GLUT
 Taper dans votre terminal : 
-$sudo apt-get install freeglut3 freeglut3-dev
+```bash
+sudo apt-get install freeglut3 freeglut3-dev
+```
 
 ### Installer SDL
 Taper dans votre terminal : 
@@ -54,10 +60,14 @@ Lancer avec la commande suivante :
 ```
 pour le level 1
 
+![imac-tower-defense](./images/maps/map01.ppm)
+
 ```bash
 ./bin/itd ./data/map02.itd
 ```
 pour le level 2
+
+![imac-tower-defense](./images/maps/map_02.ppm)
 
 # Utilisation
 
@@ -76,6 +86,9 @@ pour le level 2
 * Appuyez sur [u] pour faire une usine.
 * Appuyez sur [r] pour faire un radar.
 * Appuyez sur [t] pour faire un stock.
+
+![imac-tower-defense](./images/ui/aide.png)
+
 
 # Autrices
 
